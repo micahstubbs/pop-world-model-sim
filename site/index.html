@@ -43,7 +43,7 @@ a:hover{border-bottom-color:var(--pos)}
    surrounding text color, dotted underline only. */
 #dconvo .kicker a,.bubble .who a{color:inherit;border-bottom:1px dotted rgba(168,159,142,.5)}
 #dconvo .kicker a:hover,.bubble .who a:hover{border-bottom-color:var(--tx)}
-section{max-width:var(--maxw);margin:0 auto;padding:88px 24px 24px}
+section{max-width:var(--maxw);margin:0 auto;padding:88px 24px 24px;scroll-margin-top:52px}
 .kicker{font-family:"Fragment Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:14px}
 .kicker b{color:var(--amber1);font-weight:400}
 h2{font-size:clamp(28px,4.4vw,44px);margin-bottom:18px;max-width:18ch}
@@ -358,6 +358,30 @@ We want to see it — especially if you get anywhere near 91.5%.</pre>
 <script src="vendor/d3.min.js"></script>
 <script>
 if (location.search.includes("flat")) document.getElementById("hero").style.minHeight = "620px";
+/* hash routing: numeric deep-link aliases (#6, #06, #step-6 -> #challenge)
+   and a scrollspy that keeps the URL hash on the section in view */
+const SECTIONS = ["data","personas","ladder","diffusion","dyads","adherence","challenge"];
+function jumpTo(el){
+  const root = document.documentElement;
+  root.style.scrollBehavior = "auto";
+  el.scrollIntoView();
+  setTimeout(()=>root.style.scrollBehavior = "", 50);
+}
+function resolveHashAlias(){
+  const h = location.hash.replace(/^#/,"");
+  const m = h.match(/^(?:step[-_]?|s)?0?([0-6])$/i);
+  if (m){
+    const el = document.getElementById(SECTIONS[+m[1]]);
+    if (el){ history.replaceState(null, "", "#"+SECTIONS[+m[1]]); jumpTo(el); }
+  }
+}
+addEventListener("hashchange", resolveHashAlias);
+resolveHashAlias();
+const spy = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) history.replaceState(null, "", "#"+e.target.id);
+}), {rootMargin: "-35% 0px -55% 0px"});
+SECTIONS.forEach(id => { const el = document.getElementById(id); if (el) spy.observe(el); });
+
 document.getElementById("copyPrompt").addEventListener("click", async () => {
   const b = document.getElementById("copyPrompt");
   try { await navigator.clipboard.writeText(document.getElementById("ctaPrompt").innerText);
@@ -618,6 +642,13 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
         <div class="sample synth"><div class="lab">synthetic — bigram surrogate</div>${esc(s.synthetic[0])}</div>
       </div>`).join(""));
   })();
+
+  /* content is now full height — land the deep link correctly */
+  const cur = location.hash.replace(/^#/, "");
+  if (cur){
+    if (/^(?:step[-_]?|s)?0?[0-6]$/i.test(cur)) resolveHashAlias();
+    else { const el = document.getElementById(cur); if (el) jumpTo(el); }
+  }
 });
 </script>
 </body>
