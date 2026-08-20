@@ -23,32 +23,22 @@ for Persona Agents on Sentiment140}
 \maketitle
 
 \begin{abstract}
-Recent population-scale social simulators ground large language model (LLM)
-agents in human data at extraordinary scale: Light Society simulates over one
-billion agents grounded in World Values Survey demographics, and MatrAIx
-maintains 8.3 billion persona records evaluated for behavioral adherence. Both
-require infrastructure inaccessible to most researchers. We ask how much of
-their methodology survives translation to a single commodity machine and a
-public dataset. Using Sentiment140 --- 1.6M labeled tweets from 659{,}775 users,
-occupying under 300\,MB in memory --- we reproduce three elements at small
-scale: (i) human-grounded persona mining for the 6{,}245 users with at least 20
-tweets; (ii) a mixture-of-models scale ladder that assigns full LLM agents,
-distilled surrogates, or statistical samplers by per-user signal, cutting
-simulated-population cost by $702.7\times$ versus an all-LLM population; and
-(iii) ground-truth validation experiments on the real @-mention graph, where
-DeGroot opinion diffusion ($r=0.54$) \emph{underperforms} simple per-user
-persistence ($r=0.73$) in predicting future sentiment --- disposition beats
-diffusion at this horizon. We further characterize relationship structure,
-finding that sustained one-way (parasocial) attachments are as numerous as
-strong mutual ties and that 12.1\% of mention volume flows to
-broadcast/parasocial accounts, motivating a near-zero-cost broadcast tier in
-population simulators. Finally, we contribute a fixed behavioral-adherence
-benchmark for persona agents on this existing public dataset: a per-user
-temporal 80/20 split over the cohort with sentiment adherence measured on
-42{,}998 held-out tweets. A zero-parameter persona baseline attains 63.1\%
-(chance is 50\%); MatrAIx's reported 91.5\% adherence, though measured under a
-different protocol, frames the open gap. All code, data artifacts, and an
-interactive explainer are public.
+Population-scale social simulators such as Light Society (one billion agents)
+and MatrAIx (8.3 billion personas) require infrastructure most researchers
+cannot access. We show that their core methodology --- human-grounded personas,
+tiered compute, and ground-truth validation --- runs on one commodity machine,
+using Sentiment140: 1.6M public tweets in under 300\,MB of memory. We mine
+personas for the 6{,}245 users with at least 20 tweets each, and a
+mixture-of-models ladder cuts simulation cost $702.7\times$ versus an all-LLM
+population. Validating on the real @-mention graph produces a negative result:
+DeGroot opinion diffusion ($r=0.54$) underperforms per-user persistence
+($r=0.73$) at predicting future sentiment --- disposition beats diffusion.
+Sustained one-way (parasocial) attachments prove as numerous as strong mutual
+ties, motivating a near-zero-cost broadcast tier. We also release a fixed
+behavioral-adherence benchmark: per-user temporal 80/20 splits scored on
+42{,}998 held-out tweets, where a zero-parameter persona baseline reaches
+63.1\% and MatrAIx's reported 91.5\%, under a differing protocol, frames the
+gap. Code, artifacts, and an interactive explainer are public.
 \end{abstract}
 
 \section{Introduction}
