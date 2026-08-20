@@ -117,6 +117,15 @@ supplies the consensus-formation model we test.
 \section{Dataset and Cohort}
 \label{sec:dataset}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig9_ui_data.png}
+\caption{Dataset selection in the interactive explainer
+(\url{https://popsim.micahstubbs.ai/\#data}): candidate corpora compared on
+the number of distinct users with at least 20 tweets.}
+\label{fig:ui-data}
+\end{figure}
+
 Sentiment140 loads from one CSV into 295\,MB of memory: 1{,}600{,}000 tweets,
 659{,}775 distinct users, 48 days, balanced 800K/800K
 negative/positive labels. Figure~\ref{fig:dist} shows the heavy-tailed per-user
@@ -255,6 +264,16 @@ agent at all, only a content feed.
 \section{A Behavioral-Adherence Benchmark on Sentiment140}
 \label{sec:benchmark}
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=.92\textwidth]{figures/fig8_ui_adherence.png}
+\caption{The benchmark section of the interactive explainer
+(\url{https://popsim.micahstubbs.ai/\#adherence}): the 63.1\% zero-parameter
+baseline against the 50\% chance marker, and the per-persona accuracy
+distribution over held-out tweets.}
+\label{fig:ui-adherence}
+\end{figure*}
+
 MatrAIx's headline metric --- do persona agents behave like their personas? ---
 currently lacks a public, fixed-protocol instantiation that anyone can run. We
 contribute one on an existing public dataset.
@@ -313,6 +332,13 @@ validated a diffusion assumption against ground truth (and found it wanting),
 mapped the parasocial structure a realistic simulator must include, and left
 behind a fixed, public behavioral-adherence benchmark with a 63.1\% baseline
 and a 91.5\% bar. The gap between those numbers is, we hope, an invitation.
+
+\subsection*{Artifact Availability}
+The interactive explainer shown in Figures~\ref{fig:ui-data}
+and~\ref{fig:ui-adherence} is live at \url{https://popsim.micahstubbs.ai}.
+All analysis code, data pipelines, the benchmark protocol, and the source of
+this paper are at \url{https://github.com/micahstubbs/pop-world-model-sim};
+the deployed site source is at \url{https://github.com/micahstubbs/popsim}.
 
 \subsection*{Acknowledgments}
 Built at the Postlabor.dev ``Building Economic World Models'' Simulation Build
