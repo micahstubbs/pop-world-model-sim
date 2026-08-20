@@ -200,9 +200,24 @@ adherence = n_hit_total / n_test_total
 acc_hist = np.histogram(per_user_acc, bins=20, range=(0, 1))
 
 # surrogate text samples: word-bigram Markov per heavy user (clearly labeled synthetic)
+# Bot/spam accounts among the heaviest posters — skip them; a template-spam
+# "real tweet" is a useless example of persona voice.
+BOT_USERS = {"webwoke", "tweetpet", "what_bugs_u", "wowlew"}
+# Curated picks for the displayed samples (pop-world-model-sim-nig): a
+# substantive real tweet and a Markov seed whose walk reads coherently.
+# Seeds index a fresh default_rng per user; real text must be verbatim.
+CURATED = {
+    "tsarnick": ("@tequilakitty haha you're a bit paranoid aren't you??  i like it. i don't want to get blocked!", [16, 2]),
+    "TraceyHewins": ("@keza34 Watching the Wizard of Oz for the millionth time with me. Cooking for me! lol I know. I'm lucky", [7, 12]),
+    "SallytheShizzle": (None, [10, 1]),
+}
 rng = np.random.default_rng(42)
 samples = []
-for u in stats_u.sort_values("n", ascending=False).head(6).index:
+heavy = [u for u in stats_u.sort_values("n", ascending=False).index if u not in BOT_USERS]
+# site shows the first 4; lead with the curated human voices, then fill by volume
+order = ["lost_dog", "tsarnick", "TraceyHewins", "SallytheShizzle"]
+order += [u for u in heavy if u not in order][:2]
+for u in order:
     texts = c.loc[c["user"] == u, "text"].tolist()
     chains = defaultdict(list)
     starts = []
@@ -212,16 +227,19 @@ for u in stats_u.sort_values("n", ascending=False).head(6).index:
             starts.append(ws[0])
             for i in range(len(ws) - 1):
                 chains[ws[i]].append(ws[i + 1])
+    real_pick, seeds = CURATED.get(u, (None, [None, None]))
     gen = []
-    for _ in range(2):
-        w = rng.choice(starts); out = [w]
+    for seed in seeds:
+        r = rng if seed is None else np.random.default_rng(seed)
+        w = r.choice(starts); out = [w]
         for _ in range(16):
             nxt = chains.get(w)
             if not nxt:
                 break
-            w = str(rng.choice(nxt)); out.append(w)
+            w = str(r.choice(nxt)); out.append(w)
         gen.append(" ".join(out)[:140])
-    samples.append({"u": u, "real": texts[0][:140], "synthetic": gen})
+    real = next((t for t in texts if real_pick and t.strip() == real_pick.strip()), texts[0])
+    samples.append({"u": u, "real": real[:140], "synthetic": gen})
 
 json.dump({"adherence": round(adherence, 4),
            "n_users": len(per_user_acc), "n_test_tweets": n_test_total,
