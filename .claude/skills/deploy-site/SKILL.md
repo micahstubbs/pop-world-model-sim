@@ -1,6 +1,6 @@
 ---
 name: deploy-site
-description: Alias for ds - deploy site/* to the micahstubbs/popsim gh-pages repo (copy, never mirror) and verify popsim.micahstubbs.ai
+description: Alias for ds - deploy site/ to the Cloudflare Pages project popsim (wrangler), mirror to gh-pages, verify popsim.micahstubbs.ai
 ---
 
 # Deploy Site (Alias)
