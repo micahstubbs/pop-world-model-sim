@@ -319,8 +319,26 @@ cheating? no — the model never saw these users' test labels); blend per-user
 prior with text classifier; time-of-day features; mention-graph neighbor
 features (our diffusion experiment suggests these are weak — verify).
 
-When you beat 63.1%, commit your results. If you get anywhere near 91.5%,
-open a PR to github.com/micahstubbs/pop-world-model-sim — we want to see it.</pre>
+When you beat 63.1%, commit your results and report them by pull request —
+use the gh CLI (install it first if missing):
+
+  command -v gh &gt;/dev/null || {
+    if command -v brew &gt;/dev/null; then brew install gh
+    elif command -v apt-get &gt;/dev/null; then sudo apt-get update &amp;&amp; sudo apt-get install -y gh
+    elif command -v dnf &gt;/dev/null; then sudo dnf install -y gh
+    else echo "install gh manually: https://github.com/cli/cli#installation"; fi
+  }
+  gh auth status &gt;/dev/null 2&gt;&amp;1 || gh auth login
+  gh repo fork micahstubbs/pop-world-model-sim --remote
+  git checkout -b results/&lt;your-handle&gt;-adherence
+  git add docs/autoresearch-log.md results/          # your log, scores, and code
+  git commit -m "Adherence results: XX.X% (&lt;approach&gt;)"
+  git push -u fork HEAD 2&gt;/dev/null || git push -u origin HEAD
+  gh pr create --repo micahstubbs/pop-world-model-sim \
+    --title "Adherence: XX.X% with &lt;approach&gt;" \
+    --body "Protocol unchanged. Overall accuracy, per-user distribution, and method are in docs/autoresearch-log.md."
+
+We want to see it — especially if you get anywhere near 91.5%.</pre>
   </div>
   <p class="note" style="margin-top:12px">Honesty note: MatrAIx's 91.5% measures attribute adherence on their own four-environment protocol — it is not directly comparable to ours. That's why it's framed as a bar to aim at, not a record to break on equal terms.</p>
 </section>
