@@ -163,6 +163,7 @@ footer .in{max-width:var(--maxw);margin:0 auto;padding:40px 24px;color:var(--tx3
   <a href="#diffusion"><b>03</b>diffusion test</a>
   <a href="#dyads"><b>04</b>dyads</a>
   <a href="#adherence"><b>05</b>adherence</a>
+  <a href="#challenge"><b>06</b>beat 91.5%</a>
 </div></nav>
 
 <section id="data">
@@ -267,6 +268,52 @@ footer .in{max-width:var(--maxw);margin:0 auto;padding:40px 24px;color:var(--tx3
   <div class="grid2" id="samples"></div>
 </section>
 
+<hr class="hr">
+<section id="challenge">
+  <div class="kicker"><b>06</b> — your turn</div>
+  <h2>Beat 91.5%</h2>
+  <p class="lede">MatrAIx reports <strong>91.5% behavioral adherence</strong> for its persona agents. Our zero-parameter floor on this dataset is <strong>63.1%</strong>. The gap is the research opportunity — and everything you need is public. Paste the prompt below into your agentic LLM (Claude Code, Codex, whatever you run) and let it grind: it clones the repo, reproduces our baselines, then runs an autonomous research loop against a fixed evaluation protocol.</p>
+  <div class="panel" style="position:relative">
+    <button id="copyPrompt" style="position:absolute;top:14px;right:14px">copy prompt</button>
+    <pre id="ctaPrompt" style="white-space:pre-wrap;font:12.5px/1.6 'Fragment Mono',monospace;color:var(--tx2);margin-top:6px;overflow-x:auto">Clone and set up the popsim persona-adherence challenge:
+
+  git clone https://github.com/micahstubbs/pop-world-model-sim &amp;&amp; cd pop-world-model-sim
+  python3 -m venv .venv &amp;&amp; .venv/bin/pip install pandas numpy pyarrow
+  curl -L -o data.zip http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
+  mkdir -p data &amp;&amp; cd data &amp;&amp; unzip ../data.zip &amp;&amp; cd ..
+  .venv/bin/python scripts/sentiment140_stats.py      # sanity: 1.6M tweets, 6,245-user cohort
+  .venv/bin/python scripts/build_demo_artifacts.py    # reproduces our baseline numbers
+
+THE TASK — an autonomous research loop to maximize behavioral adherence of
+persona agents grounded in this dataset (context: popsim.micahstubbs.ai).
+
+Protocol (FIXED — beat it, don't bend it):
+- Cohort: the 6,245 users with &gt;= 20 tweets.
+- Split per user, by time: train = first 80% of their tweets, test = last 20% (min 4).
+- Metric: fraction of held-out test tweets whose sentiment label (0 = negative,
+  4 = positive) your persona model predicts correctly, over all 42,998 test tweets.
+- Baseline to beat: 63.1% (zero-parameter, per-user train-majority).
+- Aspirational bar: 91.5% — MatrAIx's reported behavioral adherence (their
+  protocol differs; treat the number as the target on ours).
+- Rules: never train on, embed, or peek at any user's test tweets. Train-tweet
+  text is fair game: features, per-user models, pretrained classifiers,
+  persona-card-conditioned LLM prompting, fine-tunes.
+- Log every experiment in docs/autoresearch-log.md (approach, score, next
+  hypothesis). Iterate until you plateau. Report overall accuracy AND the
+  per-user accuracy distribution.
+
+Ideas worth trying, roughly in order of effort: per-user logistic on char/word
+n-grams; cardiffnlp/twitter-roberta sentiment zero-shot on test text (is that
+cheating? no — the model never saw these users' test labels); blend per-user
+prior with text classifier; time-of-day features; mention-graph neighbor
+features (our diffusion experiment suggests these are weak — verify).
+
+When you beat 63.1%, commit your results. If you get anywhere near 91.5%,
+open a PR to github.com/micahstubbs/pop-world-model-sim — we want to see it.</pre>
+  </div>
+  <p class="note" style="margin-top:12px">Honesty note: MatrAIx's 91.5% measures attribute adherence on their own four-environment protocol — it is not directly comparable to ours. That's why it's framed as a bar to aim at, not a record to break on equal terms.</p>
+</section>
+
 <footer><div class="in">
   <b style="color:var(--tx2)">popsim</b> — built in one evening at <a href="https://luma.com/th01qwp1">Postlabor.dev: Building Economic World Models</a> by Micah Stubbs, Yvonne Chen &amp; Jake Schwartz.<br>
   Papers: <a href="https://arxiv.org/abs/2506.12078">Light Society (one billion agents)</a> · <a href="https://arxiv.org/abs/2608.04205">MatrAIx (8.3B personas)</a> &nbsp;·&nbsp; Projects: <a href="https://github.com/micahstubbs/pop-world-model-sim">pop-world-model-sim</a> · <a href="https://mindmeld.now">mindmeld.now</a><br>
@@ -277,6 +324,13 @@ footer .in{max-width:var(--maxw);margin:0 auto;padding:40px 24px;color:var(--tx3
 <script src="vendor/d3.min.js"></script>
 <script>
 if (location.search.includes("flat")) document.getElementById("hero").style.minHeight = "620px";
+document.getElementById("copyPrompt").addEventListener("click", async () => {
+  const b = document.getElementById("copyPrompt");
+  try { await navigator.clipboard.writeText(document.getElementById("ctaPrompt").innerText);
+    b.textContent = "copied ✓"; }
+  catch(e){ b.textContent = "select + copy manually"; }
+  setTimeout(()=>b.textContent="copy prompt", 2200);
+});
 const F = d3.format(","), tip = document.getElementById("tip");
 const senti = d3.scaleLinear().domain([0,.5,1]).range(["#e06a44","#8a8578","#2ea88f"]).clamp(true);
 function esc(s){ return s.replace(/ï¿½|�/g,"'").replace(/</g,"&lt;"); }
