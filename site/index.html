@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <style>
 :root{
   --ink:#16130f; --ink2:#1e1a14; --panel:#221d16; --line:#372f24;
@@ -25,6 +28,10 @@ h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;line-height:1.12}
 .mono{font-family:"Fragment Mono",monospace}
 a{color:var(--pos);text-decoration:none;border-bottom:1px solid rgba(46,168,143,.35)}
 a:hover{border-bottom-color:var(--pos)}
+/* Dyad handle links: keep the mono, sentiment-neutral look — inherit the
+   surrounding text color, dotted underline only. */
+#dconvo .kicker a,.bubble .who a{color:inherit;border-bottom:1px dotted rgba(168,159,142,.5)}
+#dconvo .kicker a:hover,.bubble .who a:hover{border-bottom-color:var(--tx)}
 section{max-width:var(--maxw);margin:0 auto;padding:88px 24px 24px}
 .kicker{font-family:"Fragment Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:14px}
 .kicker b{color:var(--amber1);font-weight:400}
@@ -232,7 +239,7 @@ footer .in{max-width:var(--maxw);margin:0 auto;padding:40px 24px;color:var(--tx3
 <section id="dyads">
   <div class="kicker"><b>04</b> — mindmeld.now pattern</div>
   <h2>Bilateral dyads, seeded from real pairs</h2>
-  <p class="lede">mindmeld.now imagines a social network built from bilateral agent exchanges. The cohort already contains <strong>3,324 reciprocal pairs</strong> — two personas who repeatedly @-mention each other. These are real 2009 exchanges; each pair is a ready-made seed for a two-agent conversation loop.</p>
+  <p class="lede"><a href="https://mindmeld.now">mindmeld.now</a> imagines a social network built from bilateral agent exchanges. The cohort already contains <strong>3,324 reciprocal pairs</strong> — two personas who repeatedly @-mention each other. These are real 2009 exchanges; each pair is a ready-made seed for a two-agent conversation loop.</p>
   <div class="dwrap">
     <div class="dlist" id="dlist"></div>
     <div class="panel" id="dconvo"></div>
@@ -475,13 +482,15 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
   /* ---------- 04 dyads ---------- */
   (function(){
     const list = d3.select("#dlist");
+    // Real 2009 handles: link each to its x.com profile.
+    const prof = h=>`<a href="https://x.com/${encodeURIComponent(h)}" target="_blank" rel="noopener">@${esc(h)}</a>`;
     function open(d,i){
       list.selectAll("button").classed("on",(x,j)=>j===i);
       d3.select("#dconvo").html(`
-        <div class="kicker">@${d.a} ⇄ @${d.b} · ${d.w_ab+d.w_ba} mutual mentions in 48 days</div>
+        <div class="kicker">${prof(d.a)} ⇄ ${prof(d.b)} · ${d.w_ab+d.w_ba} mutual mentions in 48 days</div>
         ${d.ex.map(e=>`<div class="bubble ${e.from===d.a?"left":"right"} ${e.pos?"p":"n"}">
-          <div class="who">@${e.from} → @${e.to}</div>${esc(e.text)}</div>`).join("")}
-        <p class="note">Real exchange, 2009. As a mindmeld.now seed: two persona agents initialized from these users' cards continue this conversation — its dynamics validated against the ${d.w_ab+d.w_ba} real exchanges above.</p>`);
+          <div class="who">${prof(e.from)} → ${prof(e.to)}</div>${esc(e.text)}</div>`).join("")}
+        <p class="note">Real exchange, 2009. As a <a href="https://mindmeld.now">mindmeld.now</a> seed: two persona agents initialized from these users' cards continue this conversation — its dynamics validated against the ${d.w_ab+d.w_ba} real exchanges above.</p>`);
     }
     list.selectAll("button").data(dyads.dyads).join("button")
       .html(d=>`@${d.a} ⇄ @${d.b}<br><span style="color:var(--tx3)">${d.w_ab}↔${d.w_ba} mentions</span>`)
