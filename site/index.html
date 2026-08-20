@@ -105,6 +105,11 @@ button:disabled{opacity:.45;cursor:default}
 
 /* ladder */
 .tier{display:grid;grid-template-columns:160px 1fr 120px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+@media(max-width:640px){
+  .tier{grid-template-columns:1fr;gap:8px}
+  .tier .cnt{text-align:left}
+  .scrollcue{display:none}
+}
 .tier:last-of-type{border-bottom:none}
 .tier .nm{font-weight:700;font-size:14.5px}
 .tier .nm small{display:block;font-weight:400;color:var(--tx3);font-family:"Fragment Mono",monospace;font-size:11px;margin-top:2px}
@@ -379,8 +384,11 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
   d3.select("#s-mem").text(stats.mem_mb+" MB");
 
   const cv = document.getElementById("dotfield"), ctx = cv.getContext("2d");
-  const N = stats.cohort_users, dots = [];
-  function sizeCanvas(){ cv.width = cv.clientWidth*devicePixelRatio; cv.height = cv.clientHeight*devicePixelRatio; }
+  const small = innerWidth < 560;
+  const DPR = Math.min(devicePixelRatio || 1, small ? 1.25 : 2);
+  const N = small ? 2200 : stats.cohort_users, dots = [];
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function sizeCanvas(){ cv.width = cv.clientWidth*DPR; cv.height = cv.clientHeight*DPR; }
   sizeCanvas(); addEventListener("resize", () => { sizeCanvas(); layout(); });
   const posDist = personas.cards.map(c => c.pos);
   function layout(){
@@ -388,7 +396,7 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
     for (let i=0;i<N;i++){
       dots.push({ x: Math.random()*cv.width, y: Math.random()*cv.height,
         s: posDist[i % posDist.length] + (Math.random()-.5)*.15,
-        ph: Math.random()*Math.PI*2, r: (.6+Math.random()*1.3)*devicePixelRatio });
+        ph: Math.random()*Math.PI*2, r: (.6+Math.random()*1.3)*DPR });
     }
   }
   layout();
@@ -409,13 +417,13 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
       ctx.beginPath(); ctx.arc(d.x, d.y, d.r*(awake?1.25:1), 0, 7); ctx.fill();
     }
     ctx.globalAlpha = 1;
-    requestAnimationFrame(frame);
+    if (!reduceMotion) requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 
   /* ---------- 01 personas ---------- */
   (function(){
-    const svg = d3.select("#pscatter"), W = svg.node().clientWidth, H = 430, m = {t:14,r:16,b:40,l:46};
+    const svg = d3.select("#pscatter"), W = Math.max(svg.node().clientWidth, 300), H = 430, m = {t:14,r:16,b:40,l:46};
     const cards = personas.cards;
     const x = d3.scaleLinear().domain([0,1]).range([m.l, W-m.r]);
     const y = d3.scaleLinear().domain(d3.extent(cards, c=>c.w)).nice().range([H-m.b, m.t]);
@@ -427,7 +435,7 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
       .call(d3.axisLeft(y).ticks(5).tickSize(-(W-m.l-m.r)))
       .call(g => g.selectAll(".tick line").attr("class","gridline"));
     svg.append("text").attr("class","axis").attr("x",W/2).attr("y",H-6).attr("text-anchor","middle")
-      .style("fill","var(--tx3)").style("font","11px Fragment Mono").text("sentiment disposition (share positive)");
+      .style("fill","var(--tx3)").style("font","11px Fragment Mono").text(W < 420 ? "sentiment disposition" : "sentiment disposition (share positive)");
     svg.append("text").attr("class","axis").attr("transform",`rotate(-90)`).attr("x",-H/2).attr("y",13)
       .attr("text-anchor","middle").style("fill","var(--tx3)").style("font","11px Fragment Mono").text("verbosity (words / tweet)");
     const dotsSel = svg.append("g").selectAll("circle").data(cards).join("circle")
@@ -479,7 +487,7 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
 
   /* ---------- 03 diffusion ---------- */
   (function(){
-    const svg = d3.select("#graph"), W = svg.node().clientWidth, H = 430;
+    const svg = d3.select("#graph"), W = Math.max(svg.node().clientWidth, 300), H = 430;
     const nodes = diff.graph.nodes.map(d=>({...d, s0:d.s, cur:d.s}));
     const byId = new Map(nodes.map(n=>[n.id,n]));
     const links = diff.graph.edges.filter(e=>byId.has(e.s)&&byId.has(e.t)).map(e=>({source:e.s,target:e.t,w:e.w}));
@@ -543,7 +551,7 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
           <div style="height:100%;border-radius:4px;background:${c};width:${val*100}%"></div></div>
       </div>`).join(""));
 
-    const dsvg = d3.select("#daily"), dW = dsvg.node().clientWidth, dH = 150, dm = {t:10,r:8,b:22,l:38};
+    const dsvg = d3.select("#daily"), dW = Math.max(dsvg.node().clientWidth, 280), dH = 150, dm = {t:10,r:8,b:22,l:38};
     const days = diff.daily;
     const dx = d3.scalePoint().domain(days.map(d=>d.d)).range([dm.l,dW-dm.r]);
     const dy = d3.scaleLinear().domain([.35,.65]).range([dH-dm.b,dm.t]);
@@ -589,12 +597,12 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
     const io = new IntersectionObserver(es=>{ if(es[0].isIntersecting){ fill(); io.disconnect(); }},{threshold:.4});
     io.observe(document.getElementById("adfill"));
     setTimeout(fill, 2500);
-    const svg = d3.select("#adhist"), W = svg.node().clientWidth, H = 140, m = {t:8,r:8,b:24,l:38};
+    const svg = d3.select("#adhist"), W = Math.max(svg.node().clientWidth, 280), H = 140, m = {t:8,r:8,b:24,l:38};
     const bins = adh.acc_hist, bx = d3.scaleBand().domain(d3.range(bins.length)).range([m.l,W-m.r]).paddingInner(.18);
     const by = d3.scaleLinear().domain([0,d3.max(bins)]).range([H-m.b,m.t]);
     svg.append("g").attr("class","axis").attr("transform",`translate(0,${H-m.b})`)
       .call(d3.axisBottom(d3.scaleLinear().domain([0,1]).range([m.l,W-m.r])).ticks(5).tickFormat(d3.format(".0%")));
-    svg.append("g").attr("class","axis").attr("transform",`translate(${m.l},0)`).call(d3.axisLeft(by).ticks(3));
+    svg.append("g").attr("class","axis").attr("transform",`translate(${m.l},0)`).call(d3.axisLeft(by).ticks(3).tickFormat(d3.format("~s")));
     svg.selectAll("rect.b").data(bins).join("rect").attr("class","b")
       .attr("x",(_,i)=>bx(i)).attr("width",bx.bandwidth())
       .attr("y",d=>by(d)).attr("height",d=>H-m.b-by(d))
