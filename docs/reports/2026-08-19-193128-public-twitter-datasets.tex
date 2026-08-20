@@ -1,0 +1,370 @@
+\documentclass[twocolumn,10pt,letterpaper]{article}
+
+% -- Page geometry --
+\usepackage[
+  top=0.85in,
+  bottom=0.75in,
+  left=0.65in,
+  right=0.65in,
+  columnsep=0.25in
+]{geometry}
+
+% -- Beautiful typography: Century Schoolbook --
+\usepackage[T1]{fontenc}
+\usepackage{tgschola}              % TeX Gyre Schola (Century Schoolbook)
+\usepackage[scaled=0.82]{beramono} % Bera Mono for code
+\usepackage{microtype}             % Microtypographic refinements
+\usepackage{setspace}              % Line spacing control
+\setstretch{1.08}                  % Slightly open leading for readability
+
+% -- Packages --
+\usepackage{xurl}        % Allow URL breaks at any character (load before hyperref)
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}    % Professional tables
+\usepackage{tabularx}    % Width-constrained tables
+\usepackage{enumitem}    % List customization
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{balance}
+\usepackage{stfloats}    % Enable [h] placement for table* in two-column layout
+\usepackage{titlesec}    % Section heading customization
+\usepackage{listings}    % Code blocks with line wrapping
+
+% -- Paragraph spacing (no indent, modest skip) --
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em plus 0.1em minus 0.05em}
+\setlength{\emergencystretch}{1em}  % Extra stretch to avoid overfull hboxes in narrow columns
+
+% -- Code listings with line wrapping --
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  breakatwhitespace=false,
+  breakautoindent=true,
+  postbreak=\mbox{\textcolor{accentrule}{$\hookrightarrow$}\space},
+  columns=fullflexible,
+  keepspaces=true,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codebg},
+  framesep=3pt,
+  aboveskip=0.5em,
+  belowskip=0.5em,
+  xleftmargin=4pt,
+  xrightmargin=0pt,
+}
+
+% -- Colors --
+\definecolor{linkblue}{HTML}{1D4ED8}
+\definecolor{headergray}{HTML}{1F2937}
+\definecolor{rulegray}{HTML}{D1D5DB}
+\definecolor{titlebg}{HTML}{111827}
+\definecolor{accentrule}{HTML}{6B7280}
+\definecolor{brandred}{HTML}{8B2635}
+\definecolor{codebg}{HTML}{F3F4F6}    % Very light gray for code backgrounds
+
+% -- Hyperlinks --
+\hypersetup{
+    colorlinks=true,
+    linkcolor=linkblue,
+    urlcolor=linkblue,
+    citecolor=linkblue,
+    pdfstartview=FitH
+}
+
+% -- Section numbering: Roman > Alph > Arabic > alph, no decimals --
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+\renewcommand{\theparagraph}{\alph{paragraph}}
+\makeatletter
+\@addtoreset{subsection}{section}
+\@addtoreset{subsubsection}{subsection}
+\@addtoreset{paragraph}{subsubsection}
+\makeatother
+
+% -- Section headings --
+\titleformat{\section}
+  {\large\bfseries\color{titlebg}}
+  {\thesection.}{0.5em}{}
+  [\vspace{-0.3em}{\color{accentrule}\rule{\columnwidth}{0.5pt}}]
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{headergray}}
+  {\thesubsection.}{0.4em}{}
+\titleformat{\subsubsection}
+  {\small\bfseries\itshape\color{headergray}}
+  {\thesubsubsection.}{0.4em}{}
+\titleformat{\paragraph}[runin]
+  {\small\bfseries\color{headergray}}
+  {\theparagraph)}{0.4em}{}[.\hspace{0.4em}]
+\titlespacing*{\section}{0pt}{1.0em}{0.35em}
+\titlespacing*{\subsection}{0pt}{0.75em}{0.2em}
+\titlespacing*{\subsubsection}{0pt}{0.55em}{0.15em}
+\titlespacing*{\paragraph}{0pt}{0.4em}{0em}
+
+% -- Lists: compact, elegant --
+\setlist{nosep, leftmargin=1.1em, topsep=0.2em, itemsep=0.05em}
+\setlist[itemize]{label={\small\textcolor{accentrule}{\textbullet}}}
+\setlist[enumerate]{label={\small\textcolor{headergray}{\arabic*.}}}
+
+% -- Tables: tighter, small text --
+\renewcommand{\arraystretch}{1.15}
+
+% -- Header/footer (pages 2+) --
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{rulegray}\leaders\hrule height \headrulewidth\hfill}}
+\fancyhead[L]{\footnotesize\color{headergray}\textit{Publicly Available Twitter/X Tweet Datasets for Download and Study}}
+\renewcommand{\footrulewidth}{0.3pt}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{rulegray}\leaders\hrule height \footrulewidth\hfill}}
+% Brand mark footer: wordmark left, page number right
+\fancyfoot[L]{\footnotesize\textbf{\color{headergray}pop-world-model-sim}}
+\fancyfoot[R]{\footnotesize\color{headergray}\thepage}
+
+% -- Page 1 style: footer only, no header rule --
+\fancypagestyle{firstpage}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0.3pt}%
+  \renewcommand{\footrule}{\hbox to\headwidth{\color{rulegray}\leaders\hrule height 0.3pt\hfill}}%
+  \fancyfoot[L]{\footnotesize\textbf{\color{headergray}pop-world-model-sim}}%
+  \fancyfoot[R]{\footnotesize\color{headergray}\thepage}%
+}
+
+% -- Column rule --
+% \columnseprulecolor is a hook multicol never defines, so it must be created
+% with \newcommand; \renewcommand raises "Command \columnseprulecolor
+% undefined", which nonstopmode swallows while leaving the rule black.
+\setlength{\columnseprule}{0.15pt}
+\newcommand{\columnseprulecolor}{\color{rulegray}}
+
+% -- Title --
+\title{\vspace{-1.8em}\LARGE\bfseries\color{titlebg} Publicly Available Twitter/X Tweet Datasets for Download and Study\vspace{-0.3em}}
+\author{pop-world-model-sim}
+\date{{\small\color{headergray} \today}}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{firstpage}
+\vspace{-0.5em}
+
+
+\textbf{Generated:} 2026-08-19 \textbf{Topic:} Well-structured, easy-to-access, publicly downloadable Twitter/tweet datasets with an academic track record \textbf{Context:} Supporting a hackathon project at the \href{https://luma.com/th01qwp1}{Postlabor.dev -- Building Economic World Models} Simulation Build Night, an event focused on large-scale AI agent simulations of economic and social systems. Dataset selection below is weighted toward corpora useful for seeding, calibrating, or evaluating agent-based social simulations.
+
+
+\subsection{Executive Summary}
+
+The single most important fact about Twitter data in 2026 is that the era of freely collecting or "rehydrating" tweets is over. In early 2023, X shut down the free and Academic Research API tiers; replacement commercial tiers start at roughly \$100/month with no historical access and climb to about \$42,000/month for enterprise access. This broke the standard academic sharing workflow, in which papers shipped tweet-ID lists that anyone could rehydrate into full tweets with tools like twarc or the DocNow Hydrator. As a result, the practical value of a dataset today depends almost entirely on whether it ships \textbf{full tweet text and metadata}, not just IDs.
+
+
+Fortunately, several excellent full-content corpora remain publicly downloadable and have deep academic pedigrees. For quick, structured work: \textbf{Sentiment140} (1.6M labeled tweets, one CSV) and \textbf{TweetEval} (seven classification tasks with fixed splits) are the easiest on-ramps. For scale and raw realism: the \textbf{Archive Team Twitter Stream Grab} on the Internet Archive offers roughly a decade (2011-early 2023) of 1\% sampled global tweets as complete JSON, about 50 GB compressed per month. For post-2023 data and full user timelines -- arguably the best fit for persona-driven agent simulation -- the \textbf{Community Archive} provides 7M+ donated tweets as an open Supabase database and API. For network structure to drive simulation topology, Stanford SNAP's \textbf{Higgs Twitter} dataset (456K users; follower, retweet, reply, and mention layers around a single global event) is the standout.
+
+
+For the world-model-simulation use case specifically, the recommended stack is: Higgs Twitter for realistic network topology and diffusion dynamics; Community Archive or Archive Team samples for realistic content and user timelines to build agent personas; and TweetEval-style labeled sets for evaluating whether simulated content is distributionally plausible.
+
+
+\subsection{The 2023-2026 Access Landscape (Read This First)}
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item In early 2023 Twitter/X shut down the free API and the Academic Research track that had provided full-archive access to vetted researchers (\href{https://www.cjr.org/tow\_center/qa-what-happened-to-academic-research-on-twitter.php}{Columbia Journalism Review}, \href{https://arxiv.org/pdf/2404.07340}{"RIP Twitter API: A Eulogy"}).
+  \item Twitter's developer terms historically prohibited redistributing full tweet objects, so most academic datasets were released as \textbf{tweet-ID lists} meant to be rehydrated via the API (\href{https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/13-Twitter-Data-Sharing.html}{Twitter Data Sharing guide, Melanie Walsh}). With free API access gone, DocNow Hydrator and twarc broke; \textbf{ID-only datasets are now largely unusable without an expensive enterprise contract or third-party hydration services} of varying legitimacy (\href{https://xcrop.io/blog/twitter-data-academic-research}{xcrop guide}, \href{https://api.sorsa.io/solutions/academic-research}{Sorsa}).
+  \item A promised X "Research API" was announced in January 2024 but had shipped no implementation details as of the end of 2024.
+  \item Practical consequence: \textbf{prefer datasets that ship full text.} Treat ID-only corpora as unusable unless you already hold hydrated copies.
+\end{itemize}
+
+\subsection{Tier 1 -- Full-Text, Download-and-Go Datasets}
+
+\subsubsection{Sentiment140 -- the classic starter dataset}
+
+1.6 million tweets from 2009, distantly labeled for sentiment via emoticons, created by Stanford researchers (Go, Bhayani, Huang). One flat CSV with tweet text, timestamp, user, and polarity label. It is among the most-cited sentiment corpora in NLP and remains a default benchmark.
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} \href{https://huggingface.co/datasets/stanfordnlp/sentiment140}{Hugging Face (stanfordnlp/sentiment140)}, \href{https://www.kaggle.com/datasets/kazanova/sentiment140}{Kaggle}, \href{https://www.tensorflow.org/datasets/catalog/sentiment140}{TensorFlow Datasets}
+  \item \textbf{Structure:} single CSV, 6 columns; loads in one line of pandas.
+  \item \textbf{Academic pedigree:} thousands of citations; standard baseline (\href{https://medium.com/lexiconia/the-sentiment140-dataset-a-benchmark-for-sentiment-classification-7f37313bf757}{overview}).
+  \item \textbf{Caveat:} 2009-era tweets (140 chars, no threads/quote-tweets); labels are noisy by construction.
+\end{itemize}
+
+\subsubsection{TweetEval -- seven benchmark tasks in one repo}
+
+Cardiff NLP's unified benchmark: emotion recognition, emoji prediction, irony detection, hate speech, offensive language, sentiment, and stance detection -- all as multi-class tweet classification with fixed train/validation/test splits in a consistent format.
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} \href{https://github.com/cardiffnlp/tweeteval}{GitHub (cardiffnlp/tweeteval)}; also on Hugging Face as \texttt{tweet\_\penalty0 eval}.
+  \item \textbf{Structure:} plain-text one-tweet-per-line files plus label files per task; trivially parseable.
+  \item \textbf{Academic pedigree:} the standard tweet-classification benchmark since 2020 (Findings of EMNLP); the basis for the widely used TimeLMs/twitter-roberta models.
+  \item \textbf{Fit for the hackathon:} ready-made evaluators -- score simulated agent output for sentiment/emotion/stance realism.
+\end{itemize}
+
+\subsubsection{Archive Team Twitter Stream Grab -- a decade of raw global tweets}
+
+The Internet Archive hosts the "Spritzer" 1\% sample of the global Twitter firehose, collected by Archive Team from 2011 until the API shutdown in early 2023 (with some gap months). Each month is a tarball of hourly bzip2 files of \textbf{complete tweet JSON objects, all fields included} -- text, user objects, entities, geo, retweet structure.
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} \href{https://archive.org/details/twitterstream}{Collection index}; example items: \href{https://archive.org/details/archiveteam-twitter-stream-2017-01}{2017-01}, \href{https://archive.org/details/archiveteam-twitter-stream-2021-08}{2021-08}, \href{https://archive.org/details/archiveteam-twitter-stream-2022-11}{2022-11}.
+  \item \textbf{Size:} \textasciitilde{}50 GB compressed per month; download only the months you need.
+  \item \textbf{Academic pedigree:} used across hundreds of papers as the standard "random sample of Twitter" (\href{https://blogs.baylor.edu/digitalscholarship/2018/11/02/archive-team-the-twitter-stream-grab-historic-twitter-content/}{Baylor digital scholarship overview}).
+  \item \textbf{Fit for the hackathon:} the most realistic raw material for populating a simulated feed; hour-resolution timing supports temporal dynamics. Budget parsing time -- it is raw JSON, not a tidy table.
+\end{itemize}
+
+\subsubsection{Community Archive -- open, post-2023, full user timelines}
+
+An open-source project where users donate their full Twitter archives to a public-domain database: 7M+ tweets as of September 2025, growing, with a public Supabase API and downloadable data. This is the rare source that is (a) full-text, (b) legally clean (donated by the authors), and (c) still alive after the API shutdown.
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} \href{https://github.com/TheExGenesis/community-archive}{GitHub (TheExGenesis/community-archive)}, site at community-archive.org; \href{https://github.com/DefenderOfBasic/twitter-archive-toolkit/blob/main/Community\_Archive\_Analysis\_Quickstart.ipynb}{analysis quickstart notebook}.
+  \item \textbf{Structure:} relational DB (tweets, users, likes, followers) queryable via Supabase REST API; bulk export available.
+  \item \textbf{Unique property:} \textbf{complete per-user timelines}, not topic slices -- ideal for building believable long-horizon agent personas (the exact pattern used in recent generative-agent papers that seed simulated users from real tweet histories).
+  \item \textbf{Caveat:} self-selected population (skews tech/"ingroup" Twitter); not a representative sample.
+\end{itemize}
+
+\subsubsection{PHEME rumour dataset -- conversation threads with veracity labels}
+
+Twitter rumour conversation threads around breaking-news events (Charlie Hebdo, Ferguson, the Germanwings crash, etc.), annotated for rumour vs. non-rumour and veracity. Ships full thread structure (source tweet + reply cascades).
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} via figshare ("PHEME dataset for Rumour Detection and Veracity Classification"); indexed in \href{https://github.com/shaypal5/awesome-twitter-data}{awesome-twitter-data}.
+  \item \textbf{Academic pedigree:} the standard rumour-detection benchmark (Zubiaga et al.); the related Twitter15/Twitter16 sets are used in current LLM-agent disinformation simulations.
+  \item \textbf{Fit for the hackathon:} real reply-cascade structures to validate simulated conversation trees against.
+\end{itemize}
+
+\subsection{Tier 2 -- Network/Graph Datasets (Simulation Topology)}
+
+\subsubsection{SNAP Higgs Twitter -- the best single dataset for diffusion simulation}
+
+Built by monitoring Twitter July 1-7, 2012, around the Higgs boson discovery announcement. Contains a 456,631-node, 14.9M-edge follower graph \textbf{plus} time-stamped retweet, reply, and mention interaction layers for the same users -- i.e., both the substrate network and the diffusion that ran over it.
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} \href{https://snap.stanford.edu/data/higgs-twitter.html}{SNAP page} -- plain edge-list files, anonymized.
+  \item \textbf{Academic pedigree:} Domenico et al., \textit{The Anatomy of a Scientific Rumor} (Scientific Reports, 2013); a staple in information-diffusion literature (\href{https://arxiv.org/pdf/1508.00540}{example}).
+  \item \textbf{Fit for the hackathon:} wire agents onto the real follower graph and compare simulated cascade shapes against the recorded retweet/mention cascades. This is essentially a ready-made ground-truth experiment for a social world model.
+\end{itemize}
+
+\subsubsection{SNAP ego-Twitter -- social circles}
+
+973 ego-networks (\textasciitilde{}81K users, 1.77M edges) crawled from public Twitter, with node features and hand-labeled "circles." From McAuley \& Leskovec, \textit{Learning to Discover Social Circles in Ego Networks} (NIPS 2012).
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Get it:} \href{https://snap.stanford.edu/data/ego-Twitter.html}{SNAP page}; mirrors on \href{https://academictorrents.com/details/276e1028b08decbf711f275a57901dbde88ca5ab}{Academic Torrents} and \href{https://www.kaggle.com/datasets/wolfram77/graphs-social}{Kaggle social-graph bundles}.
+  \item \textbf{Fit:} realistic local community structure for small/medium simulations; widely used in community-detection papers (\href{https://arxiv.org/pdf/2012.09561}{example}).
+\end{itemize}
+
+\subsubsection{Kwak et al. 2010 follower graph -- historically foundational, now hard to get}
+
+The WWW 2010 paper \textit{What is Twitter, a Social Network or a News Media?} released a crawl of 41.7M users and 1.47B follow edges. It defined how the field understands Twitter's topology, but the original distribution was taken down at Twitter's request; treat it as unavailable unless you find a mirror, and check terms before using one.
+
+
+\subsection{Tier 3 -- Topical ID-Only Corpora (Hydration Caveat Applies)}
+
+These remain important to know about -- they dominate the citation record -- but \textbf{ship tweet IDs only}, and hydration is effectively broken post-2023.
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{COVID-19 Twitter dataset (Chen, Lerman, Ferrara / USC-ISI):} ongoing multilingual collection started January 2020; billions of IDs. \href{https://github.com/echen102/COVID-19-TweetIDs}{GitHub (echen102/COVID-19-TweetIDs)}; paper in \href{https://publichealth.jmir.org/2020/2/e19273/}{JMIR Public Health}. One of the most-studied social datasets ever. CC-BY-NC-4.0-style academic terms.
+  \item \textbf{Augmented multilingual COVID-19 dataset (Lopez et al.):} \textasciitilde{}3.0B tweets collected through 2022, with IDs plus derived fields (sentiment, NER, geo where computable) that partially offset the hydration problem. \href{https://github.com/lopezbec/COVID19\_Tweets\_Dataset}{GitHub (lopezbec/COVID19\_Tweets\_Dataset)}.
+  \item \textbf{Monkeypox/mpox 2022 datasets:} e.g., a 556K-tweet open collection (\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9680479/}{PMC}) -- again ID-centric.
+  \item \textbf{DocNow Catalog:} a registry of hundreds of event-based tweet-ID datasets (protests, elections, disasters) at \href{https://catalog.docnow.io/}{catalog.docnow.io} -- excellent as an index of what exists, subject to the same hydration caveat.
+\end{itemize}
+
+\textbf{Removed at Twitter's request (do not plan around them):} SNAP \textbf{Twitter7} (476M tweets, June-Dec 2009) was withdrawn from Stanford's site (\href{https://snap.stanford.edu/data/twitter7.html}{SNAP page}, \href{https://groups.google.com/g/snap-datasets/c/4\_sMYlFRf9Q}{mailing-list confirmation}). Mirrors circulate, but the takedown reflects the rights-holder's position.
+
+
+\subsection{Datasets Purpose-Built for LLM Agent Simulation (2025)}
+
+Directly relevant to the Postlabor.dev build-night theme:
+
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{BluePrint} (2025): a social-media user dataset built specifically for LLM persona evaluation and training -- clustered real user timelines into privacy-preserving persona prototypes (\href{https://arxiv.org/pdf/2510.02343}{arXiv}).
+  \item Recent generative-agent-based-modeling (GABM) work seeds simulated users from real tweet histories -- e.g., simulating conversations with agents initialized from 2020 US-election user timelines and validating against the Twitter16 rumour set (\href{https://www.researchgate.net/publication/397507280\_Simulating\_conversations\_on\_social\_media\_with\_generative\_agent-based\_models}{ResearchGate}, \href{https://dl.acm.org/doi/10.1007/978-3-031-78541-2\_10}{survey chapter}).
+  \item Population-scale LLM-agent frameworks (AgentSociety, EconSimulacra, APS) use exactly the seed-from-real-corpora pattern the Tier 1 datasets enable (\href{https://arxiv.org/pdf/2606.26883}{EconSimulacra}, \href{https://arxiv.org/pdf/2605.27419}{APS}).
+\end{itemize}
+
+\subsection{Analysis -- Which Dataset for Which Job}
+
+\vspace{0.4em}
+\noindent
+\small
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Need} & \textbf{Best choice} & \textbf{Why} \\
+\midrule
+Load a clean table in 5 minutes & Sentiment140 & One CSV, 1.6M rows, labeled \\
+Benchmark text realism & TweetEval & 7 tasks, fixed splits \\
+Raw realistic feed content & Archive Team Stream Grab & Full JSON, 2011-2023 \\
+Full user timelines for personas & Community Archive & Post-2023, full text, open API \\
+Topology + ground-truth diffusion & SNAP Higgs Twitter & Follow graph + timed cascades \\
+Conversation-thread structure & PHEME & Real reply trees with veracity labels \\
+\bottomrule
+\end{tabularx}
+\vspace{0.4em}
+
+Cross-cutting cautions: (1) anything ID-only is effectively frozen; (2) most corpora predate 2023 -- X-era behavior (paid verification, algorithmic feed changes) is not represented anywhere except the Community Archive; (3) respect per-dataset licenses -- several are NonCommercial; (4) all of these contain real people's speech -- aggregate, don't republish individual identifiable content.
+
+
+\subsection{Recommendations -- Punch List for the Build Night}
+
+\begin{enumerate}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \textbf{Start with SNAP Higgs Twitter as the simulation substrate.} Download the follower graph + retweet/reply/mention layers (single page, small files). It gives both agent topology and ground-truth cascades to validate against. Cost: minutes. Defer only if the project is content-only with no network component.
+  \item \textbf{Pull one month of the Archive Team Stream Grab (e.g., 2022-11) for realistic content.} Sample a few hourly .bz2 files rather than the full 50 GB tarball. Use it to build empirical distributions of tweet length, posting cadence, and topic mix that agents should match. Defer if bandwidth-constrained; Sentiment140 is a lightweight fallback.
+  \item \textbf{Use the Community Archive API for persona seeding.} Query a handful of complete user timelines and initialize LLM agents from them (the GABM pattern). It's the only live, full-text, post-2023 source. Cost: an hour of API exploration.
+  \item \textbf{Adopt TweetEval classifiers as the realism scorecard.} Run cardiffnlp's pretrained twitter-roberta models over simulated output and compare label distributions to real data. Cost: low; models and data are on Hugging Face.
+  \item \textbf{Skip ID-only corpora (COVID-19-TweetIDs, DocNow catalog entries) for the hackathon.} Hydration is dead without enterprise API money. Revisit only if X ships the promised Research API.
+  \item \textbf{Do not build on Twitter7 or the Kwak 2010 graph.} Both were withdrawn at Twitter's request; mirrors carry legal ambiguity the project doesn't need.
+\end{enumerate}
+
+\subsection{Sources}
+
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+  \item \href{https://archive.org/details/twitterstream}{Archive Team: The Twitter Stream Grab (Internet Archive)} -- decade-scale raw tweet JSON collection
+  \item \href{https://blogs.baylor.edu/digitalscholarship/2018/11/02/archive-team-the-twitter-stream-grab-historic-twitter-content/}{Baylor Digital Scholarship on the Stream Grab} -- format and size details
+  \item \href{https://huggingface.co/datasets/stanfordnlp/sentiment140}{stanfordnlp/sentiment140 on Hugging Face} \textit{ \href{https://www.kaggle.com/datasets/kazanova/sentiment140}{Kaggle mirror} } \href{https://www.tensorflow.org/datasets/catalog/sentiment140}{TensorFlow Datasets}
+  \item \href{https://github.com/cardiffnlp/tweeteval}{cardiffnlp/tweeteval (GitHub)} -- TweetEval benchmark
+  \item \href{https://github.com/TheExGenesis/community-archive}{TheExGenesis/community-archive (GitHub)} * \href{https://github.com/DefenderOfBasic/twitter-archive-toolkit/blob/main/Community\_Archive\_Analysis\_Quickstart.ipynb}{analysis quickstart}
+  \item \href{https://snap.stanford.edu/data/higgs-twitter.html}{SNAP Higgs Twitter} \textit{ \href{https://snap.stanford.edu/data/ego-Twitter.html}{SNAP ego-Twitter} } \href{https://snap.stanford.edu/data/twitter7.html}{SNAP Twitter7 (withdrawn)}
+  \item \href{https://github.com/echen102/COVID-19-TweetIDs}{echen102/COVID-19-TweetIDs (GitHub)} \textit{ \href{https://publichealth.jmir.org/2020/2/e19273/}{JMIR paper} } \href{https://github.com/lopezbec/COVID19\_Tweets\_Dataset}{lopezbec augmented dataset}
+  \item \href{https://melaniewalsh.github.io/Intro-Cultural-Analytics/04-Data-Collection/13-Twitter-Data-Sharing.html}{Melanie Walsh, Twitter Data Sharing} -- tweet-ID/hydration norms
+  \item \href{https://www.cjr.org/tow\_center/qa-what-happened-to-academic-research-on-twitter.php}{CJR: What happened to academic research on Twitter?} \textit{ \href{https://arxiv.org/pdf/2404.07340}{RIP Twitter API (arXiv)} } \href{https://xcrop.io/blog/twitter-data-academic-research}{xcrop 2026 access guide}
+  \item \href{https://arxiv.org/pdf/2510.02343}{BluePrint persona dataset (arXiv)} * \href{https://www.researchgate.net/publication/397507280\_Simulating\_conversations\_on\_social\_media\_with\_generative\_agent-based\_models}{GABM conversation simulation}
+  \item \href{https://github.com/shaypal5/awesome-twitter-data}{shaypal5/awesome-twitter-data (GitHub)} -- meta-index of Twitter datasets
+  \item \href{https://catalog.docnow.io/}{DocNow Catalog} -- registry of event-based tweet-ID datasets
+  \item \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9680479/}{Monkeypox 2022 dataset (PMC)}
+\end{itemize}
+
+
+\balance
+\end{document}
