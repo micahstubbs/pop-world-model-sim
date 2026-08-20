@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>popsim — a population world model on one machine</title>
+<meta name="description" content="6,245 real personas from 1.6M tweets, simulated on a single node. Built at Postlabor.dev's Building Economic World Models night.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,900&family=Archivo:wght@400;500;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16130f; --ink2:#1e1a14; --panel:#221d16; --line:#372f24;
+  --tx:#ece6da; --tx2:#a89f8e; --tx3:#6f685c;
+  --neg:#e06a44; --mid:#8a8578; --pos:#2ea88f;
+  --amber1:#e5a94d; --amber2:#a8752b; --amber3:#5f4a20;
+  --maxw:1060px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--tx);font:16px/1.65 "Archivo",sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;line-height:1.12}
+.mono{font-family:"Fragment Mono",monospace}
+a{color:var(--pos);text-decoration:none;border-bottom:1px solid rgba(46,168,143,.35)}
+a:hover{border-bottom-color:var(--pos)}
+section{max-width:var(--maxw);margin:0 auto;padding:88px 24px 24px}
+.kicker{font-family:"Fragment Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:14px}
+.kicker b{color:var(--amber1);font-weight:400}
+h2{font-size:clamp(28px,4.4vw,44px);margin-bottom:18px;max-width:18ch}
+.lede{color:var(--tx2);max-width:62ch;margin-bottom:28px}
+.lede strong{color:var(--tx)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px}
+.hr{border:none;border-top:1px solid var(--line);margin:64px auto 0;max-width:var(--maxw)}
+
+/* hero */
+#hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;max-width:none;padding:0}
+#dotfield{position:absolute;inset:0;width:100%;height:100%}
+.hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 24px;width:100%}
+.hero-inner h1{font-size:clamp(40px,7.2vw,84px);font-weight:900;max-width:14ch;
+  text-shadow:0 2px 30px rgba(22,19,15,.9),0 0 4px rgba(22,19,15,.9)}
+.hero-inner h1 em{font-style:italic;font-weight:300;color:var(--amber1)}
+.hero-sub{margin-top:20px;color:var(--tx2);max-width:52ch;text-shadow:0 1px 12px rgba(22,19,15,.95)}
+.clock{margin-top:26px;display:inline-flex;gap:14px;align-items:baseline;background:rgba(30,26,20,.82);
+  border:1px solid var(--line);border-radius:8px;padding:10px 16px;font-family:"Fragment Mono",monospace;font-size:13px}
+.clock .t{color:var(--amber1);font-size:19px}
+.statrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.stat{background:rgba(30,26,20,.82);border:1px solid var(--line);border-radius:8px;padding:12px 18px;min-width:150px}
+.stat .v{font-family:"Fraunces",serif;font-size:30px;font-weight:600;color:var(--tx)}
+.stat .l{font-size:12px;color:var(--tx3);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:var(--tx3);font-size:12px;letter-spacing:.2em;z-index:2}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(22,19,15,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .in{max-width:var(--maxw);margin:0 auto;padding:10px 24px;display:flex;gap:20px;overflow-x:auto;white-space:nowrap;font-size:13px}
+nav a{color:var(--tx2);border:none}
+nav a:hover{color:var(--tx)}
+nav a b{color:var(--amber1);font-weight:500;font-family:"Fragment Mono",monospace;margin-right:5px}
+
+/* charts shared */
+.axis text{fill:var(--tx3);font:11px "Fragment Mono",monospace}
+.axis line,.axis path{stroke:var(--line)}
+.gridline{stroke:var(--line);stroke-dasharray:2 4}
+.tip{position:fixed;pointer-events:none;background:#2a241b;border:1px solid var(--line);border-radius:6px;
+  padding:8px 11px;font-size:12.5px;color:var(--tx);max-width:300px;z-index:50;display:none;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.tip .h{font-family:"Fragment Mono",monospace;color:var(--amber1);margin-bottom:3px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--tx2);margin:8px 0 4px}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+button{font:500 13.5px "Archivo",sans-serif;background:var(--pos);color:#0d211c;border:none;border-radius:7px;
+  padding:9px 18px;cursor:pointer}
+button.ghost{background:transparent;color:var(--tx2);border:1px solid var(--line)}
+button:disabled{opacity:.45;cursor:default}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+
+/* personas */
+.pwrap{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+@media(max-width:820px){.pwrap{grid-template-columns:1fr}}
+#pcard .name{font-family:"Fraunces",serif;font-size:24px;margin-bottom:2px}
+#pcard .meta{font-family:"Fragment Mono",monospace;font-size:12px;color:var(--tx3);margin-bottom:12px}
+#pcard .row{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:6px 0;font-size:13.5px}
+#pcard .row span:last-child{font-family:"Fragment Mono",monospace;color:var(--tx)}
+#pcard .ex{margin-top:12px;font-size:13.5px;color:var(--tx2);font-style:italic;border-left:2px solid var(--amber2);padding-left:10px}
+.tags{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:"Fragment Mono",monospace;font-size:11px;background:var(--ink2);border:1px solid var(--line);border-radius:4px;padding:3px 7px;color:var(--tx2)}
+
+/* ladder */
+.tier{display:grid;grid-template-columns:160px 1fr 120px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.tier:last-of-type{border-bottom:none}
+.tier .nm{font-weight:700;font-size:14.5px}
+.tier .nm small{display:block;font-weight:400;color:var(--tx3);font-family:"Fragment Mono",monospace;font-size:11px;margin-top:2px}
+.tier .bar{height:26px;border-radius:4px;position:relative;min-width:3px}
+.tier .cnt{font-family:"Fragment Mono",monospace;font-size:13px;color:var(--tx2);text-align:right}
+.costbig{font-family:"Fraunces",serif;font-size:clamp(44px,6vw,72px);font-weight:900;color:var(--amber1);line-height:1}
+
+/* dyads */
+.dwrap{display:grid;grid-template-columns:270px 1fr;gap:20px}
+@media(max-width:820px){.dwrap{grid-template-columns:1fr}}
+.dlist button{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);
+  color:var(--tx2);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-family:"Fragment Mono",monospace;font-size:12px}
+.dlist button.on{border-color:var(--amber2);color:var(--tx)}
+.bubble{max-width:78%;margin-bottom:12px;padding:10px 14px;border-radius:12px;font-size:13.5px;background:var(--ink2);border:1px solid var(--line)}
+.bubble .who{font-family:"Fragment Mono",monospace;font-size:11px;color:var(--tx3);margin-bottom:3px}
+.bubble.right{margin-left:auto;border-bottom-right-radius:3px}
+.bubble.left{border-bottom-left-radius:3px}
+.bubble.p{border-left:3px solid var(--pos)}
+.bubble.n{border-left:3px solid var(--neg)}
+
+/* adherence */
+.adhero{display:flex;gap:36px;align-items:center;flex-wrap:wrap}
+.adnum{font-family:"Fraunces",serif;font-size:clamp(72px,11vw,130px);font-weight:900;color:var(--pos);line-height:.95}
+.gauge{height:14px;background:var(--ink2);border:1px solid var(--line);border-radius:7px;position:relative;margin-top:10px;overflow:visible}
+.gauge .fill{height:100%;border-radius:7px 0 0 7px;background:var(--pos);width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.gauge .base{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--tx2)}
+.sample{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;font-size:13px}
+.sample .lab{font-family:"Fragment Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.sample.real .lab{color:var(--tx3)} .sample.synth .lab{color:var(--amber1)}
+.sample.synth{border-style:dashed;border-color:var(--amber3)}
+
+footer{border-top:1px solid var(--line);margin-top:80px}
+footer .in{max-width:var(--maxw);margin:0 auto;padding:40px 24px;color:var(--tx3);font-size:13px;line-height:2}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{font-family:"Fragment Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--tx2)}
+.tbl td:first-child{color:var(--tx)}
+.win td{color:var(--pos)}
+.note{font-size:12.5px;color:var(--tx3);margin-top:10px;max-width:70ch}
+.verdict{border-left:3px solid var(--amber1);background:var(--ink2);padding:16px 18px;border-radius:0 8px 8px 0;margin-top:20px;max-width:66ch}
+.verdict b{color:var(--amber1)}
+</style>
+</head>
+<body>
+
+<div id="hero">
+  <canvas id="dotfield"></canvas>
+  <div class="hero-inner">
+    <div class="kicker">popsim · postlabor.dev build night · aug 2026</div>
+    <h1>A population <em>world&nbsp;model</em>, alive on one machine</h1>
+    <p class="hero-sub">6,245 real people from 2009 Twitter, mined into personas, wired into their real @-mention graph, and simulated — every dot below is one of them, waking and sleeping on the dataset's true diurnal clock.</p>
+    <div class="clock"><span>SIM CLOCK</span><span class="t" id="clock">--:00 PDT</span><span id="clockrate"></span></div>
+    <div class="statrow">
+      <div class="stat"><div class="v" id="s-tweets">—</div><div class="l">real tweets</div></div>
+      <div class="stat"><div class="v" id="s-personas">—</div><div class="l">personas (≥20 tweets)</div></div>
+      <div class="stat"><div class="v" id="s-edges">—</div><div class="l">mention edges</div></div>
+      <div class="stat"><div class="v" id="s-mem">—</div><div class="l">fits in RAM</div></div>
+    </div>
+  </div>
+  <div class="scrollcue">▼ SCROLL</div>
+</div>
+
+<nav><div class="in">
+  <a href="#data"><b>00</b>the data</a>
+  <a href="#personas"><b>01</b>persona mining</a>
+  <a href="#ladder"><b>02</b>scale ladder</a>
+  <a href="#diffusion"><b>03</b>diffusion test</a>
+  <a href="#dyads"><b>04</b>dyads</a>
+  <a href="#adherence"><b>05</b>adherence</a>
+</div></nav>
+
+<section id="data">
+  <div class="kicker"><b>00</b> — the substrate</div>
+  <h2>Why Sentiment140</h2>
+  <p class="lede">The event's two papers — <a href="https://arxiv.org/abs/2506.12078">Light Society</a> (10⁹ agents) and <a href="https://arxiv.org/abs/2608.04205">MatrAIx</a> (8.3B personas) — both stand on <strong>human-grounded persona data</strong>. Since the 2023 X API shutdown killed tweet-ID hydration, the practical question is: which full-text corpus gives the most distinct humans with enough history each to ground a persona — on one laptop?</p>
+  <table class="tbl">
+    <tr><th>candidate</th><th>users with ≥20 tweets</th><th>verdict</th></tr>
+    <tr class="win"><td>Sentiment140 (2009)</td><td class="mono">6,245 — measured</td><td>selected · 295 MB in RAM</td></tr>
+    <tr><td>Community Archive</td><td class="mono">≤ 363 accounts total</td><td>full-corpus access paused</td></tr>
+    <tr><td>Archive Team 1% stream</td><td class="mono">~0</td><td>users rarely recur 20×</td></tr>
+    <tr><td>tweet-ID corpora (COVID etc.)</td><td class="mono">n/a</td><td>hydration is dead</td></tr>
+  </table>
+  <p class="note">All numbers on this page were computed locally from the downloaded corpus. Every tweet shown is real, public, and 17 years old — except the ones clearly marked synthetic.</p>
+</section>
+
+<hr class="hr">
+<section id="personas">
+  <div class="kicker"><b>01</b> — matraix pattern</div>
+  <h2>Mining 6,245 human-grounded personas</h2>
+  <p class="lede">MatrAIx grounds ~600K persona records in real human data. We do the hackathon-scale version: every cohort user becomes a persona card — sentiment disposition, verbosity, mention rate, peak hour, vocabulary — mined from their real timeline. <strong>Hover the field; click a dot to open its persona.</strong> Showing the 300 most active; dot area = tweets, color = sentiment disposition.</p>
+  <div class="pwrap">
+    <div class="panel"><svg id="pscatter" width="100%" height="430"></svg>
+      <div class="legend"><span><span class="sw" style="background:var(--neg)"></span>negative disposition</span><span><span class="sw" style="background:var(--mid)"></span>neutral</span><span><span class="sw" style="background:var(--pos)"></span>positive disposition</span></div>
+    </div>
+    <div class="panel" id="pcard"><div class="name">click a dot →</div><div class="meta">persona card</div></div>
+  </div>
+</section>
+
+<hr class="hr">
+<section id="ladder">
+  <div class="kicker"><b>02</b> — light society pattern</div>
+  <h2>The mixture-of-models scale ladder</h2>
+  <p class="lede">Light Society reaches 10⁹ agents by mixing full LLMs with distilled surrogates. Same trick, sized to one node: spend LLM tokens only where there's enough human signal to deserve them. Color = compute intensity per agent-tick.</p>
+  <div class="panel" id="tiers"></div>
+  <div class="grid2" style="margin-top:20px">
+    <div class="panel">
+      <div class="kicker">cost of one simulation tick (relative)</div>
+      <div id="costbars"></div>
+    </div>
+    <div class="panel" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="costbig" id="savings">—×</div>
+      <div style="color:var(--tx2);margin-top:6px">cheaper than running every one of the 659,775 users as a full LLM agent — with zero loss on the 927 users who carry the most signal.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+<section id="diffusion">
+  <div class="kicker"><b>03</b> — validated against ground truth</div>
+  <h2>Does sentiment actually diffuse?</h2>
+  <p class="lede">The cohort contains a real directed graph: <strong>31,515 @-mention edges</strong> between personas. Light Society validates with opinion-diffusion experiments — so we ran one against ground truth: seed each user with their <em>first-half</em> sentiment, run DeGroot mixing over the real graph, and test whether that predicts their <em>second-half</em> sentiment better than simple persistence. <strong>Press run.</strong></p>
+  <div class="grid2">
+    <div class="panel">
+      <div style="display:flex;gap:10px;margin-bottom:8px"><button id="runDiff">▶ run diffusion</button><button class="ghost" id="resetDiff">reset</button><span class="mono" id="diffstep" style="align-self:center;font-size:12px;color:var(--tx3)">step 0/10</span></div>
+      <svg id="graph" width="100%" height="430"></svg>
+      <div class="legend"><span><span class="sw" style="background:var(--neg)"></span>negative</span><span><span class="sw" style="background:var(--mid)"></span>neutral</span><span><span class="sw" style="background:var(--pos)"></span>positive</span><span style="color:var(--tx3)">· 301 highest-degree personas shown</span></div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="kicker">predicting second-half sentiment (pearson r, n=5,463)</div>
+        <div id="valbars"></div>
+      </div>
+      <div class="verdict"><b>Finding: disposition beats diffusion.</b> Neighbor-mixing (r = 0.54) predicts a person's future sentiment <em>worse</em> than their own past (r = 0.73). On a 48-day horizon, who you are outweighs who you talk to. A population world model that over-weights social contagion would be <em>less</em> accurate than one grounded in stable personas — exactly why persona grounding (§01) matters.</div>
+      <div class="panel" style="margin-top:20px">
+        <div class="kicker">cohort daily positivity, real record (48 days)</div>
+        <svg id="daily" width="100%" height="150"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+<section id="dyads">
+  <div class="kicker"><b>04</b> — mindmeld.now pattern</div>
+  <h2>Bilateral dyads, seeded from real pairs</h2>
+  <p class="lede">mindmeld.now imagines a social network built from bilateral agent exchanges. The cohort already contains <strong>3,324 reciprocal pairs</strong> — two personas who repeatedly @-mention each other. These are real 2009 exchanges; each pair is a ready-made seed for a two-agent conversation loop.</p>
+  <div class="dwrap">
+    <div class="dlist" id="dlist"></div>
+    <div class="panel" id="dconvo"></div>
+  </div>
+</section>
+
+<hr class="hr">
+<section id="adherence">
+  <div class="kicker"><b>05</b> — matraix's headline metric</div>
+  <h2>Behavioral adherence, measured honestly</h2>
+  <p class="lede">MatrAIx reports 91.5% behavioral adherence for its persona agents. Our closing number: hold out each persona's <strong>last 20% of tweets (42,998 tweets)</strong>, predict them from the persona alone, and score it.</p>
+  <div class="panel">
+    <div class="adhero">
+      <div><div class="adnum" id="adnum">—</div><div class="kicker" style="margin-top:6px">sentiment adherence on held-out tweets</div></div>
+      <div style="flex:1;min-width:260px">
+        <div class="gauge"><div class="fill" id="adfill"></div><div class="base" style="left:50%"></div></div>
+        <div class="mono" style="font-size:11px;color:var(--tx3);margin-top:8px">chance = 50% (marker) · persona-only predictor, no text model, no LLM</div>
+        <p class="note">A zero-parameter persona (majority sentiment of the user's own history) beats chance by 13 points across 6,245 users. That's the floor — the surrogate tier (§02) starts here, and the LLM tier climbs from it. Per-user accuracy distribution below.</p>
+      </div>
+    </div>
+    <svg id="adhist" width="100%" height="140" style="margin-top:14px"></svg>
+  </div>
+  <h3 style="margin:34px 0 10px;font-size:21px">What the cheapest surrogate sounds like</h3>
+  <p class="note" style="margin-bottom:14px">Word-bigram chains fitted per persona — deliberately the dumbest possible generator, as the ladder's bottom rung. Synthetic text is dashed and labeled; it is never presented as real.</p>
+  <div class="grid2" id="samples"></div>
+</section>
+
+<footer><div class="in">
+  <b style="color:var(--tx2)">popsim</b> — built in one evening at <a href="https://luma.com/th01qwp1">Postlabor.dev: Building Economic World Models</a> by Micah Stubbs, Yvonne Chen &amp; Jake Schwartz.<br>
+  Papers: <a href="https://arxiv.org/abs/2506.12078">Light Society (one billion agents)</a> · <a href="https://arxiv.org/abs/2608.04205">MatrAIx (8.3B personas)</a> &nbsp;·&nbsp; Projects: <a href="https://github.com/micahstubbs/pop-world-model-sim">pop-world-model-sim</a> · <a href="https://mindmeld.now">mindmeld.now</a><br>
+  Data: Sentiment140 (Go, Bhayani &amp; Huang, 2009) — 1.6M public tweets, Apr–Jun 2009. All statistics computed locally; code in the repo.
+</div></footer>
+
+<div class="tip" id="tip"></div>
+<script src="vendor/d3.min.js"></script>
+<script>
+if (location.search.includes("flat")) document.getElementById("hero").style.minHeight = "620px";
+const F = d3.format(","), tip = document.getElementById("tip");
+const senti = d3.scaleLinear().domain([0,.5,1]).range(["#e06a44","#8a8578","#2ea88f"]).clamp(true);
+function esc(s){ return s.replace(/ï¿½|�/g,"'").replace(/</g,"&lt;"); }
+function showTip(ev, html){ tip.innerHTML = html; tip.style.display="block";
+  const w = tip.offsetWidth, x = Math.min(ev.clientX+14, innerWidth-w-10);
+  tip.style.left = x+"px"; tip.style.top = (ev.clientY+14)+"px"; }
+function hideTip(){ tip.style.display = "none"; }
+
+Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n =>
+  fetch("data/"+n+".json").then(r => r.json())
+)).then(([stats, personas, ladder, diff, dyads, adh]) => {
+
+  /* ---------- hero ---------- */
+  d3.select("#s-tweets").text("1.6M");
+  d3.select("#s-personas").text(F(stats.cohort_users));
+  d3.select("#s-edges").text(F(stats.mention_edges_cohort));
+  d3.select("#s-mem").text(stats.mem_mb+" MB");
+
+  const cv = document.getElementById("dotfield"), ctx = cv.getContext("2d");
+  const N = stats.cohort_users, dots = [];
+  function sizeCanvas(){ cv.width = cv.clientWidth*devicePixelRatio; cv.height = cv.clientHeight*devicePixelRatio; }
+  sizeCanvas(); addEventListener("resize", () => { sizeCanvas(); layout(); });
+  const posDist = personas.cards.map(c => c.pos);
+  function layout(){
+    dots.length = 0;
+    for (let i=0;i<N;i++){
+      dots.push({ x: Math.random()*cv.width, y: Math.random()*cv.height,
+        s: posDist[i % posDist.length] + (Math.random()-.5)*.15,
+        ph: Math.random()*Math.PI*2, r: (.6+Math.random()*1.3)*devicePixelRatio });
+    }
+  }
+  layout();
+  const byHour = stats.by_hour, maxH = Math.max(...byHour);
+  let simHour = 20, acc = 0, last = performance.now();
+  document.getElementById("clockrate").textContent = "1 sim-hour / 1.6s";
+  function frame(now){
+    const dt = now-last; last = now; acc += dt;
+    if (acc > 1600){ acc = 0; simHour = (simHour+1)%24;
+      document.getElementById("clock").textContent = String(simHour).padStart(2,"0")+":00 PDT"; }
+    const act = byHour[simHour]/maxH;                 // real diurnal activity 0..1
+    ctx.clearRect(0,0,cv.width,cv.height);
+    const t = now/1000;
+    for (const d of dots){
+      const awake = (Math.sin(t*1.1+d.ph)*.5+.5) < act*.92+.06;
+      ctx.globalAlpha = awake ? .8 : .13;
+      ctx.fillStyle = senti(d.s);
+      ctx.beginPath(); ctx.arc(d.x, d.y, d.r*(awake?1.25:1), 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* ---------- 01 personas ---------- */
+  (function(){
+    const svg = d3.select("#pscatter"), W = svg.node().clientWidth, H = 430, m = {t:14,r:16,b:40,l:46};
+    const cards = personas.cards;
+    const x = d3.scaleLinear().domain([0,1]).range([m.l, W-m.r]);
+    const y = d3.scaleLinear().domain(d3.extent(cards, c=>c.w)).nice().range([H-m.b, m.t]);
+    const r = d3.scaleSqrt().domain([20, d3.max(cards,c=>c.n)]).range([3.5,17]);
+    svg.append("g").attr("class","axis").attr("transform",`translate(0,${H-m.b})`)
+      .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".0%")).tickSize(-(H-m.t-m.b)))
+      .call(g => g.selectAll(".tick line").attr("class","gridline"));
+    svg.append("g").attr("class","axis").attr("transform",`translate(${m.l},0)`)
+      .call(d3.axisLeft(y).ticks(5).tickSize(-(W-m.l-m.r)))
+      .call(g => g.selectAll(".tick line").attr("class","gridline"));
+    svg.append("text").attr("class","axis").attr("x",W/2).attr("y",H-6).attr("text-anchor","middle")
+      .style("fill","var(--tx3)").style("font","11px Fragment Mono").text("sentiment disposition (share positive)");
+    svg.append("text").attr("class","axis").attr("transform",`rotate(-90)`).attr("x",-H/2).attr("y",13)
+      .attr("text-anchor","middle").style("fill","var(--tx3)").style("font","11px Fragment Mono").text("verbosity (words / tweet)");
+    const dotsSel = svg.append("g").selectAll("circle").data(cards).join("circle")
+      .attr("cx",c=>x(c.pos)).attr("cy",c=>y(c.w)).attr("r",c=>r(c.n))
+      .attr("fill",c=>senti(c.pos)).attr("fill-opacity",.72).attr("stroke","var(--ink)").attr("stroke-width",1.5)
+      .style("cursor","pointer")
+      .on("mousemove",(ev,c)=>showTip(ev,`<div class="h">@${c.u}</div>${c.n} tweets · ${Math.round(c.pos*100)}% positive · ${c.w} w/tweet`))
+      .on("mouseleave",hideTip)
+      .on("click",(ev,c)=>openCard(c));
+    function openCard(c){
+      dotsSel.attr("stroke","var(--ink)").attr("stroke-width",1.5);
+      dotsSel.filter(d=>d.u===c.u).attr("stroke","var(--amber1)").attr("stroke-width",2.5).raise();
+      d3.select("#pcard").html(`
+        <div class="name">@${c.u}</div>
+        <div class="meta">persona · mined from ${c.n} real tweets over ${c.span} days</div>
+        <div class="row"><span>sentiment disposition</span><span style="color:${senti(c.pos)}">${Math.round(c.pos*100)}% positive</span></div>
+        <div class="row"><span>verbosity</span><span>${c.w} words / tweet</span></div>
+        <div class="row"><span>mention rate</span><span>${Math.round(c.m*100)}% of tweets</span></div>
+        <div class="row"><span>peak posting hour</span><span>${String(c.ph).padStart(2,"0")}:00 PDT</span></div>
+        <div class="tags">${c.top.map(w=>`<span class="tag">${esc(w)}</span>`).join("")}</div>
+        <div class="ex">“${esc(c.ex)}”</div>`);
+    }
+    openCard(cards.find(c=>c.m<.8 && c.pos>.25 && c.pos<.85 && c.n<250) || cards[0]);
+  })();
+
+  /* ---------- 02 ladder ---------- */
+  (function(){
+    const seq = ["var(--amber1)","var(--amber2)","var(--amber3)"];
+    const maxU = Math.max(...ladder.tiers.map(t=>t.users));
+    d3.select("#tiers").html(ladder.tiers.map((t,i)=>`
+      <div class="tier">
+        <div class="nm">${t.name}<small>${t.rule} · ${t.engine}</small></div>
+        <div><div class="bar" style="background:${seq[i]};width:${Math.max(1.2, Math.sqrt(t.users/maxU)*100)}%"></div></div>
+        <div class="cnt">${F(t.users)} users<br>${F(t.tweets)} tweets</div>
+      </div>`).join("") + `<div class="note" style="margin-top:10px">bar length √-scaled — on a linear scale the two LLM-and-surrogate tiers vanish next to 653,530 background users, which is precisely the point of the ladder.</div>`);
+    const cb = d3.select("#costbars");
+    const rows = [["all-LLM population", ladder.all_llm_cost, "var(--tx3)"],
+                  ["mixture-of-models ladder", ladder.ladder_cost, "var(--amber1)"]];
+    const maxC = ladder.all_llm_cost;
+    cb.html(rows.map(([l,v,c])=>`
+      <div style="margin:12px 0">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--tx2)">
+          <span>${l}</span><span class="mono">${d3.format(".3s")(v)} units/tick</span></div>
+        <div style="height:20px;background:var(--ink2);border-radius:4px;margin-top:4px">
+          <div style="height:100%;border-radius:4px;background:${c};width:${Math.max(.4, v/maxC*100)}%"></div></div>
+      </div>`).join(""));
+    d3.select("#savings").text(ladder.savings_x+"×");
+  })();
+
+  /* ---------- 03 diffusion ---------- */
+  (function(){
+    const svg = d3.select("#graph"), W = svg.node().clientWidth, H = 430;
+    const nodes = diff.graph.nodes.map(d=>({...d, s0:d.s, cur:d.s}));
+    const byId = new Map(nodes.map(n=>[n.id,n]));
+    const links = diff.graph.edges.filter(e=>byId.has(e.s)&&byId.has(e.t)).map(e=>({source:e.s,target:e.t,w:e.w}));
+    const sim = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d=>d.id).distance(34).strength(.25))
+      .force("charge", d3.forceManyBody().strength(-26))
+      .force("center", d3.forceCenter(W/2, H/2))
+      .force("collide", d3.forceCollide(6));
+    const L = svg.append("g").selectAll("line").data(links).join("line")
+      .attr("stroke","var(--line)").attr("stroke-opacity",.55).attr("stroke-width",e=>Math.min(2.5,.5+e.w*.15));
+    const Nn = svg.append("g").selectAll("circle").data(nodes).join("circle")
+      .attr("r",d=>Math.min(9, 2.5+Math.sqrt(d.d)*.35)).attr("fill",d=>senti(d.cur))
+      .attr("stroke","var(--ink)").attr("stroke-width",1.2)
+      .on("mousemove",(ev,d)=>showTip(ev,`<div class="h">@${d.id}</div>degree ${d.d} · sentiment ${Math.round(d.cur*100)}% positive`))
+      .on("mouseleave",hideTip)
+      .call(d3.drag().on("start",(ev,d)=>{if(!ev.active)sim.alphaTarget(.2).restart();d.fx=d.x;d.fy=d.y;})
+        .on("drag",(ev,d)=>{d.fx=ev.x;d.fy=ev.y;}).on("end",(ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
+    sim.on("tick",()=>{ L.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+      Nn.attr("cx",d=>d.x=Math.max(8,Math.min(W-8,d.x))).attr("cy",d=>d.y=Math.max(8,Math.min(H-8,d.y))); });
+    const inN = new Map(nodes.map(n=>[n.id,[]]));
+    links.forEach(l=>inN.get(l.source.id ?? l.source).push(l));
+    let step = 0, timer = null;
+    const ALPHA = diff.validation.alpha;
+    function stepOnce(){
+      if (step>=10){ clearInterval(timer); timer=null; return; }
+      step++;
+      const nxt = new Map();
+      nodes.forEach(n=>{
+        const inc = inN.get(n.id);
+        if (inc.length){
+          let sw=0, tw=0; inc.forEach(l=>{ const src = byId.get(l.target.id ?? l.target)===n ? byId.get(l.source.id ?? l.source) : null;
+            if(src){ sw += src.cur*l.w; tw += l.w; } });
+          nxt.set(n.id, tw? ALPHA*n.cur + (1-ALPHA)*(sw/tw) : n.cur);
+        } else nxt.set(n.id, n.cur);
+      });
+      nodes.forEach(n=>n.cur = nxt.get(n.id));
+      Nn.transition().duration(360).attr("fill",d=>senti(d.cur));
+      d3.select("#diffstep").text(`step ${step}/10`);
+    }
+    d3.select("#runDiff").on("click",()=>{ if(!timer) timer = setInterval(stepOnce, 420); });
+    d3.select("#resetDiff").on("click",()=>{ clearInterval(timer); timer=null; step=0;
+      nodes.forEach(n=>n.cur=n.s0); Nn.attr("fill",d=>senti(d.cur)); d3.select("#diffstep").text("step 0/10"); });
+
+    const v = diff.validation;
+    const vb = [["persistence baseline (own past)", v.r_baseline, "var(--tx2)"],
+                ["DeGroot diffusion (neighbors)", v.r_sim, "var(--amber1)"]];
+    d3.select("#valbars").html(vb.map(([l,val,c])=>`
+      <div style="margin:12px 0">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--tx2)">
+          <span>${l}</span><span class="mono" style="color:var(--tx)">r = ${val.toFixed(2)}</span></div>
+        <div style="height:18px;background:var(--ink2);border-radius:4px;margin-top:4px">
+          <div style="height:100%;border-radius:4px;background:${c};width:${val*100}%"></div></div>
+      </div>`).join(""));
+
+    const dsvg = d3.select("#daily"), dW = dsvg.node().clientWidth, dH = 150, dm = {t:10,r:8,b:22,l:38};
+    const days = diff.daily;
+    const dx = d3.scalePoint().domain(days.map(d=>d.d)).range([dm.l,dW-dm.r]);
+    const dy = d3.scaleLinear().domain([.35,.65]).range([dH-dm.b,dm.t]);
+    dsvg.append("g").attr("class","axis").attr("transform",`translate(${dm.l},0)`)
+      .call(d3.axisLeft(dy).ticks(3).tickFormat(d3.format(".0%")));
+    dsvg.append("g").attr("class","axis").attr("transform",`translate(0,${dH-dm.b})`)
+      .call(d3.axisBottom(dx).tickValues(days.filter((_,i)=>i%10===0).map(d=>d.d)));
+    dsvg.append("line").attr("x1",dm.l).attr("x2",dW-dm.r).attr("y1",dy(.5)).attr("y2",dy(.5)).attr("class","gridline");
+    dsvg.append("path").datum(days).attr("fill","none").attr("stroke","var(--pos)").attr("stroke-width",2)
+      .attr("d", d3.line().x(d=>dx(d.d)).y(d=>dy(d.pos)).curve(d3.curveMonotoneX));
+    dsvg.append("rect").attr("x",dm.l).attr("y",dm.t).attr("width",dW-dm.l-dm.r).attr("height",dH-dm.t-dm.b)
+      .attr("fill","transparent")
+      .on("mousemove",ev=>{ const [mx]=d3.pointer(ev); const i=Math.round((mx-dm.l)/(dW-dm.l-dm.r)*(days.length-1));
+        const d=days[Math.max(0,Math.min(days.length-1,i))];
+        showTip(ev,`<div class="h">${d.d}</div>${Math.round(d.pos*100)}% positive · ${F(d.n)} tweets`);})
+      .on("mouseleave",hideTip);
+  })();
+
+  /* ---------- 04 dyads ---------- */
+  (function(){
+    const list = d3.select("#dlist");
+    function open(d,i){
+      list.selectAll("button").classed("on",(x,j)=>j===i);
+      d3.select("#dconvo").html(`
+        <div class="kicker">@${d.a} ⇄ @${d.b} · ${d.w_ab+d.w_ba} mutual mentions in 48 days</div>
+        ${d.ex.map(e=>`<div class="bubble ${e.from===d.a?"left":"right"} ${e.pos?"p":"n"}">
+          <div class="who">@${e.from} → @${e.to}</div>${esc(e.text)}</div>`).join("")}
+        <p class="note">Real exchange, 2009. As a mindmeld.now seed: two persona agents initialized from these users' cards continue this conversation — its dynamics validated against the ${d.w_ab+d.w_ba} real exchanges above.</p>`);
+    }
+    list.selectAll("button").data(dyads.dyads).join("button")
+      .html(d=>`@${d.a} ⇄ @${d.b}<br><span style="color:var(--tx3)">${d.w_ab}↔${d.w_ba} mentions</span>`)
+      .on("click",(ev,d)=>open(d, dyads.dyads.indexOf(d)));
+    open(dyads.dyads[0],0);
+  })();
+
+  /* ---------- 05 adherence ---------- */
+  (function(){
+    const pct = Math.round(adh.adherence*1000)/10;
+    d3.select("#adnum").text(pct+"%");
+    const fill = () => document.getElementById("adfill").style.width = pct+"%";
+    const io = new IntersectionObserver(es=>{ if(es[0].isIntersecting){ fill(); io.disconnect(); }},{threshold:.4});
+    io.observe(document.getElementById("adfill"));
+    setTimeout(fill, 2500);
+    const svg = d3.select("#adhist"), W = svg.node().clientWidth, H = 140, m = {t:8,r:8,b:24,l:38};
+    const bins = adh.acc_hist, bx = d3.scaleBand().domain(d3.range(bins.length)).range([m.l,W-m.r]).paddingInner(.18);
+    const by = d3.scaleLinear().domain([0,d3.max(bins)]).range([H-m.b,m.t]);
+    svg.append("g").attr("class","axis").attr("transform",`translate(0,${H-m.b})`)
+      .call(d3.axisBottom(d3.scaleLinear().domain([0,1]).range([m.l,W-m.r])).ticks(5).tickFormat(d3.format(".0%")));
+    svg.append("g").attr("class","axis").attr("transform",`translate(${m.l},0)`).call(d3.axisLeft(by).ticks(3));
+    svg.selectAll("rect.b").data(bins).join("rect").attr("class","b")
+      .attr("x",(_,i)=>bx(i)).attr("width",bx.bandwidth())
+      .attr("y",d=>by(d)).attr("height",d=>H-m.b-by(d))
+      .attr("rx",2).attr("fill",(d,i)=> (i/bins.length)<.5 ? "var(--neg)" : "var(--pos)").attr("fill-opacity",.8)
+      .on("mousemove",(ev,d)=>{const i=bins.indexOf(d);showTip(ev,`accuracy ${i*5}–${i*5+5}%<br>${F(d)} personas`)})
+      .on("mouseleave",hideTip);
+    svg.append("text").attr("x",W/2).attr("y",H-4).attr("text-anchor","middle")
+      .style("fill","var(--tx3)").style("font","10.5px Fragment Mono").text("per-persona accuracy on held-out tweets");
+    d3.select("#samples").html(adh.samples.slice(0,4).map(s=>`
+      <div>
+        <div class="kicker" style="margin-bottom:8px">@${s.u}</div>
+        <div class="sample real"><div class="lab">real tweet</div>${esc(s.real)}</div>
+        <div class="sample synth"><div class="lab">synthetic — bigram surrogate</div>${esc(s.synthetic[0])}</div>
+      </div>`).join(""));
+  })();
+});
+</script>
+</body>
+</html>
