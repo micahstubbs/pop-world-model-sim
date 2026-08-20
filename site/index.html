@@ -409,29 +409,38 @@ Promise.all(["stats","personas","ladder","diffusion","dyads","adherence"].map(n 
         .on("drag",(ev,d)=>{d.fx=ev.x;d.fy=ev.y;}).on("end",(ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}));
     sim.on("tick",()=>{ L.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y).attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
       Nn.attr("cx",d=>d.x=Math.max(8,Math.min(W-8,d.x))).attr("cy",d=>d.y=Math.max(8,Math.min(H-8,d.y))); });
-    const inN = new Map(nodes.map(n=>[n.id,[]]));
-    links.forEach(l=>inN.get(l.source.id ?? l.source).push(l));
+    // neighbors that influence n = the personas n mentions (link source -> target)
+    const nbrsOf = new Map(nodes.map(n=>[n.id,[]]));
+    links.forEach(l=>{
+      const s = typeof l.source === "object" ? l.source : byId.get(l.source);
+      const t = typeof l.target === "object" ? l.target : byId.get(l.target);
+      nbrsOf.get(s.id).push({nb: t, w: l.w});
+    });
     let step = 0, timer = null;
     const ALPHA = diff.validation.alpha;
+    const runBtn = d3.select("#runDiff");
     function stepOnce(){
-      if (step>=10){ clearInterval(timer); timer=null; return; }
+      if (step>=10){ clearInterval(timer); timer=null; runBtn.text("▶ run diffusion").attr("disabled",null); return; }
       step++;
       const nxt = new Map();
       nodes.forEach(n=>{
-        const inc = inN.get(n.id);
-        if (inc.length){
-          let sw=0, tw=0; inc.forEach(l=>{ const src = byId.get(l.target.id ?? l.target)===n ? byId.get(l.source.id ?? l.source) : null;
-            if(src){ sw += src.cur*l.w; tw += l.w; } });
-          nxt.set(n.id, tw? ALPHA*n.cur + (1-ALPHA)*(sw/tw) : n.cur);
+        const nb = nbrsOf.get(n.id);
+        if (nb.length){
+          let sw=0, tw=0;
+          nb.forEach(e=>{ sw += e.nb.cur*e.w; tw += e.w; });
+          nxt.set(n.id, ALPHA*n.cur + (1-ALPHA)*(sw/tw));
         } else nxt.set(n.id, n.cur);
       });
       nodes.forEach(n=>n.cur = nxt.get(n.id));
       Nn.transition().duration(360).attr("fill",d=>senti(d.cur));
       d3.select("#diffstep").text(`step ${step}/10`);
     }
-    d3.select("#runDiff").on("click",()=>{ if(!timer) timer = setInterval(stepOnce, 420); });
+    function runDiffusion(){ if(!timer && step<10){ runBtn.text("running…").attr("disabled",true); timer = setInterval(stepOnce, 420); } }
+    runBtn.on("click", runDiffusion);
     d3.select("#resetDiff").on("click",()=>{ clearInterval(timer); timer=null; step=0;
+      runBtn.text("▶ run diffusion").attr("disabled",null);
       nodes.forEach(n=>n.cur=n.s0); Nn.attr("fill",d=>senti(d.cur)); d3.select("#diffstep").text("step 0/10"); });
+    if (location.search.includes("autorun")) setTimeout(runDiffusion, 800);
 
     const v = diff.validation;
     const vb = [["persistence baseline (own past)", v.r_baseline, "var(--tx2)"],
