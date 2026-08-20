@@ -7,11 +7,7 @@
 \usepackage{amsmath}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[C]{\small DRAFT --- for internal review, not for distribution}
-\fancyfoot[C]{\thepage}
-\setlength{\headheight}{14pt}
+\pagestyle{plain}
 
 \title{\textbf{popsim}: Reproducing Elements of Billion-Agent Social Simulators\\
 on a Single Machine, with a Behavioral-Adherence Benchmark\\
@@ -25,7 +21,7 @@ for Persona Agents on Sentiment140}
   San Francisco, CA\\
   \texttt{yc.yvonnechen@gmail.com}
 }
-\date{August 2026 --- draft v0.2}
+\date{August 2026}
 
 \begin{document}
 \maketitle
@@ -119,7 +115,7 @@ supplies the consensus-formation model we test.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig9_ui_data.png}
+\includegraphics[width=\columnwidth]{figures/fig9_ui_data_light.png}
 \caption{Dataset selection in the interactive explainer
 (\url{https://popsim.micahstubbs.ai/\#data}): candidate corpora compared on
 the number of distinct users with at least 20 tweets.}
@@ -266,7 +262,7 @@ agent at all, only a content feed.
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=.92\textwidth]{figures/fig8_ui_adherence.png}
+\includegraphics[width=.92\textwidth]{figures/fig8_ui_adherence_light.png}
 \caption{The benchmark section of the interactive explainer
 (\url{https://popsim.micahstubbs.ai/\#adherence}): the 63.1\% zero-parameter
 baseline against the 50\% chance marker, and the per-persona accuracy

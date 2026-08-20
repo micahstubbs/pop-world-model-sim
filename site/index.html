@@ -30,6 +30,18 @@
   --amber1:#e5a94d; --amber2:#a8752b; --amber3:#5f4a20;
   --maxw:1060px;
 }
+html.light{
+  --ink:#faf7f2; --ink2:#f1ebe0; --panel:#fffdf8; --line:#ddd4c3;
+  --tx:#292319; --tx2:#5c5347; --tx3:#8b8171;
+  --neg:#c9522e; --mid:#8a8578; --pos:#1e8a72;
+  --amber1:#8a5f10; --amber2:#b78f3a; --amber3:#dbc99f;
+}
+html.light body::before{opacity:.025}
+html.light .hero-inner h1,html.light .hero-sub{text-shadow:none}
+html.light .clock,html.light .stat{background:rgba(255,253,248,.88)}
+html.light nav{background:rgba(250,247,242,.92)}
+html.light .tip{background:#fffdf8;box-shadow:0 6px 24px rgba(60,50,30,.25)}
+html.light button{color:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--ink);color:var(--tx);font:16px/1.65 "Archivo",sans-serif;-webkit-font-smoothing:antialiased}
@@ -180,6 +192,7 @@ footer .in{max-width:var(--maxw);margin:0 auto;padding:40px 24px;color:var(--tx3
   <a href="#dyads"><b>04</b>dyads</a>
   <a href="#adherence"><b>05</b>adherence</a>
   <a href="#challenge"><b>06</b>beat 91.5%</a>
+  <a href="#" id="themeToggle" style="margin-left:auto">◐ light</a>
 </div></nav>
 
 <section id="data">
@@ -358,6 +371,17 @@ We want to see it — especially if you get anywhere near 91.5%.</pre>
 <script src="vendor/d3.min.js"></script>
 <script>
 if (location.search.includes("flat")) document.getElementById("hero").style.minHeight = "620px";
+const LIGHT = location.search.includes("light") ? true
+  : location.search.includes("dark") ? false
+  : localStorage.getItem("popsim-theme") === "light";
+if (LIGHT) document.documentElement.classList.add("light");
+document.getElementById("themeToggle").textContent = LIGHT ? "\u25d1 dark" : "\u25d0 light";
+document.getElementById("themeToggle").addEventListener("click", ev => {
+  ev.preventDefault();
+  localStorage.setItem("popsim-theme", LIGHT ? "dark" : "light");
+  const u = new URL(location); u.searchParams.delete("light"); u.searchParams.delete("dark");
+  location.href = u;
+});
 /* hash routing: numeric deep-link aliases (#6, #06, #step-6 -> #challenge)
    and a scrollspy that keeps the URL hash on the section in view */
 const SECTIONS = ["data","personas","ladder","diffusion","dyads","adherence","challenge"];
@@ -390,7 +414,7 @@ document.getElementById("copyPrompt").addEventListener("click", async () => {
   setTimeout(()=>b.textContent="copy prompt", 2200);
 });
 const F = d3.format(","), tip = document.getElementById("tip");
-const senti = d3.scaleLinear().domain([0,.5,1]).range(["#e06a44","#8a8578","#2ea88f"]).clamp(true);
+const senti = d3.scaleLinear().domain([0,.5,1]).range(LIGHT ? ["#c9522e","#8a8578","#1e8a72"] : ["#e06a44","#8a8578","#2ea88f"]).clamp(true);
 function esc(s){ return s.replace(/ï¿½|�/g,"'").replace(/</g,"&lt;"); }
 function showTip(ev, html){ tip.innerHTML = html; tip.style.display="block";
   const w = tip.offsetWidth, x = Math.min(ev.clientX+14, innerWidth-w-10);
