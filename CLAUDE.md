@@ -90,3 +90,29 @@ bv --robot-label-health | jq '.results.labels[] | select(.health_level == "criti
 **Performance:** Phase 1 instant, Phase 2 async (500ms timeout). Prefer `--robot-plan` over `--robot-insights` when speed matters. Results cached by data hash.
 
 Use bv instead of parsing beads.jsonl—it computes PageRank, critical paths, cycles, and parallel tracks deterministically.
+
+## Paper conventions (docs/paper/popsim.tex)
+
+### Easter-egg reference and citation hyperlinks
+
+The paper intentionally includes a non-conventional feature: every reference
+and every parenthetical citation is a clickable hyperlink, deliberately NOT
+styled as a link (no color, no border; hyperref is loaded with `hidelinks`).
+This is an Easter Egg for readers of the PDF: mousing over a citation or a
+reference title reveals it is clickable, for the convenience of readers who
+want to jump straight to the cited paper.
+
+Keep this feature when editing the paper:
+
+- **Bibliography entries**: the title of each `\bibitem` is wrapped in
+  `\href{<url>}{...}` pointing at the best source for that paper. Prefer a
+  source hosting the full text (arXiv abs page, ACL Anthology, an
+  author/university-hosted PDF); fall back to the best metadata page (the
+  publisher DOI page) only when no legitimate full-text source exists.
+- **In-text citations**: use the `\ecite{<url>}{<bibkey>}` macro (defined in
+  the preamble) instead of `\cite{<bibkey>}`. It wraps the bracketed citation
+  in an unstyled external hyperlink to the same source URL as the bibliography
+  entry, suppressing hyperref's internal bibliography link via `\NoHyper`.
+- When adding a new reference, search the web for its full-text source, add
+  the `\href` to the new `\bibitem`, and cite it with `\ecite` using the same
+  URL.
