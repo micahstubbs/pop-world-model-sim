@@ -126,7 +126,8 @@ established the large-scale
 structural view of Twitter; Horton and Wohl
 \ecite{https://www.participations.org/03-01-04-horton.pdf}{horton1956}
 introduced the
-parasocial-interaction construct we operationalize; DeGroot \cite{degroot1974}
+parasocial-interaction construct we operationalize; DeGroot
+\ecite{https://doi.org/10.1080/01621459.1974.10480137}{degroot1974}
 supplies the consensus-formation model we test.
 
 \section{Dataset and Cohort}
@@ -212,7 +213,8 @@ The cohort contains a real directed interaction graph: 31{,}515 @-mention
 events between cohort members. Light Society validates simulations with
 opinion-diffusion experiments; we run the corresponding test \emph{against
 ground truth}. Each user is seeded with their first-half sentiment; DeGroot
-mixing \cite{degroot1974} ($s_{t+1} = 0.7\,s_t + 0.3\,\bar{s}_{\mathcal{N}}$,
+mixing \ecite{https://doi.org/10.1080/01621459.1974.10480137}{degroot1974}
+($s_{t+1} = 0.7\,s_t + 0.3\,\bar{s}_{\mathcal{N}}$,
 10 steps, edge weights = mention counts) evolves states over the real graph;
 we then ask which predictor better recovers each user's \emph{second-half}
 sentiment (users with $\geq 5$ tweets in each half; $n=5{,}463$).
@@ -417,7 +419,8 @@ Distance}.
 
 \bibitem{degroot1974}
 M.~H. DeGroot.
-\newblock Reaching a Consensus.
+\newblock \href{https://doi.org/10.1080/01621459.1974.10480137}{Reaching a
+Consensus}.
 \newblock \emph{Journal of the American Statistical Association},
 69(345):118--121, 1974.
 
