@@ -1,22 +1,62 @@
 [
  {
   "page": 1,
-  "url": "https://arxiv.org/abs/2506.12078",
+  "url": "https://arxiv.org/abs/1506.06021",
   "rect": [
-   246,
-   176,
-   258,
-   188
+   407,
+   232,
+   425,
+   244
   ]
  },
  {
   "page": 1,
-  "url": "https://arxiv.org/abs/2608.04205",
+  "url": "https://doi.org/10.1073/pnas.1320040111",
   "rect": [
-   111,
-   104,
+   423,
+   232,
+   440,
+   244
+  ]
+ },
+ {
+  "page": 1,
+  "url": "https://arxiv.org/abs/1604.03427",
+  "rect": [
+   438,
+   232,
+   456,
+   244
+  ]
+ },
+ {
+  "page": 1,
+  "url": "https://arxiv.org/abs/2304.03442",
+  "rect": [
    124,
-   116
+   164,
+   137,
+   176
+  ]
+ },
+ {
+  "page": 1,
+  "url": "https://arxiv.org/abs/2411.11581",
+  "rect": [
+   138,
+   152,
+   150,
+   164
+  ]
+ },
+ {
+  "page": 1,
+  "url": "https://arxiv.org/abs/2506.12078",
+  "rect": [
+   216,
+   152,
+   228,
+   164
   ]
  },
  {
@@ -27,6 +67,16 @@
    88,
    540,
    99
+  ]
+ },
+ {
+  "page": 1,
+  "url": "https://arxiv.org/abs/2608.04205",
+  "rect": [
+   98,
+   80,
+   110,
+   92
   ]
  },
  {
@@ -51,112 +101,482 @@
  },
  {
   "page": 2,
-  "url": "https://popsim.micahstubbs.ai/#data",
+  "url": "https://arxiv.org/abs/2304.03442",
   "rect": [
-   112,
-   549,
-   297,
-   561
+   100,
+   513,
+   113,
+   525
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2411.10109",
+  "rect": [
+   523,
+   488,
+   541,
+   500
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2411.11581",
+  "rect": [
+   136,
+   477,
+   149,
+   489
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2502.08691",
+  "rect": [
+   259,
+   465,
+   277,
+   478
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2408.00818",
+  "rect": [
+   204,
+   441,
+   222,
+   453
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2505.17479",
+  "rect": [
+   328,
+   440,
+   345,
+   452
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2504.10157",
+  "rect": [
+   253,
+   430,
+   270,
+   441
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2510.02343",
+  "rect": [
+   310,
+   416,
+   327,
+   428
   ]
  },
  {
   "page": 2,
   "url": "https://arxiv.org/abs/2506.12078",
   "rect": [
-   273,
-   473,
-   285,
-   484
+   219,
+   406,
+   232,
+   418
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2502.14642",
+  "rect": [
+   522,
+   404,
+   540,
+   416
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2605.17044",
+  "rect": [
+   443,
+   392,
+   460,
+   404
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2506.19806",
+  "rect": [
+   337,
+   368,
+   354,
+   380
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2605.27419",
+  "rect": [
+   71,
+   322,
+   88,
+   334
   ]
  },
  {
   "page": 2,
   "url": "https://arxiv.org/abs/2608.04205",
   "rect": [
-   225,
-   413,
-   237,
-   425
-  ]
- },
- {
-  "page": 2,
-  "url": "https://arxiv.org/abs/2304.03442",
-  "rect": [
+   187,
+   310,
    199,
-   353,
-   211,
-   365
+   323
   ]
  },
  {
   "page": 2,
-  "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
+  "url": "https://arxiv.org/abs/2608.11215",
   "rect": [
-   173,
-   317,
-   186,
-   329
-  ]
- },
- {
-  "page": 2,
-  "url": "https://aclanthology.org/2020.findings-emnlp.148/",
-  "rect": [
+   163,
+   262,
    181,
-   233,
-   194,
-   245
+   274
   ]
  },
  {
   "page": 2,
+  "url": "https://doi.org/10.1073/pnas.1320040111",
+  "rect": [
+   445,
+   260,
+   462,
+   272
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/1506.06021",
+  "rect": [
+   439,
+   236,
+   457,
+   248
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/1604.03427",
+  "rect": [
+   474,
+   212,
+   491,
+   224
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://doi.org/10.1073/pnas.0908800106",
+  "rect": [
+   393,
+   176,
+   411,
+   188
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/1004.4704",
+  "rect": [
+   523,
+   176,
+   541,
+   188
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/1109.6018",
+  "rect": [
+   498,
+   152,
+   516,
+   164
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2510.16366",
+  "rect": [
+   71,
+   140,
+   89,
+   152
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2604.18011",
+  "rect": [
+   143,
+   128,
+   161,
+   140
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2506.12078",
+  "rect": [
+   124,
+   116,
+   136,
+   128
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://arxiv.org/abs/2607.02464",
+  "rect": [
+   207,
+   116,
+   225,
+   128
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://doi.org/10.1080/01621459.1974.10480137",
+  "rect": [
+   489,
+   104,
+   501,
+   116
+  ]
+ },
+ {
+  "page": 2,
+  "url": "https://escholarship.org/uc/item/2r82w1vs",
+  "rect": [
+   511,
+   80,
+   528,
+   92
+  ]
+ },
+ {
+  "page": 3,
   "url": "https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf",
   "rect": [
    261,
-   209,
+   707,
    273,
-   221
+   719
   ]
  },
  {
-  "page": 2,
-  "url": "https://www.participations.org/03-01-04-horton.pdf",
+  "page": 3,
+  "url": "https://firstmonday.org/ojs/index.php/fm/article/view/2317",
   "rect": [
-   131,
-   185,
-   143,
-   197
+   133,
+   683,
+   150,
+   695
   ]
  },
  {
-  "page": 2,
-  "url": "https://doi.org/10.1080/01621459.1974.10480137",
+  "page": 3,
+  "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14033",
   "rect": [
-   235,
-   173,
+   230,
+   659,
    248,
-   185
+   671
   ]
  },
  {
   "page": 3,
   "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
-   510,
-   358,
-   522,
-   370
+   71,
+   623,
+   83,
+   635
   ]
  },
  {
   "page": 3,
+  "url": "https://popsim.micahstubbs.ai/#data",
+  "rect": [
+   351,
+   549,
+   536,
+   561
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://doi.org/10.1126/science.1202775",
+  "rect": [
+   386,
+   460,
+   404,
+   472
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
+  "rect": [
+   173,
+   357,
+   186,
+   369
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://aclanthology.org/2020.findings-emnlp.148/",
+  "rect": [
+   119,
+   238,
+   132,
+   250
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://doi.org/10.1126/science.1202775",
+  "rect": [
+   238,
+   214,
+   256,
+   226
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://arxiv.org/abs/2506.12078",
+  "rect": [
+   406,
+   104,
+   418,
+   116
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://arxiv.org/abs/2510.16366",
+  "rect": [
+   413,
+   92,
+   430,
+   104
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://arxiv.org/abs/2604.18011",
+  "rect": [
+   522,
+   92,
+   540,
+   104
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://arxiv.org/abs/2605.27419",
+  "rect": [
+   394,
+   80,
+   411,
+   92
+  ]
+ },
+ {
+  "page": 3,
+  "url": "https://arxiv.org/abs/2608.11215",
+  "rect": [
+   310,
+   69,
+   328,
+   80
+  ]
+ },
+ {
+  "page": 4,
   "url": "https://doi.org/10.1080/01621459.1974.10480137",
   "rect": [
-   247,
-   165,
-   260,
-   177
+   486,
+   483,
+   499,
+   495
+  ]
+ },
+ {
+  "page": 4,
+  "url": "https://arxiv.org/abs/2605.27419",
+  "rect": [
+   173,
+   376,
+   191,
+   388
+  ]
+ },
+ {
+  "page": 4,
+  "url": "https://doi.org/10.1073/pnas.0908800106",
+  "rect": [
+   485,
+   315,
+   502,
+   327
+  ]
+ },
+ {
+  "page": 4,
+  "url": "https://arxiv.org/abs/1004.4704",
+  "rect": [
+   453,
+   303,
+   470,
+   315
+  ]
+ },
+ {
+  "page": 4,
+  "url": "https://arxiv.org/abs/1506.06021",
+  "rect": [
+   464,
+   255,
+   482,
+   267
+  ]
+ },
+ {
+  "page": 4,
+  "url": "https://arxiv.org/abs/1604.03427",
+  "rect": [
+   488,
+   243,
+   506,
+   255
+  ]
+ },
+ {
+  "page": 4,
+  "url": "https://arxiv.org/abs/1109.6018",
+  "rect": [
+   464,
+   172,
+   482,
+   183
   ]
  },
  {
@@ -164,9 +584,9 @@
   "url": "https://popsim.micahstubbs.ai/#adherence",
   "rect": [
    383,
-   334,
+   533,
    541,
-   346
+   545
   ]
  },
  {
@@ -174,36 +594,16 @@
   "url": "https://popsim.micahstubbs.ai/#adherence",
   "rect": [
    71,
-   322,
+   521,
    125,
-   334
+   533
   ]
  },
  {
   "page": 5,
-  "url": "https://x.com/ClovisVinant",
+  "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14033",
   "rect": [
-   467,
-   278,
-   541,
-   290
-  ]
- },
- {
-  "page": 5,
-  "url": "https://x.com/ClovisVinant",
-  "rect": [
-   310,
-   266,
-   375,
-   278
-  ]
- },
- {
-  "page": 5,
-  "url": "https://x.com/tanzealous",
-  "rect": [
-   467,
+   523,
    266,
    541,
    278
@@ -211,122 +611,382 @@
  },
  {
   "page": 5,
-  "url": "https://x.com/tanzealous",
+  "url": "https://firstmonday.org/ojs/index.php/fm/article/view/2317",
   "rect": [
-   310,
-   254,
-   364,
-   266
+   159,
+   171,
+   177,
+   183
   ]
  },
  {
   "page": 5,
-  "url": "https://x.com/ycyvonne_",
-  "rect": [
-   467,
-   254,
-   541,
-   266
-  ]
- },
- {
-  "page": 5,
-  "url": "https://x.com/ycyvonne_",
-  "rect": [
-   310,
-   242,
-   359,
-   254
-  ]
- },
- {
-  "page": 5,
-  "url": "https://popsim.micahstubbs.ai",
-  "rect": [
-   101,
-   216,
-   254,
-   227
-  ]
- },
- {
-  "page": 5,
-  "url": "https://github.com/micahstubbs/pop-world-model-sim",
-  "rect": [
-   202,
-   192,
-   302,
-   203
-  ]
- },
- {
-  "page": 5,
-  "url": "https://github.com/micahstubbs/pop-world-model-sim",
-  "rect": [
-   71,
-   180,
-   237,
-   191
-  ]
- },
- {
-  "page": 5,
-  "url": "https://github.com/micahstubbs/popsim",
-  "rect": [
-   139,
-   168,
-   302,
-   179
-  ]
- },
- {
-  "page": 5,
-  "url": "https://github.com/micahstubbs/popsim",
-  "rect": [
-   71,
-   156,
-   104,
-   166
-  ]
- },
- {
-  "page": 5,
-  "url": "https://luma.com/th01qwp1",
+  "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
    271,
-   92,
-   302,
-   104
-  ]
- },
- {
-  "page": 5,
-  "url": "https://luma.com/th01qwp1",
-  "rect": [
-   71,
    80,
-   172,
+   283,
    92
   ]
  },
  {
-  "page": 7,
-  "url": "https://arxiv.org/abs/2506.12078",
+  "page": 6,
+  "url": "https://arxiv.org/abs/2411.10109",
   "rect": [
-   87,
-   665,
+   206,
+   631,
+   223,
+   643
+  ]
+ },
+ {
+  "page": 6,
+  "url": "https://arxiv.org/abs/2505.17479",
+  "rect": [
+   71,
+   619,
+   89,
+   631
+  ]
+ },
+ {
+  "page": 6,
+  "url": "https://arxiv.org/abs/2510.02343",
+  "rect": [
+   284,
+   619,
    302,
-   675
+   631
+  ]
+ },
+ {
+  "page": 6,
+  "url": "https://escholarship.org/uc/item/2r82w1vs",
+  "rect": [
+   492,
+   394,
+   510,
+   405
+  ]
+ },
+ {
+  "page": 6,
+  "url": "https://arxiv.org/abs/1004.4704",
+  "rect": [
+   453,
+   346,
+   470,
+   358
+  ]
+ },
+ {
+  "page": 6,
+  "url": "https://arxiv.org/abs/2608.11215",
+  "rect": [
+   408,
+   200,
+   426,
+   212
+  ]
+ },
+ {
+  "page": 6,
+  "url": "https://arxiv.org/abs/2506.19806",
+  "rect": [
+   236,
+   104,
+   254,
+   116
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://popsim.micahstubbs.ai",
+  "rect": [
+   101,
+   676,
+   254,
+   688
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2411.11581",
+  "rect": [
+   330,
+   663,
+   541,
+   673
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://github.com/micahstubbs/pop-world-model-sim",
+  "rect": [
+   202,
+   653,
+   302,
+   664
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2411.11581",
+  "rect": [
+   330,
+   653,
+   438,
+   662
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://github.com/micahstubbs/pop-world-model-sim",
+  "rect": [
+   71,
+   641,
+   237,
+   652
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://github.com/micahstubbs/popsim",
+  "rect": [
+   139,
+   629,
+   302,
+   640
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://github.com/micahstubbs/popsim",
+  "rect": [
+   71,
+   617,
+   104,
+   627
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2502.08691",
+  "rect": [
+   457,
+   600,
+   541,
+   610
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2502.08691",
+  "rect": [
+   330,
+   589,
+   541,
+   599
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2502.08691",
+  "rect": [
+   330,
+   578,
+   541,
+   588
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2502.08691",
+  "rect": [
+   330,
+   567,
+   361,
+   577
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://luma.com/th01qwp1",
+  "rect": [
+   271,
+   558,
+   302,
+   570
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://luma.com/th01qwp1",
+  "rect": [
+   71,
+   546,
+   172,
+   558
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2408.00818",
+  "rect": [
+   396,
+   525,
+   541,
+   535
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://x.com/ClovisVinant",
+  "rect": [
+   228,
+   522,
+   302,
+   534
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2408.00818",
+  "rect": [
+   330,
+   514,
+   412,
+   524
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://x.com/ClovisVinant",
+  "rect": [
+   71,
+   510,
+   136,
+   522
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://x.com/tanzealous",
+  "rect": [
+   228,
+   510,
+   302,
+   522
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://x.com/tanzealous",
+  "rect": [
+   71,
+   498,
+   125,
+   510
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://x.com/ycyvonne_",
+  "rect": [
+   228,
+   498,
+   302,
+   510
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://x.com/ycyvonne_",
+  "rect": [
+   71,
+   486,
+   120,
+   498
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2504.10157",
+  "rect": [
+   480,
+   461,
+   541,
+   471
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2504.10157",
+  "rect": [
+   330,
+   450,
+   541,
+   460
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2504.10157",
+  "rect": [
+   330,
+   439,
+   540,
+   449
   ]
  },
  {
   "page": 7,
   "url": "https://arxiv.org/abs/2506.12078",
   "rect": [
-   87,
-   654,
-   146,
-   664
+   157,
+   399,
+   302,
+   409
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2605.27419",
+  "rect": [
+   450,
+   397,
+   541,
+   407
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2506.12078",
+  "rect": [
+   91,
+   388,
+   226,
+   398
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2605.27419",
+  "rect": [
+   330,
+   386,
+   541,
+   396
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2605.27419",
+  "rect": [
+   330,
+   375,
+   383,
+   385
   ]
  },
  {
@@ -334,139 +994,649 @@
   "url": "https://arxiv.org/abs/2608.04205",
   "rect": [
    263,
-   634,
+   358,
    302,
-   645
+   369
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2608.11215",
+  "rect": [
+   375,
+   355,
+   541,
+   366
   ]
  },
  {
   "page": 7,
   "url": "https://arxiv.org/abs/2608.04205",
   "rect": [
-   87,
-   624,
+   91,
+   348,
    301,
-   634
+   357
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2608.11215",
+  "rect": [
+   330,
+   344,
+   540,
+   354
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2510.16366",
+  "rect": [
+   529,
+   313,
+   541,
+   324
   ]
  },
  {
   "page": 7,
   "url": "https://arxiv.org/abs/2304.03442",
   "rect": [
+   199,
+   307,
+   302,
+   316
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2510.16366",
+  "rect": [
+   330,
+   303,
+   541,
+   313
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2304.03442",
+  "rect": [
+   91,
+   296,
+   238,
+   306
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2510.16366",
+  "rect": [
+   330,
+   292,
+   376,
+   302
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
+  "rect": [
+   224,
+   265,
+   302,
+   276
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2604.18011",
+  "rect": [
+   395,
+   261,
+   541,
+   271
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
+  "rect": [
+   91,
+   255,
+   258,
+   265
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2604.18011",
+  "rect": [
+   330,
+   251,
+   541,
+   260
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2604.18011",
+  "rect": [
+   330,
+   239,
+   437,
+   249
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://aclanthology.org/2020.findings-emnlp.148/",
+  "rect": [
+   133,
+   216,
+   302,
+   224
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2607.02464",
+  "rect": [
+   429,
+   208,
+   541,
+   218
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://aclanthology.org/2020.findings-emnlp.148/",
+  "rect": [
+   91,
+   203,
+   265,
+   213
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2607.02464",
+  "rect": [
+   330,
    197,
-   583,
-   302,
-   593
-  ]
- },
- {
-  "page": 7,
-  "url": "https://arxiv.org/abs/2304.03442",
-  "rect": [
-   87,
-   572,
-   236,
-   582
-  ]
- },
- {
-  "page": 7,
-  "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
-  "rect": [
-   223,
-   542,
-   302,
-   552
-  ]
- },
- {
-  "page": 7,
-  "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
-  "rect": [
-   87,
-   531,
-   256,
-   541
-  ]
- },
- {
-  "page": 7,
-  "url": "https://aclanthology.org/2020.findings-emnlp.148/",
-  "rect": [
-   125,
-   490,
-   302,
-   500
-  ]
- },
- {
-  "page": 7,
-  "url": "https://aclanthology.org/2020.findings-emnlp.148/",
-  "rect": [
-   87,
-   479,
-   250,
-   489
+   428,
+   207
   ]
  },
  {
   "page": 7,
   "url": "https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf",
   "rect": [
+   235,
+   172,
+   302,
+   183
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf",
+  "rect": [
+   91,
+   162,
    234,
-   449,
-   302,
-   460
+   172
   ]
  },
  {
   "page": 7,
-  "url": "https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf",
+  "url": "https://arxiv.org/abs/2411.10109",
   "rect": [
-   87,
-   438,
-   232,
-   448
+   444,
+   155,
+   541,
+   165
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2411.10109",
+  "rect": [
+   330,
+   144,
+   541,
+   154
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2411.10109",
+  "rect": [
+   330,
+   133,
+   388,
+   143
   ]
  },
  {
   "page": 7,
   "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
-   192,
-   408,
+   193,
+   132,
    302,
-   419
+   143
   ]
  },
  {
   "page": 7,
   "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
-   87,
-   398,
+   91,
+   121,
    302,
-   408
+   131
   ]
  },
  {
   "page": 7,
   "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
-   87,
-   386,
-   131,
-   397
+   91,
+   110,
+   147,
+   121
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2505.17479",
+  "rect": [
+   377,
+   102,
+   541,
+   112
   ]
  },
  {
   "page": 7,
   "url": "https://doi.org/10.1080/01621459.1974.10480137",
   "rect": [
-   158,
-   367,
+   166,
+   91,
+   261,
+   102
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2505.17479",
+  "rect": [
+   330,
+   91,
+   541,
+   101
+  ]
+ },
+ {
+  "page": 7,
+  "url": "https://arxiv.org/abs/2505.17479",
+  "rect": [
+   330,
+   80,
+   458,
+   90
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1126/science.1202775",
+  "rect": [
+   450,
+   707,
+   541,
+   718
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1126/science.1202775",
+  "rect": [
+   330,
+   696,
+   541,
+   706
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2510.02343",
+  "rect": [
+   148,
+   685,
+   302,
+   695
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1126/science.1202775",
+  "rect": [
+   330,
+   685,
+   403,
+   696
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2510.02343",
+  "rect": [
+   91,
+   674,
+   301,
+   684
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2502.14642",
+  "rect": [
+   91,
+   631,
+   302,
+   641
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2502.14642",
+  "rect": [
+   91,
+   622,
+   302,
+   630
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2502.14642",
+  "rect": [
+   91,
+   609,
+   117,
+   619
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2605.17044",
+  "rect": [
+   172,
+   577,
+   302,
+   587
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2605.17044",
+  "rect": [
+   91,
+   566,
+   302,
+   576
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2605.17044",
+  "rect": [
+   91,
+   555,
    251,
-   378
+   565
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2506.19806",
+  "rect": [
+   91,
+   512,
+   302,
+   522
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/2506.19806",
+  "rect": [
+   91,
+   501,
+   107,
+   512
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1073/pnas.1320040111",
+  "rect": [
+   275,
+   469,
+   302,
+   480
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1073/pnas.1320040111",
+  "rect": [
+   91,
+   460,
+   302,
+   468
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1073/pnas.1320040111",
+  "rect": [
+   91,
+   447,
+   211,
+   458
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1506.06021",
+  "rect": [
+   173,
+   414,
+   302,
+   425
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1506.06021",
+  "rect": [
+   91,
+   404,
+   156,
+   414
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1604.03427",
+  "rect": [
+   275,
+   382,
+   302,
+   393
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1604.03427",
+  "rect": [
+   91,
+   372,
+   302,
+   382
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1604.03427",
+  "rect": [
+   91,
+   360,
+   124,
+   371
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1073/pnas.0908800106",
+  "rect": [
+   273,
+   328,
+   302,
+   339
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1073/pnas.0908800106",
+  "rect": [
+   91,
+   318,
+   302,
+   328
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://doi.org/10.1073/pnas.0908800106",
+  "rect": [
+   91,
+   307,
+   262,
+   317
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1004.4704",
+  "rect": [
+   211,
+   274,
+   302,
+   285
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1004.4704",
+  "rect": [
+   91,
+   264,
+   302,
+   274
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1004.4704",
+  "rect": [
+   91,
+   253,
+   187,
+   263
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1109.6018",
+  "rect": [
+   91,
+   210,
+   302,
+   220
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://arxiv.org/abs/1109.6018",
+  "rect": [
+   91,
+   199,
+   131,
+   209
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://escholarship.org/uc/item/2r82w1vs",
+  "rect": [
+   219,
+   177,
+   302,
+   188
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://escholarship.org/uc/item/2r82w1vs",
+  "rect": [
+   91,
+   166,
+   130,
+   177
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://firstmonday.org/ojs/index.php/fm/article/view/2317",
+  "rect": [
+   276,
+   134,
+   302,
+   145
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://firstmonday.org/ojs/index.php/fm/article/view/2317",
+  "rect": [
+   91,
+   123,
+   301,
+   133
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14033",
+  "rect": [
+   91,
+   80,
+   302,
+   90
+  ]
+ },
+ {
+  "page": 8,
+  "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14033",
+  "rect": [
+   91,
+   69,
+   159,
+   79
   ]
  }
 ]

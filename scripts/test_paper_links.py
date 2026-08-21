@@ -71,6 +71,7 @@ def main():
         pdf = build(Path(td))
         got_links, got_text = links(pdf), text(pdf)
     assert got_links, "no link annotations found in built PDF"
+    layout_ok = check_layout()
     if update:
         SNAP.mkdir(exist_ok=True)
         (SNAP / "links.json").write_text(json.dumps(got_links, indent=1) + "\n")
@@ -91,8 +92,26 @@ def main():
         print("TEXT MISMATCH")
         import difflib
         sys.stdout.writelines(difflib.unified_diff(exp_text.splitlines(1), got_text.splitlines(1), "expected", "got", n=1))
+    ok = ok and layout_ok
     print("PASS" if ok else "FAIL", f"({len(got_links)} links)")
     sys.exit(0 if ok else 1)
+
+
+def check_layout() -> bool:
+    """Figure-near-text rule from docs/paper/LAYOUT.md: every figure sits on the
+    page of its first reference, or at worst the page before; never after."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import paper_layout as pl
+    preamble, parts, figs = pl.parse((PAPER / "popsim.tex").read_text())
+    with tempfile.TemporaryDirectory() as td:
+        _cost, info = pl.evaluate(preamble, parts, figs, Path(td))
+    ok = True
+    for r in info["figures"]:
+        d = r["fig_page"] - r["ref_page"]
+        if d > 0 or d < -1:
+            ok = False
+            print(f"LAYOUT: {r['label']} on p{r['fig_page']} but first referenced on p{r['ref_page']}")
+    return ok
 
 
 if __name__ == "__main__":
