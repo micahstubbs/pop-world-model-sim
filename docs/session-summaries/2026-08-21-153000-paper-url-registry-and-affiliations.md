@@ -11,3 +11,8 @@ Added a rendering regression test for the paper, refactored the easter-egg citat
 
 ## Next Session Context
 Run `python3 scripts/test_paper_links.py` after any paper edit; `--update` after intentional changes plus a PDF rebuild.
+
+## Addendum (session close)
+- 59b0d1f: both author affiliation lines dropped (CaseMirror Research removed too); affiliation implied by email. PDF rebuilt, snapshots updated, header verified.
+- Latest PDF emailed to hi@micah.fyi via Resend (id c37bd56a-b97f-4083-9c7e-0e6c0cc015c2).
+- /close: LESSONS.md created (3 lessons); new skills `apc`/`audit-pr-commits` and `plt`/`pdf-link-snapshot-test`; `sfr` skill and global CLAUDE.md updated.
