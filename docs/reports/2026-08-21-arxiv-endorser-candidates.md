@@ -10,7 +10,7 @@ Three sources were mined and every plausible name was cross-referenced against t
 
 1. **Google Takeout contacts** (`scripts/edu_contacts.py`): 390 `.edu`/`.ac.*` emails across 170 domains, plus 23 at AI-lab/top-university domains. Mostly OU/OSU/ORU/JBU alumni rosters; 46 research-plausible names were scanned.
 2. **Gmail / Calendar / Drive / session transcripts / julius-world CRM**: searched for "autoresearch", "Steven", Stanford/OpenAI, `.edu` correspondents, reading groups. `.edu` mail is all newsletters (Knight Center, Stanford Math Circle, OU MarComm); sent mail is family/school/vendors. **"Steven from the autoresearch group" was not found in any of these** — the only autoresearch traces are the Karpathy fork at `~/wk/autoresearch`, the defunct `knoxus-ai/AutoResearch` repo (Unreasonable Labs), and the May 30 "Autoresearch Systems Hackathon with Modal, OpenAI, Raindrop & Antler" listing in a Bond AI SF digest. The group chat is presumably on Luma/WhatsApp/Discord. *Action for Micah: supply Steven's surname and I will run the arXiv check in one call.*
-3. **X followers of @micahstubbs** (Apify `kaitoeasyapi/premium-x-follower-scraper-following-data`, 4,464 followers, $0.63): `scripts/x_followers_academic.py` scored bios for academic signals → 1,384 flagged, 229 with score ≥4 were scanned against arXiv → **63 have CS-eligible papers** (partial figure; see final table in `docs/data/x-academic-arxiv-scan.out`).
+3. **X followers of @micahstubbs** (Apify `kaitoeasyapi/premium-x-follower-scraper-following-data`, 4,464 followers, $0.63): `scripts/x_followers_academic.py` scored bios for academic signals → 1,384 flagged, 229 with score ≥4 were scanned against arXiv → **87 have CS-eligible papers** (`docs/data/x-academic-arxiv-scan.out` plus `x-academic-arxiv-scan-retry.out` for the 63 names arXiv rate-limited on the first pass).
 
 Raw data: `docs/data/x-followers-micahstubbs-2026-08-21.json`, `docs/data/x-followers-academic-2026-08-21.tsv`, `docs/data/x-academic-arxiv-scan.out`, probe at `docs/scrape-probe-2026-08-21-apify-x-followers.json`.
 
@@ -22,6 +22,7 @@ These people would *understand and appreciate* a reproduction of billion-agent s
 
 | Candidate | Affiliation | Eligible CS papers (sample) | Why them |
 |---|---|---|---|
+| **Deepak Nathani** (@deepaknathani11) | ML researcher (agents) | 2604.00842 (**cs.AI/LG/cs.MA** "Proactive Agent Research Environment: Simulating Active Users to Evaluate…"), 2603.17863 (cs.LG/AI); 10 eligible | The only follower with a recent **cs.MA** paper, and it is about simulating users to evaluate agents — the closest thing to popsim in the whole set. |
 | **Dhiraj Murthy** (@dhirajmurthy) | Professor, Journalism/Media & Sociology, UT Austin; author of *Twitter: Social Communication in the Twitter Age* | 2505.20584 (cs.SI/CY/HC, mpox discourse dashboard), 2408.06900 (cs.CY/AI, social-bot detection) | Computational social scientist working on exactly the social-media dynamics popsim simulates; cs.SI author. Strongest topical match. |
 | **David Sumpter** (@Soccermatics) | Professor of Applied Mathematics, Uppsala; *Collective Animal Behavior*, *Outnumbered* | 2603.12741 (cs.CY/HC), 2504.00767 (cs.LG/CL/HC); 11 eligible incl. cs.SI | Collective behaviour and social-contagion modelling is his field; writes for a popular audience so will read a reproduction paper charitably. |
 | **Daniel Angus** (@antmandan) | Professor of Digital Communication, QUT Digital Media Research Centre | 2511.15732 (cs.CY/AI, conspiratorial ideation), 2509.18874 (cs.HC/AI/CR) | Computational social science / platform studies; 3 eligible CS papers. |
@@ -37,6 +38,12 @@ Warm relationships from the data-vis world; all have many eligible cs.* papers. 
 | Candidate | Affiliation | Eligible CS papers | Notes |
 |---|---|---|---|
 | **Jeffrey Heer** (@jeffrey_heer) | Professor, UW CSE; Vega/D3 lineage | 25 (cs.HC/AI/CL/DB) | Micah's D3/Vega community; the most natural "knows you personally" endorser. |
+| **Jessica Hullman** (@JessicaHullman) | Professor, Northwestern CS; vis + statistical reasoning | 37 (cs.HC/LG/stat) | Vis community; writes about uncertainty and simulation-based reasoning — will read the evaluation sections critically but fairly. |
+| **Miles Brundage** (@Miles_Brundage) | Independent AI policy researcher; ex-OpenAI | 13 (cs.CY) | Societal-impact framing of agent simulations; cs.CY domain. |
+| **Bum Chul Kwon** (@BCKwon) | IBM Research, vis/ML | 17 (cs.LG/AI/HC) | Vis community. |
+| **Meredith Martin** (@mmvty) | Princeton, computational humanities | 3 (cs.AI/CY/HC) | Cultural-technology framing of generative AI. |
+| **Bharath Ramsundar** (@rbhar90) | DeepChem | 21 (cs.LG) | Open-science ML; values reproductions. |
+| **Ian McKenzie** (@McKenzieIA) | FAR AI | 3 (cs.CL/AI/LG) | |
 | **Dominik Moritz** (@domoritz) | Prof CMU HCII; Apple | 39 (cs.HC/AI/LG/DB) | Vega-Lite co-creator; ML-adjacent (interpretability) so reads agent papers. |
 | **Hanspeter Pfister** (@hpfister) | Harvard professor, vis/graphics/CV | 46 | Very active; large lab. |
 | **Elena Glassman** (@roboticwrestler) | Asst Prof CS, Harvard | 30 (cs.HC/AI/CY) | Human-AI interaction; cs.AI author. |
@@ -64,11 +71,12 @@ Of 46 scanned contact names, real eligible hits: Paige Bailey, Anmol Agrawal, Da
 
 ## Recommendation — who to ask, in order
 
-1. **Dhiraj Murthy** — cs.SI, social-media dynamics, UT Austin. Send the draft with a note on the Twitter-corpus / relationship-strength parts of popsim.
-2. **Jeffrey Heer** or **Dominik Moritz** — the warmest personal connections with unambiguous endorser status in CS; either will endorse on a quick read if the vis figures are good.
-3. **David Sumpter** — collective-behaviour modelling; likely enthusiastic about a reproduction paper.
-4. Backups: Zijie Jay Wang (OpenAI), Kai Arulkumaran (just wrote a replication paper), Daniel Angus.
-5. **Steven (autoresearch group)** — still the user's own top pick; unresolved only because the surname is unknown. Provide it and the check takes one API call.
+1. **Deepak Nathani** — the one cs.MA author, working on simulated users for agent evaluation; the paper is squarely in his lane.
+2. **Dhiraj Murthy** — cs.SI, social-media dynamics, UT Austin. Send the draft with a note on the Twitter-corpus / relationship-strength parts of popsim.
+3. **Jeffrey Heer**, **Dominik Moritz**, or **Jessica Hullman** — the warmest personal connections with unambiguous endorser status in CS; either will endorse on a quick read if the vis figures are good.
+4. **David Sumpter** — collective-behaviour modelling; likely enthusiastic about a reproduction paper.
+5. Backups: Zijie Jay Wang (OpenAI), Kai Arulkumaran (just wrote a replication paper), Daniel Angus.
+6. **Steven (autoresearch group)** — still the user's own top pick; unresolved only because the surname is unknown. Provide it and the check takes one API call.
 
 Ask one or two at a time, attach the PDF and the six-character endorsement code, and do not re-ping. Before emailing, open one of their abstract pages while logged in and confirm the "endorsers" link lists them for the cs domain.
 

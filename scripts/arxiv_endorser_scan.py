@@ -60,15 +60,15 @@ def main():
         try:
             papers = query(name)
         except Exception as ex:
-            print(f"{name}\t{email}\tERROR {ex}", flush=True); time.sleep(3); continue
+            print(f"{name}\t{email}\tERROR {ex}", flush=True); time.sleep(6); continue
         elig = [p for p in papers if p["eligible"]]
         cs_elig = [p for p in elig if any(c.startswith("cs.") for c in p["cats"])]
         if cs_only and not cs_elig:
-            time.sleep(3); continue
+            time.sleep(6); continue
         print(f"{name}\t{email}\ttotal={len(papers)}\teligible={len(elig)}\tcs_eligible={len(cs_elig)}", flush=True)
         for p in elig[:6]:
             print(f"\t{p['id']}\t{p['published']}\t{','.join(p['cats'][:3])}\t{p['title'][:90]}", flush=True)
-        time.sleep(3)
+        time.sleep(6)
 
 if __name__ == "__main__":
     main()
