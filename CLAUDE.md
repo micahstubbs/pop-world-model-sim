@@ -104,15 +104,21 @@ want to jump straight to the cited paper.
 
 Keep this feature when editing the paper:
 
-- **Bibliography entries**: the title of each `\bibitem` is wrapped in
-  `\href{<url>}{...}` pointing at the best source for that paper. Prefer a
-  source hosting the full text (arXiv abs page, ACL Anthology, an
-  author/university-hosted PDF); fall back to the best metadata page (the
-  publisher DOI page) only when no legitimate full-text source exists.
-- **In-text citations**: use the `\ecite{<url>}{<bibkey>}` macro (defined in
-  the preamble) instead of `\cite{<bibkey>}`. It wraps the bracketed citation
-  in an unstyled external hyperlink to the same source URL as the bibliography
-  entry, suppressing hyperref's internal bibliography link via `\NoHyper`.
-- When adding a new reference, search the web for its full-text source, add
-  the `\href` to the new `\bibitem`, and cite it with `\ecite` using the same
-  URL.
+- **URL registry**: each bibkey's source URL is declared exactly once in the
+  preamble with `\paperurl{<bibkey>}{<url>}`. Prefer a source hosting the
+  full text (arXiv abs page, ACL Anthology, an author/university-hosted PDF);
+  fall back to the best metadata page (the publisher DOI page) only when no
+  legitimate full-text source exists.
+- **Bibliography entries**: wrap the title of each `\bibitem` in
+  `\reftitle{<bibkey>}{...}`, which links it to the registered URL.
+- **In-text citations**: use `\ecite{<bibkey>}` instead of `\cite{<bibkey>}`.
+  It wraps the bracketed citation in an unstyled external hyperlink to the
+  registered URL, suppressing hyperref's internal bibliography link via
+  `\NoHyper`.
+- When adding a new reference, search the web for its full-text source, add a
+  `\paperurl` line, wrap the new `\bibitem` title in `\reftitle`, and cite
+  it with `\ecite`.
+- **Regression test**: `scripts/test_paper_links.py` rebuilds the paper and
+  compares every PDF link annotation and the extracted text against
+  `docs/paper/snapshots/`. Run it after any edit; after an intentional
+  change, rebuild `popsim.pdf` and run it with `--update`.
