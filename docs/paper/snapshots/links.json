@@ -4,9 +4,19 @@
   "url": "https://arxiv.org/abs/2506.12078",
   "rect": [
    246,
-   152,
+   176,
    258,
-   164
+   188
+  ]
+ },
+ {
+  "page": 1,
+  "url": "https://arxiv.org/abs/2608.04205",
+  "rect": [
+   111,
+   104,
+   124,
+   116
   ]
  },
  {
@@ -17,16 +27,6 @@
    88,
    540,
    99
-  ]
- },
- {
-  "page": 1,
-  "url": "https://arxiv.org/abs/2608.04205",
-  "rect": [
-   111,
-   80,
-   124,
-   92
   ]
  },
  {
@@ -64,9 +64,9 @@
   "url": "https://arxiv.org/abs/2506.12078",
   "rect": [
    273,
-   384,
+   473,
    285,
-   396
+   484
   ]
  },
  {
@@ -74,9 +74,9 @@
   "url": "https://arxiv.org/abs/2608.04205",
   "rect": [
    225,
-   324,
+   413,
    237,
-   336
+   425
   ]
  },
  {
@@ -84,9 +84,9 @@
   "url": "https://arxiv.org/abs/2304.03442",
   "rect": [
    199,
-   265,
+   353,
    211,
-   277
+   365
   ]
  },
  {
@@ -94,9 +94,9 @@
   "url": "https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf",
   "rect": [
    173,
-   224,
+   317,
    186,
-   236
+   329
   ]
  },
  {
@@ -104,9 +104,9 @@
   "url": "https://aclanthology.org/2020.findings-emnlp.148/",
   "rect": [
    181,
-   140,
+   233,
    194,
-   152
+   245
   ]
  },
  {
@@ -114,9 +114,9 @@
   "url": "https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf",
   "rect": [
    261,
-   116,
+   209,
    273,
-   128
+   221
   ]
  },
  {
@@ -124,9 +124,9 @@
   "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
    131,
-   92,
+   185,
    143,
-   104
+   197
   ]
  },
  {
@@ -134,9 +134,9 @@
   "url": "https://doi.org/10.1080/01621459.1974.10480137",
   "rect": [
    235,
-   80,
+   173,
    248,
-   92
+   185
   ]
  },
  {
@@ -144,9 +144,9 @@
   "url": "https://www.participations.org/03-01-04-horton.pdf",
   "rect": [
    510,
-   256,
+   358,
    522,
-   268
+   370
   ]
  },
  {
@@ -154,9 +154,9 @@
   "url": "https://doi.org/10.1080/01621459.1974.10480137",
   "rect": [
    247,
-   128,
+   165,
    260,
-   140
+   177
   ]
  },
  {
@@ -181,42 +181,12 @@
  },
  {
   "page": 5,
-  "url": "https://github.com/micahstubbs/popsim",
-  "rect": [
-   310,
-   279,
-   343,
-   289
-  ]
- },
- {
-  "page": 5,
-  "url": "https://luma.com/th01qwp1",
-  "rect": [
-   510,
-   220,
-   541,
-   232
-  ]
- },
- {
-  "page": 5,
-  "url": "https://luma.com/th01qwp1",
-  "rect": [
-   310,
-   208,
-   411,
-   220
-  ]
- },
- {
-  "page": 5,
   "url": "https://x.com/ClovisVinant",
   "rect": [
    467,
-   184,
+   278,
    541,
-   196
+   290
   ]
  },
  {
@@ -224,9 +194,9 @@
   "url": "https://x.com/ClovisVinant",
   "rect": [
    310,
-   172,
+   266,
    375,
-   184
+   278
   ]
  },
  {
@@ -234,9 +204,9 @@
   "url": "https://x.com/tanzealous",
   "rect": [
    467,
-   172,
+   266,
    541,
-   184
+   278
   ]
  },
  {
@@ -244,9 +214,9 @@
   "url": "https://x.com/tanzealous",
   "rect": [
    310,
-   160,
+   254,
    364,
-   172
+   266
   ]
  },
  {
@@ -254,9 +224,9 @@
   "url": "https://x.com/ycyvonne_",
   "rect": [
    467,
-   160,
+   254,
    541,
-   172
+   266
   ]
  },
  {
@@ -264,9 +234,9 @@
   "url": "https://x.com/ycyvonne_",
   "rect": [
    310,
-   148,
+   242,
    359,
-   160
+   254
   ]
  },
  {
@@ -274,9 +244,9 @@
   "url": "https://popsim.micahstubbs.ai",
   "rect": [
    101,
-   117,
+   216,
    254,
-   128
+   227
   ]
  },
  {
@@ -284,9 +254,9 @@
   "url": "https://github.com/micahstubbs/pop-world-model-sim",
   "rect": [
    202,
-   93,
+   192,
    302,
-   104
+   203
   ]
  },
  {
@@ -294,9 +264,9 @@
   "url": "https://github.com/micahstubbs/pop-world-model-sim",
   "rect": [
    71,
-   81,
+   180,
    237,
-   92
+   191
   ]
  },
  {
@@ -304,9 +274,39 @@
   "url": "https://github.com/micahstubbs/popsim",
   "rect": [
    139,
-   69,
+   168,
    302,
-   80
+   179
+  ]
+ },
+ {
+  "page": 5,
+  "url": "https://github.com/micahstubbs/popsim",
+  "rect": [
+   71,
+   156,
+   104,
+   166
+  ]
+ },
+ {
+  "page": 5,
+  "url": "https://luma.com/th01qwp1",
+  "rect": [
+   271,
+   92,
+   302,
+   104
+  ]
+ },
+ {
+  "page": 5,
+  "url": "https://luma.com/th01qwp1",
+  "rect": [
+   71,
+   80,
+   172,
+   92
   ]
  },
  {

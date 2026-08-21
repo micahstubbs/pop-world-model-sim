@@ -1,238 +1,251 @@
 popsim: Reproducing Elements of Billion-Agent Social Simulators
   on a Single Machine, with a Behavioral-Adherence Benchmark
                for Persona Agents on Sentiment140
-                         Micah Stubbs                                   Yvonne Chen
-                      CaseMirror Research
+                         Micah Stubbs                                Yvonne Chen
                      micah@casemirror.ai                       yc.yvonnechen@gmail.com
                                                  August 2026
 
 
-Abstract                                                       attribute dimensions, with a curated million-persona
-                                                               subset grounded partly in real human profiles, and a
-Population-scale social simulators such as Light So-           headline evaluation showing persona agents express
-ciety (one billion agents) and MatrAIx (8.3 billion            or appropriately suppress declared behaviors in 91.5%
-personas) require infrastructure most researchers can-         of trials.
-not access. We show that their core methodology                   Both systems presume compute, data pipelines, and
-of human-grounded personas, tiered compute, and                engineering budgets beyond most academic and hob-
-ground-truth validation runs on one commodity ma-              byist settings. This paper asks a deliberately modest
-chine, using Sentiment140: 1.6M public tweets in               question: which elements of this research program can
-under 300 MB of memory. We mine personas for the               be reproduced on one machine, over one public dataset,
-6,245 users with at least 20 tweets each, and a mixture-       in an evening? Our answers are embodied in popsim,
-of-models ladder cuts simulation cost 702.7× versus an         built at a public build night, with all analysis running
-all-LLM population. Validating on the real @-mention           in-memory on a single node.1
-graph produces a negative result: DeGroot opinion                 Our contributions are:
+Abstract                                                       headline evaluation showing persona agents express
+                                                               or appropriately suppress declared behaviors in 91.5%
+Population-scale social simulators such as Light So-           of trials.
+ciety (one billion agents) and MatrAIx (8.3 billion               Both systems presume compute, data pipelines, and
+personas) require infrastructure most researchers can-         engineering budgets beyond most academic and hob-
+not access. We show that their core methodology                byist settings. This paper asks a deliberately modest
+of human-grounded personas, tiered compute, and                question: which elements of this research program can
+ground-truth validation runs on one commodity ma-              be reproduced on one machine, over one public dataset,
+chine, using Sentiment140: 1.6M public tweets in               in an evening? Our answers are embodied in popsim,
+under 300 MB of memory. We mine personas for the               built at a public build night, with all analysis running
+6,245 users with at least 20 tweets each, and a mixture-       in-memory on a single node.1
+of-models ladder cuts simulation cost 702.7× versus an
+                                                                  Our contributions are:
+all-LLM population. Validating on the real @-mention
+graph produces a negative result: DeGroot opinion
+                                                                1. A single-machine, small-compute reproduc-
 diffusion (r = 0.54) underperforms per-user persis-
-tence (r = 0.73) at predicting future sentiment. Dis-           1. A single-machine, small-compute reproduc-
-position beats diffusion. Sustained one-way (paraso-               tion of elements of Light Society and Ma-
-cial) attachments prove as numerous as strong mutual               trAIx: human-grounded persona mining (§4); a
-ties, motivating a near-zero-cost broadcast tier. We               mixture-of-models scale ladder with a measured
-also release a fixed behavioral-adherence benchmark:               702.7× cost reduction (§5); and validation of sim-
-per-user temporal 80/20 splits scored on 42,998 held-              ulated dynamics against held-out ground truth
-out tweets, where a zero-parameter persona baseline                on a real interaction graph (§6), including a nega-
-reaches 63.1% and MatrAIx’s reported 91.5%, under                  tive result we believe is informative for simulator
-a differing protocol, frames the gap. Code, artifacts,             design.
-and an interactive explainer are public.
-                                                                2. A new behavioral-adherence evaluation
+                                                                   tion of elements of Light Society and Ma-
+tence (r = 0.73) at predicting future sentiment. Dis-
+                                                                   trAIx: human-grounded persona mining (§4); a
+position beats diffusion. Sustained one-way (paraso-
+                                                                   mixture-of-models scale ladder with a measured
+cial) attachments prove as numerous as strong mutual
+                                                                   702.7× cost reduction (§5); and validation of sim-
+ties, motivating a near-zero-cost broadcast tier. We
+                                                                   ulated dynamics against held-out ground truth
+also release a fixed behavioral-adherence benchmark:
+                                                                   on a real interaction graph (§6), including a nega-
+per-user temporal 80/20 splits scored on 42,998 held-
+                                                                   tive result we believe is informative for simulator
+out tweets, where a zero-parameter persona baseline
+                                                                   design.
+reaches 63.1% and MatrAIx’s reported 91.5%, under
+a differing protocol, frames the gap. Code, artifacts,
+and an interactive explainer are public.                        2. A new behavioral-adherence evaluation
                                                                    for persona agents on an existing pub-
-1     Introduction                                                 lic dataset (§8): a fixed, reproducible protocol
-                                                                   on Sentiment140 with a zero-parameter baseline
-Two recent systems define the frontier of population-              of 63.1%, framed against MatrAIx’s (protocol-
- scale social simulation. Light Society [1] advances               distinct) 91.5% bar.
+                                                                   lic dataset (§8): a fixed, reproducible protocol
+1     Introduction                                                 on Sentiment140 with a zero-parameter baseline
+                                                                   of 63.1%, framed against MatrAIx’s (protocol-
+Two recent systems define the frontier of population-              distinct) 91.5% bar.
+ scale social simulation. Light Society [1] advances
 “earth-scale” simulation: over 109 agents whose states
- evolve through LLM-powered simulation operations,        3. An empirical account of relationship
- made tractable by a mixture-of-models engine combin-         strength and parasocial structure in the
- ing full LLMs with distilled surrogates, and validated       dataset’s mention graph (§7), with a concrete
- through trust-game and opinion-diffusion experiments.     1 Interactive explainer: https://popsim.micahstubbs.ai.
- MatrAIx [2] contributes population realism of a differ- Code and artifacts:       https://github.com/micahstubbs/
- ent kind: 8.3 billion persona records spanning 1,290 pop-world-model-sim.
+                                                         3. An empirical account of relationship
+ evolve through LLM-powered simulation operations,
+                                                             strength and parasocial structure in the
+ made tractable by a mixture-of-models engine combin-
+                                                             dataset’s mention graph (§7), with a concrete
+ ing full LLMs with distilled surrogates, and validated
+                                                             architectural implication: population simulators
+ through trust-game and opinion-diffusion experiments.
+                                                             need a broadcast tier, and it is nearly free.
+ MatrAIx [2] contributes population realism of a differ-
+ ent kind: 8.3 billion persona records spanning 1,290     1 Interactive explainer: https://popsim.micahstubbs.ai.
+ attribute dimensions, with a curated million-persona Code and artifacts:         https://github.com/micahstubbs/
+ subset grounded partly in real human profiles, and a pop-world-model-sim.
 
 
                                                            1
-                                                                                Per-user tweet counts (1.6M tweets, 659,775 users)
-                                                                                                        cohort threshold
-                                                                                105                     ( ≥ 20 tweets)
+                                                                                       Per-user tweet counts (1.6M tweets, 659,775 users)
+                                                                                                                  cohort threshold
+                                                                                       105                        ( ≥ 20 tweets)
 
 
 
 
                                                               number of users
-                                                                                104
-                                                                                103
-                                                                                102
-                                                                                101
-                                                                                100
-                                                                                      100         101           102
+                                                                                       104
+                                                                                       103
+                                                                                       102
+                                                                                       101
+                                                                                       100
+                                                                                             100           101            102
 Figure 1: Dataset selection in the interactive ex-                        tweets by user k
 plainer (https://popsim.micahstubbs.ai/#data):
 candidate corpora compared on the number of distinct
 users with at least 20 tweets.                       Figure 2: Per-user tweet counts are heavy-tailed. The
                                                      cohort threshold (≥ 20 tweets) admits 6,245 users
                                                      covering 226,202 tweets.
-    architectural implication: population simulators
-    need a broadcast tier, and it is nearly free.             3                   Dataset and Cohort
-                                                              Sentiment140 loads from one CSV into 295 MB of
-                                                              memory: 1,600,000 tweets, 659,775 distinct users, 48
-                                                              days, balanced 800K/800K negative/positive labels.
-2    Related Work                                             Figure 2 shows the heavy-tailed per-user activity dis-
-                                                              tribution. We define the persona cohort as the
-                                                              6,245 users with at least 20 tweets (226,202 tweets;
+2    Related Work
 Population-scale simulation. Light Society [1] for-
-                                                              mean 36.2, median 28 per user; mean per-user activity
 malizes society simulation as structured transitions
-                                                              span ∼50 days). The corpus retains a strong diurnal
-of agent and environment states governed by LLM-
-                                                              rhythm (Figure 3), with a peak at 23:00 and a trough
+of agent and environment states governed by LLM-                                                       Diurnal activity cycle
+                                                                                                                                      peak 23:00
 powered operations, scaling to 109 agents grounded
-                                                              at 13:00 PDT, usable for calibrating agent posting
+                                                                                       80
 in World Values Survey demographic profiles via a
-                                                              schedules. Selection among candidate corpora was
+                                                                  tweets (thousands)
+
+
+
+
 mixture-of-models engine. MatrAIx [2] builds an 8.3B-
-                                                              itself empirical: the Community Archive holds only
-record persona database (599,847 human-grounded
-                                                              363 accounts; the Archive Team 1% stream rarely
+                                                                                       60
+record persona database (599,847 human-grounded                                                                   trough 13:00
+
 profiles among the curated subset) and evaluates be-
-                                                              observes a user 20 times; ID-only corpora cannot be
+                                                                                       40
 havioral adherence across four environments. Genera-
-                                                              hydrated. Sentiment140 maximizes the number of dis-
 tive agent-based modeling more broadly descends from
-                                                              tinct humans with enough history to ground a persona
+                                                                                       20
 Park et al.’s generative agents [3], which demonstrated
-                                                              while fitting in RAM.
 believable social behavior from memory-augmented
-LLM agents in a small sandbox town.
-   Data. Sentiment140 [4] provides 1.6M tweets from           4                   Persona Mining
+                                                                                        0
+LLM agents in a small sandbox town.                                                          0     4       8      12    16       20
+   Data. Sentiment140 [4] provides 1.6M tweets from                                                      hour of day (PDT)
 April–June 2009, distantly labeled for sentiment by
-emoticons. It remains one of the few large fully-public       Following MatrAIx’s human-grounded persona con-
-full-text tweet corpora: since the 2023 restriction of        struction at hackathon scale, each cohort user becomes
-the X API, tweet-ID “hydration” workflows that most           a persona card computed from their real timeline: sen-
-academic Twitter datasets rely on are effectively de-         timent disposition (share of positive tweets), verbosity
-funct, making full-text corpora the practical substrate       (words/tweet), mention rate, peak posting hour, ac-
-for new work. TweetEval [5] standardizes tweet classi-        tivity span, and characteristic vocabulary. Unlike
-fication benchmarks and supplies pretrained classifiers       survey-grounded profiles, these personas carry tempo-
-usable as realism scorecards. Kwak et al. [6] estab-          ral behavior (posting cadence, diurnal phase) directly
-lished the large-scale structural view of Twitter; Hor-       usable to drive simulation ticks. The cohort skews
-ton and Wohl [7] introduced the parasocial-interaction        positive (59% vs. the corpus’s balanced 50%), a se-
-construct we operationalize; DeGroot [8] supplies the         lection effect worth modeling rather than ignoring:
-consensus-formation model we test.                            highly active users differ from the population they are
+emoticons. It remains one of the few large fully-public
+full-text tweet corpora: since the 2023 restriction of        Figure 3: Diurnal activity cycle across the corpus (all
+the X API, tweet-ID “hydration” workflows that most           1.6M tweets).
+academic Twitter datasets rely on are effectively de-
+funct, making full-text corpora the practical substrate
+for new work. TweetEval [5] standardizes tweet classi-
+fication benchmarks and supplies pretrained classifiers
+usable as realism scorecards. Kwak et al. [6] estab-          tribution. We define the persona cohort as the
+lished the large-scale structural view of Twitter; Hor-       6,245 users with at least 20 tweets (226,202 tweets;
+ton and Wohl [7] introduced the parasocial-interaction        mean 36.2, median 28 per user; mean per-user activity
+construct we operationalize; DeGroot [8] supplies the         span ∼50 days). The corpus retains a strong diurnal
+consensus-formation model we test.                            rhythm (Figure 3), with a peak at 23:00 and a trough
+                                                              at 13:00 PDT, usable for calibrating agent posting
+                                                              schedules. Selection among candidate corpora was
+3    Dataset and Cohort                                       itself empirical: the Community Archive holds only
+                                                              363 accounts; the Archive Team 1% stream rarely
+Sentiment140 loads from one CSV into 295 MB of                observes a user 20 times; ID-only corpora cannot be
+memory: 1,600,000 tweets, 659,775 distinct users, 48          hydrated. Sentiment140 maximizes the number of dis-
+days, balanced 800K/800K negative/positive labels.            tinct humans with enough history to ground a persona
+Figure 2 shows the heavy-tailed per-user activity dis-        while fitting in RAM.
 
 
                                                           2
-                                   Diurnal activity cycle                             Persistence wins (Figure 5): r = 0.73 for a user’s
-                                                                  peak 23:00       own past versus r = 0.54 after diffusion; restricting to
-                      80                                                           graph-connected users widens the gap (0.72 vs. 0.40).
- tweets (thousands)
-
-
-
-                                                                                   Neighbor-mixing strictly destroys predictive informa-
-                      60                                                           tion at this horizon. Disposition beats diffusion:
-                                              trough 13:00
-                                                                                   over 48 days, who a person is outweighs who they
-                      40                                                           talk to. For simulator design the implication is direct:
-                                                                                   a population world model that over-weights social
-                      20                                                           contagion will be less accurate than one grounded in
-                                                                                   stable personas, which is why persona grounding (§4)
-                       0                                                           matters.
-                           0   4       8      12    16       20
-                                     hour of day (PDT)
-
-
-
-Figure 3: Diurnal activity cycle across the corpus (all
-1.6M tweets).
-                                                                                   7     Relationship Strength and
-drawn from.                                                                              Parasocial Structure
-
-5                      The Mixture-of-Models Scale To model whom agents should talk to, we quantify
-                       Ladder                      relationship structure over the full mention graph
-                                                                                   (all 1.6M tweets). For unordered pairs where both
-Light Society’s central efficiency device is heteroge-                             users author tweets in the sample (so silence is ob-
-neous agent cost: full LLMs only where fidelity de-                                served, not censored; n = 293,212 pairs), we score
-mands them. We instantiate the same ladder sized to                                reciprocity r = min(wab , wba )/ max(wab , wba ) and
-one node (Figure 4): full LLM agents for the 927                                   strength log(1+total)·log(1+days)·(1+r), and classify
-users with ≥ 50 tweets (enough signal to condition                                 pairs by mutuality and volume (Figure 6, left). Gen-
-a frontier model); distilled surrogates (persona-                                  uine relationships are rare: 77% of pairs are one-off
-conditioned small models) for the 5,318 users with 20–                             contacts. Sustained one-way attachments (unidirec-
-49 tweets; and a statistical background tier (rate                                 tional strong: ≥ 5 mentions, zero returned; 1,957
-and sentiment samplers) for the remaining 653,530                                  pairs) are as numerous as strong mutual bonds (1,901
-users. Under a relative cost model of 1000 : 1 : 0.01                              pairs). For every observable friendship there is roughly
-units per agent-tick, the ladder costs 9.39 × 105 units                            one unrequited attachment.
+4     Persona Mining                                       Neighbor-mixing strictly destroys predictive informa-
+                                                           tion at this horizon. Disposition beats diffusion:
+Following MatrAIx’s human-grounded persona con-            over 48 days, who a person is outweighs who they
+struction at hackathon scale, each cohort user becomes     talk to. For simulator design the implication is direct:
+a persona card computed from their real timeline: sen-     a population world model that over-weights social
+timent disposition (share of positive tweets), verbosity   contagion will be less accurate than one grounded in
+(words/tweet), mention rate, peak posting hour, ac-        stable personas, which is why persona grounding (§4)
+tivity span, and characteristic vocabulary. Unlike         matters.
+survey-grounded profiles, these personas carry tempo-
+ral behavior (posting cadence, diurnal phase) directly
+usable to drive simulation ticks. The cohort skews 7            Relationship Strength and
+positive (59% vs. the corpus’s balanced 50%), a se-             Parasocial Structure
+lection effect worth modeling rather than ignoring:
+highly active users differ from the population they are To model whom agents should talk to, we quantify
+drawn from.                                              relationship structure over the full mention graph
+                                                         (all 1.6M tweets). For unordered pairs where both
+                                                         users author tweets in the sample (so silence is ob-
+5 The Mixture-of-Models Scale served, not censored; n = 293,212 pairs), we score
+                                                         reciprocity r = min(wab , wba )/ max(wab , wba ) and
+       Ladder                                            strength log(1+total)·log(1+days)·(1+r), and classify
+                                                         pairs by mutuality and volume (Figure 6, left). Gen-
+Light Society’s central efficiency device is heteroge-
+                                                         uine relationships are rare: 77% of pairs are one-off
+neous agent cost: full LLMs only where fidelity de-
+                                                         contacts. Sustained one-way attachments (unidirec-
+mands them. We instantiate the same ladder sized to
+                                                         tional strong: ≥ 5 mentions, zero returned; 1,957
+one node (Figure 4): full LLM agents for the 927
+                                                         pairs) are as numerous as strong mutual bonds (1,901
+users with ≥ 50 tweets (enough signal to condition
+                                                         pairs). For every observable friendship there is roughly
+a frontier model); distilled surrogates (persona-
+                                                         one unrequited attachment.
+conditioned small models) for the 5,318 users with 20–
+                                                            At the account level, among in-sample targets with
+49 tweets; and a statistical background tier (rate
+                                                         ≥ 20 distinct mentioners, 408 reciprocate under 5%
+and sentiment samplers) for the remaining 653,530
+                                                         of their audience, operationally parasocial [7], in-
+users. Under a relative cost model of 1000 : 1 : 0.01
+                                                         cluding 2009-era celebrities (wossy, ashleytisdale,
+units per agent-tick, the ladder costs 9.39 × 105 units
+                                                         tomfelton) who tweet but do not talk back, while
 per tick versus 6.60 × 108 for an all-LLM population,
-a 702.7× reduction with zero fidelity loss on the users                              At the account level, among in-sample targets with
-who carry most of the observable signal.                                           ≥ 20 distinct mentioners, 408 reciprocate under 5%
-                                                                                   of their audience, operationally parasocial [7], in-
-                                                                                   cluding 2009-era celebrities (wossy, ashleytisdale,
-6                      Does Sentiment Diffuse? A                                   tomfelton) who tweet but do not talk back, while
-                                                                                   163 community hubs of comparable audience recipro-
-                       Validated Negative Result                                   cate 30–53%. A further 524 broadcast targets (e.g.
-                                                                                   jonasbrothers: 1,901 distinct fans in 48 days) never
-The cohort contains a real directed interaction graph:                             author a sampled tweet, so their reciprocity is unob-
-31,515 @-mention events between cohort members.                                    servable and we label rather than classify them. By
-Light Society validates simulations with opinion-                                  volume, 12.1% of all mention traffic flows to broad-
-diffusion experiments; we run the corresponding test                               cast/parasocial accounts versus 1.0% to reciprocating
-against ground truth. Each user is seeded with their                               hubs (Figure 6, right).
+                                                         163 community hubs of comparable audience recipro-
+a 702.7× reduction with zero fidelity loss on the users
+                                                         cate 30–53%. A further 524 broadcast targets (e.g.
+who carry most of the observable signal.
+                                                         jonasbrothers: 1,901 distinct fans in 48 days) never
+                                                         author a sampled tweet, so their reciprocity is unob-
+                                                         servable and we label rather than classify them. By
+6 Does Sentiment Diffuse? A volume, 12.1% of all mention traffic flows to broad-
+      Validated Negative Result                          cast/parasocial accounts versus 1.0% to reciprocating
+                                                         hubs (Figure 6, right).
+The cohort contains a real directed interaction graph:      The architectural implication joins §5: simulated
+31,515 @-mention events between cohort members. populations need a broadcast tier, and it is nearly
+Light Society validates simulations with opinion- free, since parasocial edges are one-directional by con-
+diffusion experiments; we run the corresponding test struction. The celebrity side requires no agent at all,
+against ground truth. Each user is seeded with their only a content feed.
 first-half sentiment; DeGroot mixing [8] (st+1 =
-0.7 st + 0.3 s̄N , 10 steps, edge weights = mention                                   The architectural implication joins §5: simulated
-counts) evolves states over the real graph; we then                                populations need a broadcast tier, and it is nearly
-ask which predictor better recovers each user’s second-                            free, since parasocial edges are one-directional by con-
-half sentiment (users with ≥ 5 tweets in each half;                                struction. The celebrity side requires no agent at all,
-n = 5,463).                                                                        only a content feed.
+0.7 st + 0.3 s̄N , 10 steps, edge weights = mention
+counts) evolves states over the real graph; we then 8           A         Behavioral-Adherence
+ask which predictor better recovers each user’s second-         Benchmark on Sentiment140
+half sentiment (users with ≥ 5 tweets in each half;
+n = 5,463).                                              MatrAIx’s headline metric, whether persona agents
+   Persistence wins (Figure 5): r = 0.73 for a user’s behave like their personas, currently lacks a public,
+own past versus r = 0.54 after diffusion; restricting to fixed-protocol instantiation that anyone can run. We
+graph-connected users widens the gap (0.72 vs. 0.40). contribute one on an existing public dataset.
 
 
-                                                                               3
-                                       Tier populations                                                             659,775,000
-                                                                                                                                  702.7× cheaper
-                                                                 653,530
+                                                       3
+                                           Tier populations                                                                  659,775,000
+                                                                                                                                           702.7× cheaper
+                                                                        653,530
 
 
 
 
-                                                                               relative cost per tick (log)
-                   105                                                                                        108
+                                                                                      relative cost per tick (log)
+                   105                                                                                               108
      users (log)
 
 
-                   104                        5,318                                                           107
-                            927                                                                                                                    938,853
-                   103                                                                                        106
-                            Full            Distilled            Statistical                                          all-LLM                 mixture-of-models
-                         LLM agents        surrogates           background                                           population                    ladder
+                   104                            5,318                                                              107
+                                927                                                                                                                         938,853
+                   103                                                                                               106
+                               Full             Distilled               Statistical                                            all-LLM                 mixture-of-models
+                            LLM agents         surrogates              background                                             population                    ladder
 
 
 Figure 4: The scale ladder. Left: tier populations (log scale). Right: relative cost of one simulation tick,
 all-LLM versus the ladder.
 
 
-                                  Disposition beats diffusion        volatile ones for whom persona-only prediction fails.
-                                                                     This is the floor a surrogate tier starts from and an
-       persistence                                        r = 0.73   LLM tier must climb.
-        (own past)
-                                                                       The bar. MatrAIx reports 91.5% behavioral ad-
-                                                                     herence across ten attributes in four environments.
-                                                                     The protocols are not comparable: theirs measures
- DeGroot diffusion                              r = 0.54
-       (neighbors)                                                   declared-attribute expression in synthetic interactions,
-                                                                     while ours measures real held-out behavior. We there-
-                   0.0       0.2      0.4        0.6        0.8      fore frame 91.5% as an aspirational bar on our pro-
-               Pearson r vs. second-half sentiment (n = 5,463 users)
-                                                                     tocol, not a record to break on equal terms. The
-                                                                     benchmark poses an open question: how far above
-Figure 5: Predicting second-half sentiment from first- 63.1% can persona-conditioned models go on real,
-half state. Simple persistence outperforms DeGroot noisy, distantly-labeled human behavior?
-diffusion over the real mention graph.
-
-                                  9 Limitations
-8       A    Behavioral-Adherence
-        Benchmark on Sentiment140 Our substrate is 2009 Twitter: 140-character posts,
-                                  no quote tweets, no algorithmic feed; behavioral con-
-                                                         stants observed here need not transfer to modern
-MatrAIx’s headline metric, whether persona agents
-                                                         platforms. Sentiment labels are distant (emoticon-
-behave like their personas, currently lacks a public,
-                                                         derived) and noisy. The corpus is a partial sample,
-fixed-protocol instantiation that anyone can run. We
+                                      Disposition beats diffusion                                 fore frame 91.5% as an aspirational bar on our pro-
+                                                                                                  tocol, not a record to break on equal terms. The
+         persistence                                                    r = 0.73                  benchmark poses an open question: how far above
+          (own past)
+                                                                                                  63.1% can persona-conditioned models go on real,
+                                                                                                  noisy, distantly-labeled human behavior?
+ DeGroot diffusion                                          r = 0.54
+      (neighbors)
+                                                                                                  9                        Limitations
+                            0.0        0.2      0.4        0.6       0.8
+                         Pearson r vs. second-half sentiment (n = 5,463 users)
+                                                         Our substrate is 2009 Twitter: 140-character posts,
+                                                         no quote tweets, no algorithmic feed; behavioral con-
+Figure 5: Predicting second-half sentiment from first- stants observed here need not transfer to modern
+half state. Simple persistence outperforms DeGroot platforms. Sentiment labels are distant (emoticon-
+diffusion over the real mention graph.                   derived) and noisy. The corpus is a partial sample,
                                                          which censors reciprocity; we mitigate by restricting
-contribute one on an existing public dataset.
                                                          reciprocity claims to in-sample authors with audience
    Protocol (fixed). Cohort: the 6,245 Sentiment140 ≥ 20 and labeling out-of-sample targets as unobserved.
 users with ≥ 20 tweets. Per user, order tweets by The scale-ladder cost model uses nominal relative unit
@@ -249,9 +262,17 @@ dicts each user’s train-majority sentiment, attains 10           Conclusion
 63.1% (chance: 50%, label-balanced corpus). Fig-
 ure 8 shows the per-user distribution: bimodal, with a The methodology of billion-agent social simulators is
 large mass of highly consistent users and a long tail of not confined to billion-agent budgets. On one machine
+volatile ones for whom persona-only prediction fails. and one public dataset we reproduced the persona-
+This is the floor a surrogate tier starts from and an grounding and mixture-of-models patterns of Light
+LLM tier must climb.                                     Society and MatrAIx, validated a diffusion assumption
+   The bar. MatrAIx reports 91.5% behavioral ad- against ground truth (and found it wanting), mapped
+herence across ten attributes in four environments. the parasocial structure a realistic simulator must
+The protocols are not comparable: theirs measures include, and left behind a fixed, public behavioral-
+declared-attribute expression in synthetic interactions, adherence benchmark with a 63.1% baseline and a
+while ours measures real held-out behavior. We there- 91.5% bar. The gap between those numbers is, we
 
 
-                                                                               4
+                                                                                      4
                          Pair classes (293,212 observable pairs)
                         226,103
                                                                                                                             Where attention flows
@@ -289,25 +310,24 @@ Figure 7: The benchmark section of the interactive explainer (https://popsim.mic
 accuracy distribution over held-out tweets.
 
 
-and one public dataset we reproduced the persona-                                     popsim.
-grounding and mixture-of-models patterns of Light
-Society and MatrAIx, validated a diffusion assumption                                 Acknowledgments
-against ground truth (and found it wanting), mapped
-the parasocial structure a realistic simulator must                                  Built at the Postlabor.dev “Building Economic World
-include, and left behind a fixed, public behavioral-                                 Models” Simulation Build Night (August 2026, https:
-adherence benchmark with a 63.1% baseline and a                                      //luma.com/th01qwp1). We thank Jake Schwartz
-91.5% bar. The gap between those numbers is, we                                      for collaboration during the build night, and the
-hope, an invitation.                                                                 event hosts Clovis Vinant-Tang (https://x.com/
-                                                                                     ClovisVinant), Tanzeela Khan (https://x.com/
-                                                                                     tanzealous), and Yvonne Chen (https://x.com/
-Artifact Availability                                                                ycyvonne_) for organizing the evening that made this
-                                                                                     work possible.
-The interactive explainer shown in Figures 1 and 7 is
+hope, an invitation.                                  event hosts Clovis Vinant-Tang (https://x.com/
+                                                      ClovisVinant), Tanzeela Khan (https://x.com/
+                                                      tanzealous), and Yvonne Chen (https://x.com/
+Artifact Availability                                 ycyvonne_) for organizing the evening that made this
+The interactive explainer shown in Figures 1 and 7 is work possible.
 live at https://popsim.micahstubbs.ai. All analy-
 sis code, data pipelines, the benchmark protocol, and
 the source of this paper are at https://github.com/
 micahstubbs/pop-world-model-sim; the deployed
 site source is at https://github.com/micahstubbs/
+popsim.
+
+
+Acknowledgments
+Built at the Postlabor.dev “Building Economic World
+Models” Simulation Build Night (August 2026, https:
+//luma.com/th01qwp1). We thank Jake Schwartz
+for collaboration during the build night, and the
 
 
                                                                               5
