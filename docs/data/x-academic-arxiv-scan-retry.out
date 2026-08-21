@@ -1,0 +1,161 @@
+Najmeh Taleb	@NajmehTaleb	total=0	eligible=0	cs_eligible=0
+Jaime Snyder	@jay_ess	total=3	eligible=3	cs_eligible=3
+	2605.21777v1	2026-05-20	cs.HC,cs.AI	Understanding Perspectives of Patients, Caregivers and Clinicians towards Emerging Collabo
+	2603.24993v1	2026-03-26	cs.HC	Co-designing for the Triad: Design Considerations for Collaborative Decision-Making Techno
+	2504.13947v1	2025-04-16	cs.CY,cs.AI,cs.HC	From job titles to jawlines: Using context voids to study generative AI systems
+Adrien Todeschini	@adrtod	total=2	eligible=0	cs_eligible=0
+Aba Crentsil	@AOCrentsil	total=0	eligible=0	cs_eligible=0
+Karthik Duddu	@karthikduddu	total=7	eligible=6	cs_eligible=6
+	2509.20354v3	2025-09-24	cs.CL,cs.AI	EmbeddingGemma: Powerful and Lightweight Text Representations
+	2507.06261v6	2025-07-07	cs.CL,cs.AI	Gemini 2.5: Pushing the Frontier with Advanced Reasoning, Multimodality, Long Context, and
+	2503.07891v1	2025-03-10	cs.CL,cs.AI	Gemini Embedding: Generalizable Embeddings from Gemini
+	2403.20327v1	2024-03-29	cs.CL,cs.AI	Gecko: Versatile Text Embeddings Distilled from Large Language Models
+	2304.01982v3	2023-04-04	cs.CL,cs.IR	Rethinking the Role of Token Retrieval in Multi-Vector Retrieval
+	2211.01267v1	2022-11-02	cs.CL,cs.IR	Multi-Vector Retrieval as Sparse Alignment
+Liu Liu	@liuxliu_66	total=0	eligible=0	cs_eligible=0
+Miles Brundage	@Miles_Brundage	total=26	eligible=13	cs_eligible=13
+	2601.11699v4	2026-01-16	cs.CY	Frontier AI Auditing: Toward Rigorous Third-Party Assessment of Safety and Security Practi
+	2507.15916v2	2025-07-21	cs.CY	Verifying International Agreements on AI: Six Layers of Verification for Rules on Large-Sc
+	2505.01643v2	2025-05-03	cs.CY	Third-party compliance reviews for frontier AI safety frameworks
+	2412.06966v2	2024-12-09	cs.LG,cs.AI,cs.CY	Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Researc
+	2410.21276v1	2024-10-25	cs.CL,cs.AI,cs.CV	GPT-4o System Card
+	2402.08797v1	2024-02-13	cs.CY	Computing Power and the Governance of Artificial Intelligence
+Joshua Stevens	@jscarto	total=0	eligible=0	cs_eligible=0
+Bharath Ramsundar	@rbhar90	total=39	eligible=24	cs_eligible=21
+	2602.18060v1	2026-02-20	cs.LG	Deepmechanics
+	2602.17747v1	2026-02-19	q-bio.GN,cs.LG	AgriVariant: Variant Effect Prediction using DeepChem-Variant for Precision Breeding in Ri
+	2602.15923v1	2026-02-17	cond-mat.mtrl-sci,cs.AI,cs.LG	A fully differentiable framework for training proxy Exchange Correlation Functionals for p
+	2602.13419v1	2026-02-13	q-bio.QM,cs.AI,cs.CL	Protect$^*$: Steerable Retrosynthesis through Neuro-Symbolic State Encoding
+	2512.01301v1	2025-12-01	stat.ME,eess.SP	Inferring Dynamic Hidden Graph Structure in Heterogeneous Correlated Time Series
+	2511.22096v1	2025-11-27	q-bio.TO,eess.SP,stat.AP	Density-based Neural Temporal Point Processes for Heartbeat Dynamics
+Jessica Hullman	@JessicaHullman	total=50	eligible=39	cs_eligible=37
+	2604.08421v1	2026-04-09	stat.ME	Hypothesizing an effect size by considering individual variation
+	2604.01597v1	2026-04-02	cs.LG	Learning from the Right Rollouts: Data Attribution for PPO-based LLM Post-Training
+	2602.19458v1	2026-02-23	cs.AI,cs.HC	ComplLLM: Fine-tuning LLMs to Discover Complementary Signals for Decision-making
+	2602.15785v1	2026-02-17	cs.AI	This human study did not involve human subjects: Validating LLM simulations as behavioral 
+	2511.09667v1	2025-11-12	cs.HC	How AI Responses Shape User Beliefs: The Effects of Information Detail and Confidence on B
+	2507.20985v1	2025-07-28	cs.GT	Behavioral Study of Dashboard Mechanisms
+Carmen Ng	@Carmen_NgKaMan	total=2	eligible=1	cs_eligible=1
+	2603.16537v1	2026-03-17	cs.AI,cs.HC,cs.RO	Designing for Disagreement: Front-End Guardrails for Assistance Allocation in LLM-Enabled 
+Alex Engler	@AlexCEngler	total=1	eligible=1	cs_eligible=1
+	2403.07918v1	2024-02-27	cs.CY,cs.AI,cs.LG	On the Societal Impact of Open Foundation Models
+Bill Chen	@realchillben	total=3	eligible=3	cs_eligible=3
+	2601.03267v2	2025-12-19	cs.CL,cs.AI	OpenAI GPT-5 System Card
+	2510.15217v3	2025-10-17	cs.LG	Reflections from Research Roundtables at the Conference on Health, Inference, and Learning
+	2403.17165v3	2024-03-25	cs.HC	Building an Open-Source Community to Enhance Autonomic Nervous System Signal Analysis: DBD
+Junfan Zhu IROS	@junfanzhu98	total=0	eligible=0	cs_eligible=0
+Meredith Martin	@mmvty	total=3	eligible=3	cs_eligible=3
+	2604.16403v1	2026-03-31	cs.AI,cs.CY	Computational Hermeneutics: Evaluating generative AI as a cultural technology
+	2510.08831v1	2025-10-09	cs.AI,cs.CL,cs.HC	Everyone prefers human writers, including AI
+	2502.19190v2	2025-02-26	cs.CY,cs.AI	Provocations from the Humanities for Generative AI Research
+Katie McDonough	@khetiwe24	total=0	eligible=0	cs_eligible=0
+Martin Tomko	@dinomirMT	total=13	eligible=7	cs_eligible=7
+	2603.04683v1	2026-03-04	cs.LG	Direct Estimation of Tree Volume and Aboveground Biomass Using Deep Regression with Synthe
+	2510.17644v3	2025-10-20	cs.CV	Mapping Hidden Heritage: Self-supervised Pre-training on High-Resolution LiDAR DEM Derivat
+	2407.04334v2	2024-07-05	cs.CV,cs.LG	Learning Geometric Invariant Features for Classification of Vector Polygons with Graph Mes
+	2407.04326v4	2024-07-05	cs.CV	LMSeg: An end-to-end geometric message-passing network on barycentric dual graphs for larg
+	2401.02187v1	2024-01-04	cs.CL	Location Aware Modular Biencoder for Tourism Question Answering
+	2302.08761v3	2023-02-17	cs.LG	Metropolitan Segment Traffic Speeds from Massive Floating Car Data in 10 Cities
+Joel Eden	@joeleden	total=0	eligible=0	cs_eligible=0
+Michael Widner	@mwidner	total=0	eligible=0	cs_eligible=0
+Fredrik Thomassen	@f_thomassen	total=0	eligible=0	cs_eligible=0
+Branden Murray	@bmurr26	total=1	eligible=1	cs_eligible=1
+	2605.18383v2	2026-05-18	cs.LG	TabH2O: A Unified Foundation Model for Tabular Prediction
+NDSU Research Tech Park	@NDSURTP	total=0	eligible=0	cs_eligible=0
+Deepak Nathani	@deepaknathani11	total=16	eligible=10	cs_eligible=10
+	2604.00842v1	2026-04-01	cs.AI,cs.LG,cs.MA	Proactive Agent Research Environment: Simulating Active Users to Evaluate Proactive Assist
+	2603.17863v2	2026-03-18	cs.LG,cs.AI	DiscoGen: Procedural Generation of Algorithm Discovery Tasks in Machine Learning
+	2602.04837v1	2026-02-04	cs.AI	Group-Evolving Agents: Open-Ended Self-Improvement via Experience Sharing
+	2601.05567v1	2026-01-09	cs.AI,cs.CL	WildSci: Advancing Scientific Reasoning from In-the-Wild Literature
+	2511.22888v1	2025-11-28	cs.LG,cs.AI	Adversarial Training for Process Reward Models
+	2510.09359v1	2025-10-10	cs.CL	Understanding the Effects of Domain Finetuning on LLMs
+Doyle Groves	@deejmon	total=0	eligible=0	cs_eligible=0
+Alex Sherstinsky	@AlexSherstinsky	total=2	eligible=1	cs_eligible=1
+	2405.00732v1	2024-04-29	cs.CL,cs.AI,cs.LG	LoRA Land: 310 Fine-tuned LLMs that Rival GPT-4, A Technical Report
+Hassan Hijazi	@HassanLHijazi	total=18	eligible=4	cs_eligible=1
+	2506.22797v1	2025-06-28	math.OC	Optimal Trajectory Planning for Space Object Tracking with Collision-Avoidance Constraints
+	2401.05280v3	2024-01-10	math.OC	Bound Tightening using Rolling-Horizon Decomposition for Neural Network Verification
+	2203.11328v1	2022-03-21	math.OC	Benchmarking Large-Scale ACOPF Solutions and Optimality Bounds
+	2202.13501v1	2022-02-28	cs.CV	Globally Optimal Boresight Alignment of UAV-LiDAR Systems
+Bum Chul Kwon	@BCKwon	total=28	eligible=17	cs_eligible=17
+	2511.02769v1	2025-11-04	cs.LG,cs.AI,q-bio.BM	STAR-VAE: Latent Variable Transformers for Scalable and Controllable Molecular Generation
+	2507.05265v1	2025-06-26	q-bio.GN,cs.LG	BMFM-DNA: A SNP-aware DNA foundation model to capture variant effects
+	2503.08836v2	2025-03-11	cs.HC	A Critical Analysis of the Usage of Dimensionality Reduction in Four Domains
+	2410.19704v4	2024-10-25	q-bio.BM,cs.AI,cs.LG	Multi-view biomedical foundation models for molecule-target and property prediction
+	2408.04874v1	2024-08-09	cs.HC	DG Comics: Semi-Automatically Authoring Graph Comics for Dynamic Graphs
+	2404.16174v1	2024-04-24	cs.HC,cs.CV,cs.LG	MiMICRI: Towards Domain-centered Counterfactual Explanations of Cardiovascular Image Class
+Jason Park	@JasonPathology	total=4	eligible=4	cs_eligible=4
+	2604.23150v1	2026-04-25	cs.LG,cs.AI,cs.AR	Scaling Multi-Node Mixture-of-Experts Inference Using Expert Activation Patterns
+	2604.05436v1	2026-04-07	cs.CV,cs.AI	Human Interaction-Aware 3D Reconstruction from a Single Image
+	2508.08192v1	2025-08-11	cs.CL	Efficient Speculative Decoding for Llama at Scale: Challenges and Solutions
+	2407.21783v3	2024-07-31	cs.AI,cs.CL,cs.CV	The Llama 3 Herd of Models
+Andrea Bonilla	@datasci_andrea	total=0	eligible=0	cs_eligible=0
+Dan Paul Smith	@danpaulsmith	total=20	eligible=5	cs_eligible=3
+	2601.14588v1	2026-01-21	astro-ph.CO	A JWST Paschen-alpha Calibration of the Radio Luminosity-Star Formation Rate Relation at z
+	2505.09880v2	2025-05-15	cs.SE,cs.CY	Determining Absence of Unreasonable Risk: Approval Guidelines for an Automated Driving Sys
+	2504.19881v1	2025-04-28	cs.CV	Using Fixed and Mobile Eye Tracking to Understand How Visitors View Art in a Museum: A Stu
+	2411.05615v3	2024-11-08	physics.ins-det,hep-ex,nucl-ex	New methods of neutrino and anti-neutrino detection from 0.115 to 105 MeV
+	2306.01917v1	2023-06-02	cs.CY	Building a Credible Case for Safety: Waymo's Approach for the Determination of Absence of 
+Ben Moore	@benjaminlmoore	total=50	eligible=5	cs_eligible=0
+	2409.02746v2	2024-09-04	astro-ph.EP	A Systematic Survey of Moon-Forming Giant Impacts. II. Rotating bodies
+	2402.14535v1	2024-02-22	astro-ph.EP,physics.ao-ph	Quenching-driven equatorial depletion and limb asymmetries in hot Jupiter atmospheres: WAS
+	2312.03021v1	2023-12-05	math.NT	Effective generation of Hecke algebras and explicit estimates of Sato--Tate type
+	2307.06078v1	2023-07-12	astro-ph.EP	A systematic survey of Moon-forming giant impacts: Non-rotating bodies
+	2306.02171v1	2023-06-03	math.AG,math.NT	The de Rham period map for punctured elliptic curves and the KZB equation
+Damon Civin	@DCivin	total=3	eligible=1	cs_eligible=1
+	2407.21783v3	2024-07-31	cs.AI,cs.CL,cs.CV	The Llama 3 Herd of Models
+Not happy with the bigot tweets in timeline	@SteveAtTheMac	total=0	eligible=0	cs_eligible=0
+Sue Michael	@soomichael	total=0	eligible=0	cs_eligible=0
+Hyemi Song	@BohyemianSong	total=3	eligible=3	cs_eligible=3
+	2510.12156v2	2025-10-14	cs.HC	Embodied Natural Language Interaction (NLI): Speech Input Patterns in Immersive Analytics
+	2409.01399v3	2024-09-02	cs.HC	Intents, Techniques, and Components: a Unified Analysis of Interaction Authoring Tasks in 
+	2307.05052v4	2023-07-11	cs.CL,cs.AI	Towards Understanding In-Context Learning with Contrastive Demonstrations and Saliency Map
+Brian McMahan	@bcmcmahan	total=2	eligible=0	cs_eligible=0
+Joshua Fink	@joshjfink	total=0	eligible=0	cs_eligible=0
+Hua Guo	@Tacitia	total=39	eligible=28	cs_eligible=8
+	2512.03753v2	2025-12-03	physics.chem-ph,cond-mat.mtrl-sci	Real-Time Coupled Electron-Nuclear Dynamics of Chemical Bond Formation: Hydrogen Scatterin
+	2509.11566v1	2025-09-15	cs.SE	Sedeve-Kit, a Specification-Driven Development Framework for Building Distributed Systems
+	2508.16086v2	2025-08-22	physics.chem-ph	Node-Equivariant Message Passing for Efficient and Accurate Machine Learning Interatomic P
+	2507.18273v1	2025-07-24	physics.med-ph	Multishot Dual Polarity GRAPPA: Robust Nyquist Ghost Correction for multishot EPI
+	2505.14730v2	2025-05-20	q-bio.QM,cs.CV,eess.IV	Predicting Neoadjuvant Chemotherapy Response in Triple-Negative Breast Cancer Using Pre-Tr
+	2503.22964v2	2025-03-29	physics.chem-ph	Extending ring polymer molecular dynamics rate theory to reactions with non-separable reac
+Gianluca Biotto	@gianluca_b8	total=0	eligible=0	cs_eligible=0
+Elie Ritch	@SudomanX	total=0	eligible=0	cs_eligible=0
+Federico Castanedo	@overfit	total=3	eligible=1	cs_eligible=1
+	2605.14455v1	2026-05-14	cs.AI,cs.LG	Intelligence Impact Quotient (IIQ): A Framework for Measuring Organizational AI Impact
+Julian Derungs	@JulianDerungs	total=0	eligible=0	cs_eligible=0
+Michael Tu	@tuzhucheng	total=2	eligible=1	cs_eligible=1
+	2309.00597v2	2023-09-01	cs.CE,cs.DC,cs.ET	The QUATRO Application Suite: Quantum Computing for Models of Human Cognition
+Dean Farrell	@farrelldlfarrel	total=0	eligible=0	cs_eligible=0
+QUT BDA	@QUT_BDA	total=0	eligible=0	cs_eligible=0
+Mike Taptich	@MikeTaptich	total=0	eligible=0	cs_eligible=0
+Kyle Dunovan	@dunovank	total=3	eligible=0	cs_eligible=0
+Johanna Fulda	@jofu_	total=0	eligible=0	cs_eligible=0
+Freeman Wang	@freestatman	total=0	eligible=0	cs_eligible=0
+Matt Michel	@ninjaPixel	total=0	eligible=0	cs_eligible=0
+Peter Butcher	@pwsbutcher	total=7	eligible=4	cs_eligible=4
+	2508.08737v1	2025-08-12	cs.HC	From Data to Insight: Using Contextual Scenarios to Teach Critical Thinking in Data Visual
+	2408.03681v1	2024-08-07	cs.HC	Path-based Design Model for Constructing and Exploring Alternative Visualisations
+	2404.10732v2	2024-04-16	cs.HC	Attention-Aware Visualization: Tracking and Responding to User Perception Over Time
+	2310.10015v1	2023-10-16	cs.HC	The Reality of the Situation: A Survey of Situated Analytics
+Ismail Uddin	@ismailud	total=0	eligible=0	cs_eligible=0
+Kevin Mader	@KevinSMader	total=2	eligible=0	cs_eligible=0
+Rafael Quintana	@RafaelQuintanaU	total=1	eligible=0	cs_eligible=0
+Herr Professor Doktor Kurtsy	@kurtsy	total=0	eligible=0	cs_eligible=0
+Colin El	@ce1337	total=0	eligible=0	cs_eligible=0
+Chris Reudenbach	@creuden	total=0	eligible=0	cs_eligible=0
+Brian Fisher	@brfisher	total=2	eligible=0	cs_eligible=0
+Zack D	@superturbos	total=11	eligible=8	cs_eligible=0
+	2511.11975v1	2025-11-15	physics.atom-ph,physics.chem-ph	Hyperfine-Resolved Spectroscopy of Dysprosium Monoxide (DyO) for Precision Measurements of
+	2509.01618v1	2025-09-01	physics.atom-ph,cond-mat.quant-gas	Optical Trapping of SrOH Molecules for Dark Matter and T-violation Searches
+	2409.04948v1	2024-09-08	physics.atom-ph	Magneto-optical trapping of a heavy polyatomic molecule for precision measurement
+	2407.09907v2	2024-07-13	physics.atom-ph	Thermal Emission of Strontium in a Cryogenic Buffer Gas Beam Source
+	2302.10161v1	2023-02-20	physics.atom-ph,physics.chem-ph	Direct Laser Cooling of Polyatomic Molecules
+	2202.01881v1	2022-02-03	physics.atom-ph,cond-mat.quant-gas,physics.chem-ph	Functionalizing Aromatic Compounds with Optical Cycling Centers
+Ian McKenzie	@McKenzieIA	total=3	eligible=3	cs_eligible=3
+	2506.24068v3	2025-06-30	cs.CL,cs.AI	STACK: Adversarial Attacks on LLM Safeguard Pipelines
+	2407.18213v5	2024-07-25	cs.LG,cs.AI,cs.CL	Scaling Trends in Language Model Robustness
+	2306.09479v2	2023-06-15	cs.CL,cs.AI,cs.CY	Inverse Scaling: When Bigger Isn't Better
+John Walley	@DoWhatIMean	total=0	eligible=0	cs_eligible=0
+Sixthirtyone News	@631news	total=0	eligible=0	cs_eligible=0
+MSU Students for Lib	@MSULiberty	total=0	eligible=0	cs_eligible=0
