@@ -282,8 +282,8 @@ per-user distribution. Rules: no access to any user's test tweets at training
 or persona-construction time; train-tweet text is unrestricted (features,
 pretrained classifiers, persona-conditioned LLM prompting, fine-tuning).
 
-\textbf{Baseline.} The zero-parameter persona --- predict each user's
-train-majority sentiment --- attains \textbf{63.1\%} (chance: 50\%,
+\textbf{Baseline.} The zero-parameter persona, which predicts each user's
+train-majority sentiment, attains \textbf{63.1\%} (chance: 50\%,
 label-balanced corpus). Figure~\ref{fig:adherence} shows the per-user
 distribution: bimodal, with a large mass of highly consistent users and a
 long tail of volatile ones for whom persona-only prediction fails. This is the
