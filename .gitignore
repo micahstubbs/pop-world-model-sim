@@ -1,3 +1,15 @@
 .env
 node_modules
 /data/
+
+# local environments / tooling
+.venv/
+.wrangler/
+archive/
+
+# LaTeX build artifacts and m2p page previews
+*.aux
+*.log
+*.out
+docs/paper/page-*.png
+docs/reports/*-pages/
