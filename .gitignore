@@ -13,3 +13,4 @@ archive/
 *.out
 docs/paper/page-*.png
 docs/reports/*-pages/
+__pycache__/
