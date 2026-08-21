@@ -8,11 +8,27 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
 
-% Easter-egg citation: wraps the usual bracketed citation in an unstyled
-% external hyperlink to the cited paper. \NoHyper suppresses hyperref's
-% internal bibliography link so the external one applies; with [hidelinks]
-% the result looks like plain text but is clickable.
-\newcommand{\ecite}[2]{\href{#1}{\NoHyper\cite{#2}\endNoHyper}}
+% Easter-egg citations: every reference title and every bracketed citation
+% is an unstyled (hidelinks) external hyperlink to the cited paper. Each
+% bibkey's URL is declared ONCE here; \ecite and \reftitle look it up, so a
+% source URL is changed in exactly one place.
+%   \paperurl{key}{url}      declare the URL for a bibkey
+%   \ecite{key}               cite, linked externally (\NoHyper suppresses
+%                             hyperref's internal bibliography link)
+%   \reftitle{key}{Title}    linked title for use inside \bibitem
+\newcommand{\paperurl}[2]{\expandafter\def\csname paperurl@#1\endcsname{#2}}
+\newcommand{\paperurlof}[1]{\csname paperurl@#1\endcsname}
+\newcommand{\ecite}[1]{\href{\paperurlof{#1}}{\NoHyper\cite{#1}\endNoHyper}}
+\newcommand{\reftitle}[2]{\href{\paperurlof{#1}}{#2}}
+
+\paperurl{lightsociety}{https://arxiv.org/abs/2506.12078}
+\paperurl{matraix}{https://arxiv.org/abs/2608.04205}
+\paperurl{park2023}{https://arxiv.org/abs/2304.03442}
+\paperurl{sentiment140}{https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf}
+\paperurl{tweeteval}{https://aclanthology.org/2020.findings-emnlp.148/}
+\paperurl{kwak2010}{https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf}
+\paperurl{horton1956}{https://www.participations.org/03-01-04-horton.pdf}
+\paperurl{degroot1974}{https://doi.org/10.1080/01621459.1974.10480137}
 \pagestyle{plain}
 
 \title{\textbf{popsim}: Reproducing Elements of Billion-Agent Social Simulators\\
@@ -54,12 +70,12 @@ gap. Code, artifacts, and an interactive explainer are public.
 \section{Introduction}
 
 Two recent systems define the frontier of population-scale social simulation.
-Light Society \ecite{https://arxiv.org/abs/2506.12078}{lightsociety} advances
+Light Society \ecite{lightsociety} advances
 ``earth-scale'' simulation: over
 $10^9$ agents whose states evolve through LLM-powered simulation operations,
 made tractable by a mixture-of-models engine combining full LLMs with distilled
 surrogates, and validated through trust-game and opinion-diffusion experiments.
-MatrAIx \ecite{https://arxiv.org/abs/2608.04205}{matraix} contributes
+MatrAIx \ecite{matraix} contributes
 population realism of a different kind: 8.3
 billion persona records spanning 1{,}290 attribute dimensions, with a curated
 million-persona subset grounded partly in real human profiles, and a headline
@@ -96,38 +112,38 @@ Our contributions are:
 \section{Related Work}
 
 \textbf{Population-scale simulation.} Light Society
-\ecite{https://arxiv.org/abs/2506.12078}{lightsociety}
+\ecite{lightsociety}
 formalizes society simulation as structured transitions of agent and
 environment states governed by LLM-powered operations, scaling to
 $10^9$ agents grounded in World Values Survey demographic profiles via a
 mixture-of-models engine. MatrAIx
-\ecite{https://arxiv.org/abs/2608.04205}{matraix} builds an 8.3B-record persona
+\ecite{matraix} builds an 8.3B-record persona
 database (599{,}847 human-grounded profiles among the curated subset) and
 evaluates behavioral adherence across four environments. Generative agent-based
 modeling more broadly descends from Park et al.'s generative agents
-\ecite{https://arxiv.org/abs/2304.03442}{park2023}, which demonstrated
+\ecite{park2023}, which demonstrated
 believable social behavior from
 memory-augmented LLM agents in a small sandbox town.
 
 \textbf{Data.} Sentiment140
-\ecite{https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf}{sentiment140}
+\ecite{sentiment140}
 provides 1.6M tweets from
 April--June 2009, distantly labeled for sentiment by emoticons. It remains one
 of the few large fully-public full-text tweet corpora: since the 2023
 restriction of the X API, tweet-ID ``hydration'' workflows that most academic
 Twitter datasets rely on are effectively defunct, making full-text corpora the
 practical substrate for new work. TweetEval
-\ecite{https://aclanthology.org/2020.findings-emnlp.148/}{tweeteval}
+\ecite{tweeteval}
 standardizes tweet
 classification benchmarks and supplies pretrained classifiers usable as
 realism scorecards. Kwak et al.
-\ecite{https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf}{kwak2010}
+\ecite{kwak2010}
 established the large-scale
 structural view of Twitter; Horton and Wohl
-\ecite{https://www.participations.org/03-01-04-horton.pdf}{horton1956}
+\ecite{horton1956}
 introduced the
 parasocial-interaction construct we operationalize; DeGroot
-\ecite{https://doi.org/10.1080/01621459.1974.10480137}{degroot1974}
+\ecite{degroot1974}
 supplies the consensus-formation model we test.
 
 \section{Dataset and Cohort}
@@ -213,7 +229,7 @@ The cohort contains a real directed interaction graph: 31{,}515 @-mention
 events between cohort members. Light Society validates simulations with
 opinion-diffusion experiments; we run the corresponding test \emph{against
 ground truth}. Each user is seeded with their first-half sentiment; DeGroot
-mixing \ecite{https://doi.org/10.1080/01621459.1974.10480137}{degroot1974}
+mixing \ecite{degroot1974}
 ($s_{t+1} = 0.7\,s_t + 0.3\,\bar{s}_{\mathcal{N}}$,
 10 steps, edge weights = mention counts) evolves states over the real graph;
 we then ask which predictor better recovers each user's \emph{second-half}
@@ -254,7 +270,7 @@ roughly one unrequited attachment.
 At the account level, among in-sample targets with $\geq 20$ distinct
 mentioners, 408 reciprocate under 5\% of their audience, operationally
 \emph{parasocial}
-\ecite{https://www.participations.org/03-01-04-horton.pdf}{horton1956},
+\ecite{horton1956},
 including 2009-era celebrities
 (\texttt{wossy}, \texttt{ashleytisdale}, \texttt{tomfelton}) who tweet but do
 not talk back, while 163 \emph{community hubs} of comparable audience
@@ -376,50 +392,50 @@ for organizing the evening that made this work possible.
 \bibitem{lightsociety}
 H.~Guan, J.~He, L.~Fan, Z.~Ren, S.~He, X.~Yu, Y.~Chen, X.~Xu, S.~Zheng,
 Y.~Gao, E.~Chen, T.-Y.~Liu, Z.~Liu.
-\newblock \href{https://arxiv.org/abs/2506.12078}{Modeling Earth-Scale
+\newblock \reftitle{lightsociety}{Modeling Earth-Scale
 Human-Like Societies with One Billion Agents}.
 \newblock \emph{arXiv:2506.12078}, 2025.
 
 \bibitem{matraix}
 X.~Li, Y.~Hao, J.~Hou, J.~Huang, et al.
-\newblock \href{https://arxiv.org/abs/2608.04205}{MatrAIx: Simulating the
+\newblock \reftitle{matraix}{MatrAIx: Simulating the
 World with 8.3 Billion Persona Agents}.
 \newblock \emph{arXiv:2608.04205}, 2026.
 
 \bibitem{park2023}
 J.~S. Park, J.~O'Brien, C.~J. Cai, M.~R. Morris, P.~Liang, M.~S. Bernstein.
-\newblock \href{https://arxiv.org/abs/2304.03442}{Generative Agents:
+\newblock \reftitle{park2023}{Generative Agents:
 Interactive Simulacra of Human Behavior}.
 \newblock In \emph{Proc.\ UIST}, 2023. arXiv:2304.03442.
 
 \bibitem{sentiment140}
 A.~Go, R.~Bhayani, L.~Huang.
-\newblock \href{https://www-cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf}{Twitter
+\newblock \reftitle{sentiment140}{Twitter
 Sentiment Classification using Distant Supervision}.
 \newblock Stanford CS224N Project Report, 2009.
 
 \bibitem{tweeteval}
 F.~Barbieri, J.~Camacho-Collados, L.~Espinosa-Anke, L.~Neves.
-\newblock \href{https://aclanthology.org/2020.findings-emnlp.148/}{TweetEval:
+\newblock \reftitle{tweeteval}{TweetEval:
 Unified Benchmark and Comparative Evaluation for Tweet Classification}.
 \newblock In \emph{Findings of EMNLP}, 2020. arXiv:2010.12421.
 
 \bibitem{kwak2010}
 H.~Kwak, C.~Lee, H.~Park, S.~Moon.
-\newblock \href{https://snap.stanford.edu/class/cs224w-readings/kwak10twitter.pdf}{What
+\newblock \reftitle{kwak2010}{What
 is Twitter, a Social Network or a News Media?}
 \newblock In \emph{Proc.\ WWW}, 2010.
 
 \bibitem{horton1956}
 D.~Horton, R.~R. Wohl.
-\newblock \href{https://www.participations.org/03-01-04-horton.pdf}{Mass
+\newblock \reftitle{horton1956}{Mass
 Communication and Para-Social Interaction: Observations on Intimacy at a
 Distance}.
 \newblock \emph{Psychiatry}, 19(3):215--229, 1956.
 
 \bibitem{degroot1974}
 M.~H. DeGroot.
-\newblock \href{https://doi.org/10.1080/01621459.1974.10480137}{Reaching a
+\newblock \reftitle{degroot1974}{Reaching a
 Consensus}.
 \newblock \emph{Journal of the American Statistical Association},
 69(345):118--121, 1974.
