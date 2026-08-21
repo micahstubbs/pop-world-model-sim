@@ -62,16 +62,31 @@ ax.set_title("Per-user tweet counts (1.6M tweets, 659,775 users)")
 save(fig, "fig1_user_distribution")
 
 # ---- fig 2: diurnal cycle ----
+def ampm(h):
+    """0 -> '12 a.m.', 13 -> '1 p.m.', 23 -> '11 p.m.'"""
+    h = int(h) % 24
+    return f"{(h % 12) or 12} {'a.m.' if h < 12 else 'p.m.'}"
+
+
 fig, ax = plt.subplots(figsize=(FIGW, 2.2))
 hours = np.arange(24)
 vol = np.array(stats["by_hour"]) / 1000
 ax.bar(hours, vol, color=POS, width=.8, edgecolor="white", linewidth=.4)
 pk, tr = int(np.argmax(vol)), int(np.argmin(vol))
-ax.annotate(f"peak {pk}:00", (pk, vol[pk]), textcoords="offset points", xytext=(-4, 4), fontsize=7.5)
-ax.annotate(f"trough {tr}:00", (tr, vol[tr]), textcoords="offset points", xytext=(-8, 6), fontsize=7.5)
+ax.annotate(f"peak {ampm(pk)}", (pk, vol[pk]), textcoords="offset points", xytext=(-3, 2),
+            fontsize=7.5, ha="right", va="bottom")
+ax.set_ylim(0, vol.max() * 1.12)
+# Trough label floats in the clear space above the neighbouring bars (not over
+# them) and points down to the trough bar with a thin leader.
+ax.annotate(f"trough {ampm(tr)}", (tr, vol[tr]), textcoords="offset points", xytext=(0, 26),
+            fontsize=7.5, ha="center", va="bottom",
+            arrowprops=dict(arrowstyle="-", color=GRY, lw=.6, shrinkB=1))
 ax.set_xlabel("hour of day (PDT)")
 ax.set_ylabel("tweets (thousands)")
-ax.set_xticks(range(0, 24, 4))
+ticks = [0, 4, 8, 12, 16, 23]  # last tick is the 11 p.m. peak, not 8 p.m.
+ax.set_xticks(ticks)
+ax.set_xticklabels([ampm(h) for h in ticks], fontsize=7)
+ax.set_xlim(-.7, 23.7)
 ax.set_title("Diurnal activity cycle")
 save(fig, "fig2_diurnal")
 
