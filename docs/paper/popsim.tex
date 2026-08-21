@@ -7,6 +7,12 @@
 \usepackage{amsmath}
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
+
+% Easter-egg citation: wraps the usual bracketed citation in an unstyled
+% external hyperlink to the cited paper. \NoHyper suppresses hyperref's
+% internal bibliography link so the external one applies; with [hidelinks]
+% the result looks like plain text but is clickable.
+\newcommand{\ecite}[2]{\href{#1}{\NoHyper\cite{#2}\endNoHyper}}
 \pagestyle{plain}
 
 \title{\textbf{popsim}: Reproducing Elements of Billion-Agent Social Simulators\\
